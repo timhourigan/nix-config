@@ -18,6 +18,7 @@
   home.packages = with pkgs; [
     # Utils
     bat             # `cat` clone
+    bottom          # Display process information (`top` alternative)
     du-dust         # Disk space usage (`du` alternative)
     exa             # File listing (`ls` alternative)
     fd              # Find files/folders (`find` alternative)
