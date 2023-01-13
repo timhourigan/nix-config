@@ -7,8 +7,8 @@
 
     # Home Manager
     home-manager = {
-        url = "github:nix-community/home-manager";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # FIXME - Others to consider
@@ -32,5 +32,8 @@
         modules = [ ./home/home.nix ];
       };
     };
+
+    # Formatter Configuration
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
   };
 }
