@@ -18,10 +18,10 @@
       # Git
       vimPlugins.vim-fugitive
       # Languages
-      vimPlugins.vim-nix   
+      vimPlugins.vim-nix
       # CoC / Conquer of Completion
       vimPlugins.coc-pairs
-      vimPlugins.coc-snippets 
+      vimPlugins.coc-snippets
       vimPlugins.coc-python
       vimPlugins.coc-pyright
       vimPlugins.coc-go
@@ -33,12 +33,12 @@
       vimPlugins.fzf-vim
     ];
     extraConfig = ''
-        " Airline
-        let g:airline_powerline_fonts = 1
-        if !exists('g:airline_symbols')
-            let g:airline_symbols = {}
-        endif
-        let g:airline_theme = 'minimalist'
+      " Airline
+      let g:airline_powerline_fonts = 1
+      if !exists('g:airline_symbols')
+          let g:airline_symbols = {}
+      endif
+      let g:airline_theme = 'minimalist'
     '';
   };
 }

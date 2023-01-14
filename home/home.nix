@@ -17,27 +17,27 @@
   # Packages to be installed
   home.packages = with pkgs; [
     # Utils
-    bat             # `cat` clone
-    bottom          # Display process information (`top` alternative)
-    du-dust         # Disk space usage (`du` alternative)
-    exa             # File listing (`ls` alternative)
-    fd              # Find files/folders (`find` alternative)
-    feh             # Command line image viewer
-    htop            # Display process information (`top` alternative)
-    jq              # Command line JSON parser
-    neofetch        # System information
-    nixfmt          # NIX formatter
-    nmap            # Network exploration
-    ripgrep         # Fast grep
-    taskwarrior     # Task manager
-    tig             # git text-mode interface
-    tldr            # Help pages
-    tree            # Display directory struture
+    bat # `cat` clone
+    bottom # Display process information (`top` alternative)
+    du-dust # Disk space usage (`du` alternative)
+    exa # File listing (`ls` alternative)
+    fd # Find files/folders (`find` alternative)
+    feh # Command line image viewer
+    htop # Display process information (`top` alternative)
+    jq # Command line JSON parser
+    neofetch # System information
+    nixfmt # NIX formatter
+    nmap # Network exploration
+    ripgrep # Fast grep
+    taskwarrior # Task manager
+    tig # git text-mode interface
+    tldr # Help pages
+    tree # Display directory struture
 
     # Apps
-    filezilla       # FTP client
-    gimp            # Image editor
-    libreoffice     # Office suite
+    filezilla # FTP client
+    gimp # Image editor
+    libreoffice # Office suite
 
     # Browsers
     chromium

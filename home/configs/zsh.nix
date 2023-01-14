@@ -5,8 +5,8 @@
       size = -1;
     };
     shellAliases = {
-        diff = "diff --color=auto";
-        l = "exa --long --group --git --all";
+      diff = "diff --color=auto";
+      l = "exa --long --group --git --all";
     };
 
     oh-my-zsh = {

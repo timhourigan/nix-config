@@ -6,7 +6,7 @@
       window = {
         decorations = "full";
         padding = { x = 4; y = 4; };
-         startup_mode = "Maximized";
+        startup_mode = "Maximized";
       };
 
       scrolling = {
