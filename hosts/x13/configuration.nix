@@ -14,7 +14,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   # Networking
-  networking.hostName = "x1c";
+  networking.hostName = "x13";
   networking.networkmanager.enable = true;
 
   # Localisation

@@ -22,12 +22,19 @@
       x1c = nixpkgs.lib.nixosSystem {
         modules = [ ./hosts/x1c/configuration.nix ];
       };
+      x13 = nixpkgs.lib.nixosSystem {
+        modules = [ ./hosts/x13/configuration.nix ];
+      };
     };
 
     # Home-Manager Configurations
     # 'home-manager build --flake .#<username>@<hostname>'
     homeConfigurations = {
       "timh@x1c" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./home/home.nix ];
+      };
+      "timh@x13" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./home/home.nix ];
       };
