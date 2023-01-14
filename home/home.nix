@@ -70,6 +70,7 @@
     ./configs/alacritty.nix
     ./configs/autojump.nix
     ./configs/bash.nix
+    ./configs/dconf.nix
     ./configs/direnv.nix
     ./configs/fzf.nix
     ./configs/gh.nix

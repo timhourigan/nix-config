@@ -28,7 +28,6 @@
     };
 
     # Home-Manager Configurations
-    # 'home-manager build --flake .#<username>@<hostname>'
     homeConfigurations = {
       "timh@x1c" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
