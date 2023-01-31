@@ -72,6 +72,7 @@
     ./configs/bash.nix
     ./configs/dconf.nix
     ./configs/direnv.nix
+    ./configs/firefox.nix
     ./configs/fzf.nix
     ./configs/gh.nix
     ./configs/git.nix
