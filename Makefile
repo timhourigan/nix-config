@@ -29,6 +29,10 @@ switch-hm: ## Switch Home-Manager configuration
 lock: ## Update lock file
 	nix flake update
 
+.PHONY: clean
+clean: ## Garbage collect
+	nix-collect-garbage
+
 .PHONY: help
 help: ## This menu
 	@grep -P "##\s(.*)$$" $(MAKEFILE_LIST) | sed 's/:.*##/:/'

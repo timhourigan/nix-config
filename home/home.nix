@@ -38,6 +38,8 @@
     filezilla # FTP client
     gimp # Image editor
     libreoffice # Office suite
+    meld # Diff tools
+    vlc # Media player
 
     # Browsers
     chromium
