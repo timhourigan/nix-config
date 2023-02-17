@@ -23,14 +23,14 @@ build-hm: ## Build Home-Manager configuration
 
 .PHONY: switch-hm
 switch-hm: ## Switch Home-Manager configuration
-	home-manager build --flake .#$(USER)@$(HOSTNAME)
+	home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: lock
 lock: ## Update lock file
 	nix flake update
 
-.PHONY: clean
-clean: ## Garbage collect
+.PHONY: gc
+gc: ## Garbage collect
 	nix-collect-garbage
 
 .PHONY: help
