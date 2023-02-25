@@ -19,6 +19,7 @@
           radius = 2;
           padding = 2;
           font-0 = "FiraCode-Regular:size=14;2";
+          font-1 = "FiraCode-Regular:style=Bold:size=14;2";
           separator = " | ";
           modules-left = "filesystem memory cpu";
           modules-right = "time";
