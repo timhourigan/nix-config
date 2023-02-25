@@ -37,7 +37,7 @@
       };
 
       git_branch = {
-        format = "[$branch ]($style)";
+        format = "[$branch]($style)";
       };
 
       git_status = {
