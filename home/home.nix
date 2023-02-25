@@ -79,10 +79,15 @@
     ./configs/gh.nix
     ./configs/git.nix
     ./configs/neovim.nix
+    ./configs/polybar.nix
     ./configs/rofi.nix
     ./configs/starship.nix
     ./configs/tmux.nix
     ./configs/vscodium.nix
     # ./configs/zsh.nix
   ];
+
+  systemd.user.services.polybar = {
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 }

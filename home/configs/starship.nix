@@ -45,7 +45,7 @@
       };
 
       memory_usage = {
-        disabled = false;
+        disabled = true;
         threshold = -1;
         symbol = " ";
         style = "bold dimmed green";
