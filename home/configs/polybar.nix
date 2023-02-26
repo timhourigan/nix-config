@@ -32,7 +32,7 @@
           type = "internal/date";
           date = "%a %d %b %Y";
           time = "%H:%M";
-          label = "%{F#f99157}%{F-} %time% %{F#f99157}%{F-} %date% ";
+          label = "%{F#f99157}%{F-} %date% %{F#f99157}%{F-} %time%";
         };
 
         "module/cpu" = {
@@ -63,6 +63,7 @@
           type = "internal/battery";
           format-charging = "%{F#f99157}<animation-charging>%{F-}  <label-charging>";
           format-discharging = "%{F#f99157}<ramp-capacity>%{F-}  <label-discharging>";
+          format-full = "%{F#f99157}<ramp-capacity>%{F-}  <label-full>";
 
           animation-charging-0 = "";
           animation-charging-1 = "";
