@@ -31,7 +31,7 @@
           type = "internal/date";
           date = "%a %d %b %Y";
           time = "%H:%M";
-          label = "%time% %date%";
+          label = "%{F#f99157}%time%%{F-} | %date% ";
         };
 
         "module/cpu" = {
