@@ -63,7 +63,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-# System packages
+  # System packages
   environment.systemPackages = with pkgs; [
     bash-completion
     gnumake
