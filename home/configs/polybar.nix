@@ -18,8 +18,9 @@
           offset-y = 5;
           radius = 2;
           padding = 2;
-          font-0 = "FiraCode-Regular:size=14;2";
-          font-1 = "FiraCode-Regular:style=Bold:size=14;2";
+          # font-N = <fontconfig pattern>;<vertical offset>
+          #  - Use fc-list for fontconfig information
+          font-0 = "FiraCode Nerd Font:style=Bold:size=14;2";
           separator = " | ";
           modules-left = "filesystem memory cpu";
           modules-right = "time";
@@ -31,7 +32,7 @@
           type = "internal/date";
           date = "%a %d %b %Y";
           time = "%H:%M";
-          label = "%{F#f99157}%time%%{F-} | %date% ";
+          label = "%{F#f99157}%{F-} %time% %{F#f99157}%{F-} %date% ";
         };
 
         "module/cpu" = {

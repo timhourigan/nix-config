@@ -27,7 +27,6 @@
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
     neofetch # System information
-    nixfmt # NIX formatter
     nmap # Network exploration
     ripgrep # Fast grep
     taskwarrior # Task manager
@@ -57,9 +56,10 @@
         "Terminus"
       ];
     })
-    twitter-color-emoji
     noto-fonts-emoji
     powerline-fonts
+    twitter-color-emoji
+
 
     # Node
     nodejs

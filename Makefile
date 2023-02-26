@@ -25,6 +25,10 @@ build-hm: ## Build Home-Manager configuration
 switch-hm: ## Switch Home-Manager configuration
 	home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
+.PHONY: format
+format: ## Format source
+	nix fmt
+
 .PHONY: lock
 lock: ## Update lock file
 	nix flake update

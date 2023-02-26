@@ -17,7 +17,7 @@
       mouse = { hide_when_typing = true; };
       cursor.style = "Underline";
 
-      font = let fontname = "DejaVu Sans Mono for Powerline"; in {
+      font = let fontname = "FiraCode Nerd Font"; in {
         normal = { family = fontname; style = "Medium"; };
         bold = { family = fontname; style = "Bold"; };
         italic = { family = fontname; style = "Light"; };

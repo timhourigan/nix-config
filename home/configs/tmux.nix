@@ -7,7 +7,12 @@
     historyLimit = 50000;
     newSession = true;
     prefix = "C-a";
-    shell = "${pkgs.bash}/bin/bash";
+    shell = "${pkgs.bashInteractive}/bin/bash";
     terminal = "screen-256color";
+
+    plugins = with pkgs; [
+      # tmuxPlugins.continuum
+      tmuxPlugins.resurrect
+    ];
   };
 }

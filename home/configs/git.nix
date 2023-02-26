@@ -11,6 +11,7 @@
       co = "checkout";
       br = "branch";
       st = "status";
+      pub = "push origin -u";
     };
     extraConfig = { credential = { helper = "libsecret"; }; };
   };
