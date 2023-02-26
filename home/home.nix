@@ -23,6 +23,7 @@
     exa # File listing (`ls` alternative)
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
+    gitleaks # Git repository secrets checker
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
     neofetch # System information
