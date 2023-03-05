@@ -16,13 +16,14 @@
 
   # Packages to be installed
   home.packages = with pkgs; [
-    # Utils
+    # Tools
     bat # `cat` clone
     bottom # Display process information (`top` alternative)
     du-dust # Disk space usage (`du` alternative)
     exa # File listing (`ls` alternative)
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
+    ffmpeg # Audio video manipulation
     gitleaks # Git repository secrets checker
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
@@ -39,6 +40,7 @@
     gimp # Image editor
     libreoffice # Office suite
     meld # Diff tools
+    subversion # Software version control
     vlc # Media player
 
     # Browsers
@@ -65,6 +67,7 @@
     nodejs
 
     # Python
+    pipenv # Environment management
     (python310.withPackages (ps: with ps; [ black flake8 pip ]))
   ];
 
