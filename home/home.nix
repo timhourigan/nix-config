@@ -36,6 +36,7 @@
     tree # Display directory struture
 
     # Apps
+    audacity # Audio editor
     filezilla # FTP client
     gimp # Image editor
     libreoffice # Office suite
