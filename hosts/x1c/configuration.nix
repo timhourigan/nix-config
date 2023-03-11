@@ -64,7 +64,12 @@
   nixpkgs.config.allowUnfree = true;
 
   # System packages
-  environment.systemPackages = with pkgs; [ gnumake vim wget ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    gnumake
+    vim
+    wget
+  ];
 
   # Release version of first install
   system.stateVersion = "22.05";

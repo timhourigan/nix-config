@@ -16,18 +16,18 @@
 
   # Packages to be installed
   home.packages = with pkgs; [
-    # Utils
+    # Tools
     bat # `cat` clone
     bottom # Display process information (`top` alternative)
     du-dust # Disk space usage (`du` alternative)
     exa # File listing (`ls` alternative)
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
+    ffmpeg # Audio video manipulation
     gitleaks # Git repository secrets checker
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
     neofetch # System information
-    nixfmt # NIX formatter
     nmap # Network exploration
     ripgrep # Fast grep
     taskwarrior # Task manager
@@ -36,10 +36,12 @@
     tree # Display directory struture
 
     # Apps
+    audacity # Audio editor
     filezilla # FTP client
     gimp # Image editor
     libreoffice # Office suite
     meld # Diff tools
+    subversion # Software version control
     vlc # Media player
 
     # Browsers
@@ -57,14 +59,16 @@
         "Terminus"
       ];
     })
-    twitter-color-emoji
     noto-fonts-emoji
     powerline-fonts
+    twitter-color-emoji
+
 
     # Node
     nodejs
 
     # Python
+    pipenv # Environment management
     (python310.withPackages (ps: with ps; [ black flake8 pip ]))
   ];
 
