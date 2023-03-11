@@ -16,12 +16,12 @@
     extraConfig = { credential = { helper = "libsecret"; }; };
     # diff tool
     delta = {
-        enable = true;
-        options = {
-            side-by-side = true;
-            # delta --show-syntax-themes --dark
-            syntax-theme = "Coldark-Dark";
-        };
+      enable = true;
+      options = {
+        side-by-side = true;
+        # delta --show-syntax-themes --dark
+        syntax-theme = "Coldark-Dark";
+      };
     };
   };
 }
