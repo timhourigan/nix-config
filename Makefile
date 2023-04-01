@@ -25,6 +25,9 @@ build-hm: ## Build Home-Manager configuration
 switch-hm: ## Switch Home-Manager configuration
 	home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
+.PHONY: build
+build: build-nixos build-hm ## Build
+
 .PHONY: format
 format: ## Format source
 	nix fmt
@@ -35,7 +38,7 @@ lock: ## Update lock file
 
 .PHONY: gc
 gc: ## Garbage collect
-	nix-collect-garbage
+	nix-collect-garbage --delete-older-than 30d
 
 .PHONY: help
 help: ## This menu

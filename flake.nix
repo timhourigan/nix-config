@@ -11,6 +11,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Firefox Addons
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+
     # FIXME - Others to consider
     # Hardware
     # hardware.url = "github:nixos/nixos-hardware";
@@ -32,10 +35,12 @@
       "timh@x1c" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./home/home.nix ];
+        extraSpecialArgs = { inherit inputs; };
       };
       "timh@x13" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./home/home.nix ];
+        extraSpecialArgs = { inherit inputs; };
       };
     };
 

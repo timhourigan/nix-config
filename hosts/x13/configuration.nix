@@ -13,6 +13,21 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  #   # Kernel pinning
+  #   # Pinning to 5.15.97 as 5.15.99 doesn't boot completely
+  #   # Now resolved, but leaving here for reference
+  #   boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_5_15.override {
+  #     argsOverride = rec {
+  #       src = pkgs.fetchurl {
+  #             url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
+  #             # https://cdn.kernel.org/pub/linux/kernel/v5.x/sha256sums.asc
+  #             sha256 = "2cddd6f4b1beaa2705b13022fb25a51f23f09faaa1a26cb859825f35080fb3b3";
+  #       };
+  #       version = "5.15.97";
+  #       modDirVersion = "5.15.97";
+  #       };
+  #   });
+
   # Networking
   networking.hostName = "x13";
   networking.networkmanager.enable = true;
