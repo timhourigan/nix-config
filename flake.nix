@@ -46,5 +46,27 @@
 
     # Formatter Configuration
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+
+    # Checks
+    checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
+
+      checkmake = runCommand "checkmake"
+        {
+          buildInputs = [ checkmake ];
+        }
+        ''
+          mkdir $out
+          checkmake ${./Makefile}
+        '';
+
+      markdownlint = runCommand "mdl"
+        {
+          buildInputs = [ mdl ];
+        }
+        ''
+          mkdir $out
+          mdl ${./README.md}
+        '';
+    };
   };
 }

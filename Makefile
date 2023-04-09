@@ -1,6 +1,10 @@
+HOSTNAME=$(shell hostname)
+
+.PHONY: default
 default: help
 
-HOSTNAME=$(shell hostname)
+.PHONY: all
+all: lock test format build ## Lock test format and build
 
 # `nixos-rebuild` will use the current host, if none is specified
 .PHONY: build-nixos
@@ -28,6 +32,10 @@ switch-hm: ## Switch Home-Manager configuration
 .PHONY: build
 build: build-nixos build-hm ## Build
 
+.PHONY: test
+test: ## Test
+	nix flake check
+
 .PHONY: format
 format: ## Format source
 	nix fmt
@@ -36,8 +44,8 @@ format: ## Format source
 lock: ## Update lock file
 	nix flake update
 
-.PHONY: gc
-gc: ## Garbage collect
+.PHONY: clean
+clean: ## Garbage collect
 	nix-collect-garbage --delete-older-than 30d
 
 .PHONY: help
