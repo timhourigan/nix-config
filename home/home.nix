@@ -5,7 +5,7 @@
   programs.home-manager.enable = true;
 
   # Home Manager release
-  home.stateVersion = "22.05";
+  home.stateVersion = "23.05";
 
   # User info
   home.username = "timh";
@@ -63,13 +63,16 @@
     powerline-fonts
     twitter-color-emoji
 
-
     # Node
     nodejs
 
     # Python
     pipenv # Environment management
     (python310.withPackages (ps: with ps; [ black flake8 pip ]))
+
+    # Compilers
+    gcc
+    pkgs.stdenv.cc.cc.lib # LD_LIBRARY_PATH set in bash.nix
   ];
 
   # Programs and configurations to be installed
