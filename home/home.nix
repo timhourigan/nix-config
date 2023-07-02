@@ -30,6 +30,7 @@
     neofetch # System information
     nmap # Network exploration
     ripgrep # Fast grep
+    powertop # Power consumption
     taskwarrior # Task manager
     tig # git text-mode interface
     tldr # Help pages
