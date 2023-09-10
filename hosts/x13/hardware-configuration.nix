@@ -27,9 +27,6 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/c7bfdeeb-66d8-4b96-a250-f5c7929c3d61"; }];
 
-  # Hi-Res screen
-  hardware.video.hidpi.enable = true;
-
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
