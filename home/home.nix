@@ -19,27 +19,33 @@
     # Tools
     bat # `cat` clone
     bottom # Display process information (`top` alternative)
+    ddrescue # dd, with extra functionality
     du-dust # Disk space usage (`du` alternative)
     exa # File listing (`ls` alternative)
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
     ffmpeg # Audio video manipulation
     gitleaks # Git repository secrets checker
+    gparted # Disk partition tool
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
     neofetch # System information
     nmap # Network exploration
     ripgrep # Fast grep
+    p7zip # Compression tool
     powertop # Power consumption
     taskwarrior # Task manager
     tig # git text-mode interface
     tldr # Help pages
     tree # Display directory struture
+    unzip # Zip decompress
+    zip # Zip compress
 
     # Apps
     audacity # Audio editor
     filezilla # FTP client
     gimp # Image editor
+    inkscape # SVG editor
     libreoffice # Office suite
     meld # Diff tools
     subversion # Software version control
@@ -68,12 +74,14 @@
     nodejs
 
     # Python
-    pipenv # Environment management
-    (python310.withPackages (ps: with ps; [ black flake8 pip ]))
+    (python310.withPackages (ps: with ps; [ black flake8 pip pipx ]))
 
     # Compilers
     gcc
     pkgs.stdenv.cc.cc.lib # LD_LIBRARY_PATH set in bash.nix
+
+    # Printing
+    system-config-printer
   ];
 
   # Programs and configurations to be installed

@@ -20,6 +20,7 @@
     };
     sessionVariables = {
       LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+      PATH = "$PATH:$HOME/.local/bin";
     };
   };
 }

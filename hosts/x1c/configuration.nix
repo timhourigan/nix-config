@@ -13,6 +13,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+    # Filesystem support
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Networking
   networking.hostName = "x1c";
   networking.networkmanager.enable = true;
@@ -32,8 +35,12 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
-  # Printing via CUPS
+  # Printing
   services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+  # For WiFi printers
+  services.avahi.openFirewall = true;
 
   # Sound via Pipewire
   sound.enable = true;

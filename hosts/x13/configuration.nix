@@ -13,6 +13,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # Filesystem support
+  boot.supportedFilesystems = [ "ntfs" ];
+
   #   # Kernel pinning
   #   # Pinning to 5.15.97 as 5.15.99 doesn't boot completely
   #   # Now resolved, but leaving here for reference
@@ -47,8 +50,12 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
-  # Printing via CUPS
+  # Printing
   services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+  # For WiFi printers
+  services.avahi.openFirewall = true;
 
   # Sound via Pipewire
   sound.enable = true;
