@@ -5,6 +5,8 @@
     ./hardware-configuration.nix
   ];
 
+  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
+
   # Feature onfiguration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

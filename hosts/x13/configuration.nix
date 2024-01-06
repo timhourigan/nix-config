@@ -5,6 +5,8 @@
     ./hardware-configuration.nix
   ];
 
+  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
+
   # Feature onfiguration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -92,6 +94,12 @@
       PLATFORM_PROFILE_ON_BAT = "low-power";
     };
   };
+#   # Thermald (Intel only) - https://wiki.debian.org/thermald
+#   # To be investigated if any benefit - Doesn't currently work do to
+#   # lap detection, which can be ignored with `--ignore-cpuid-check`
+#   services.thermald = {
+#     enable = true;
+#   };
 
   users.users.timh = {
     isNormalUser = true;
