@@ -6,7 +6,7 @@
     };
     shellAliases = {
       diff = "diff --color=auto";
-      l = "exa --long --group --git --all";
+      l = "eza --long --group --git --all";
     };
 
     oh-my-zsh = {

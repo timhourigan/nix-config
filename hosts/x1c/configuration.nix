@@ -92,9 +92,6 @@
   # Include zsh in /etc/shells
   # environment.shells = with pkgs; [ zsh ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # System packages
   environment.systemPackages = with pkgs; [
     bash-completion

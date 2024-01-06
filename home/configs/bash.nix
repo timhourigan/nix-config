@@ -16,7 +16,7 @@
     historySize = -1;
     shellAliases = {
       diff = "diff --color=auto";
-      l = "exa --long --group --git --all";
+      l = "eza --long --group --git --all";
     };
     sessionVariables = {
       LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
