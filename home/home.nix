@@ -124,7 +124,7 @@
     ./configs/rofi.nix
     ./configs/starship.nix
     ./configs/tmux.nix
-    ./configs/vscodium.nix
+    ./configs/vscode.nix
     # ./configs/zsh.nix
   ];
 

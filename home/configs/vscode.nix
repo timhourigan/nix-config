@@ -3,7 +3,7 @@
 {
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium;
+    package = pkgs.vscode;
     extensions = with pkgs.vscode-extensions; [
       # Search with:
       # https://search.nixos.org/packages?channel=22.05type=packages&query=vscode-extensions
@@ -18,6 +18,9 @@
       # Git
       eamodio.gitlens
       donjayamanne.githistory
+      # Github
+      github.copilot
+      github.copilot-chat
       github.vscode-pull-request-github
       # Editor appearance
       johnpapa.vscode-peacock
@@ -48,6 +51,8 @@
       "update.mode" = "none";
       # Trim newlines at end of file
       "files.trimFinalNewlines" = true;
+      # Display trimmed whitespace
+      "diffEditor.ignoreTrimWhitespace" = false;
     };
   };
 }
