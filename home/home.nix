@@ -62,6 +62,8 @@
     # Apps
     audacity # Audio editor
     avidemux # Video editor
+    brasero # CD/DVD burner
+    devede # CD/DVD creator
     filezilla # FTP client
     gimp # Image editor
     inkscape # SVG editor
