@@ -36,12 +36,13 @@
     eza # File listing (`ls` alternative)
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
-    ffmpeg # Audio video manipulation
+    ffmpeg-full # Audio video manipulation
     gitleaks # Git repository secrets checker
     gparted # Disk partition tool
     hdparm # Disk utility (set/get parameters, read-only speed test)
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
+    mediainfo # Media file information
     neofetch # System information
     nmap # Network exploration
     p7zip # Compression tool
@@ -53,11 +54,14 @@
     tree # Display directory struture
     unetbootin # Bootable USB creator
     unzip # Zip decompress
+    usbutils # USB tools (lsusb)
+    v4l-utils # Video for Linux utilities
     woeusb # Bootable USB creator for Windows media
     zip # Zip compress
 
     # Apps
     audacity # Audio editor
+    avidemux # Video editor
     filezilla # FTP client
     gimp # Image editor
     inkscape # SVG editor
@@ -120,6 +124,7 @@
     ./configs/gh.nix
     ./configs/git.nix
     ./configs/neovim.nix
+    ./configs/obs.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
     ./configs/starship.nix
