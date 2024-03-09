@@ -46,7 +46,7 @@
   #  - mv $PWD/"DisplayLink USB Graphics Software for Ubuntu5.8-EXE.zip" $PWD/displaylink-580.zip
   #  - nix-prefetch-url file://$PWD/displaylink-580.zip
   #
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["displaylink"];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "displaylink" ];
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
   # Printing
@@ -101,7 +101,7 @@
     description = "timh";
     # "scanner" for scanners
     # "lp" for printer/scanners
-    extraGroups = [ "networkmanager" "wheel" "scanner" "lp"];
+    extraGroups = [ "networkmanager" "wheel" "scanner" "lp" ];
     packages = with pkgs; [ firefox git bottom ];
     shell = pkgs.bash;
   };
