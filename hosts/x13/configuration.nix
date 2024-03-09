@@ -71,6 +71,10 @@
   # For WiFi printers
   services.avahi.openFirewall = true;
 
+  # Scaanners
+  # SANE support
+  hardware.sane.enable = true;
+
   # Sound via Pipewire
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -106,17 +110,19 @@
       PLATFORM_PROFILE_ON_BAT = "low-power";
     };
   };
-#   # Thermald (Intel only) - https://wiki.debian.org/thermald
-#   # To be investigated if any benefit - Doesn't currently work do to
-#   # lap detection, which can be ignored with `--ignore-cpuid-check`
-#   services.thermald = {
-#     enable = true;
-#   };
+    # Thermald (Intel only) - https://wiki.debian.org/thermald
+    # To be investigated if any benefit - Doesn't currently work due
+    # to lap detection, which can be ignored with `--ignore-cpuid-check`
+    # services.thermald = {
+    #   enable = true;
+    # };
 
   users.users.timh = {
     isNormalUser = true;
     description = "timh";
-    extraGroups = [ "networkmanager" "wheel" ];
+    # "scanner" for scanners
+    # "lp" for printer/scanners
+    extraGroups = [ "networkmanager" "wheel" "scanner" "lp"];
     packages = with pkgs; [ firefox git bottom ];
     shell = pkgs.bash;
   };

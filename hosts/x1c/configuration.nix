@@ -56,6 +56,10 @@
   # For WiFi printers
   services.avahi.openFirewall = true;
 
+  # Scaanners
+  # SANE support
+  hardware.sane.enable = true;
+
   # Sound via Pipewire
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -95,7 +99,9 @@
   users.users.timh = {
     isNormalUser = true;
     description = "timh";
-    extraGroups = [ "networkmanager" "wheel" ];
+    # "scanner" for scanners
+    # "lp" for printer/scanners
+    extraGroups = [ "networkmanager" "wheel" "scanner" "lp"];
     packages = with pkgs; [ firefox git bottom ];
     shell = pkgs.bash;
   };
