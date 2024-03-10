@@ -3,9 +3,7 @@
 {
   nixpkgs = {
     config = {
-      allowUnfree = true;
-      # Workaround: https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = (_: true);
+       allowUnfree = true;
       permittedInsecurePackages = [
         "electron-25.9.0" # 20240104 - Needed for Obsidian v1.4
       ];
