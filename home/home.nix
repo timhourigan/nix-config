@@ -1,6 +1,17 @@
 { config, pkgs, ... }:
 
 {
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      # Workaround: https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = (_: true);
+      permittedInsecurePackages = [
+        "electron-25.9.0" # 20240104 - Needed for Obsidian v1.4
+      ];
+    };
+  };
+
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
@@ -17,44 +28,63 @@
   # Packages to be installed
   home.packages = with pkgs; [
     # Tools
+    appimage-run # Run AppImage files
     bat # `cat` clone
     bottom # Display process information (`top` alternative)
     ddrescue # dd, with extra functionality
     du-dust # Disk space usage (`du` alternative)
-    exa # File listing (`ls` alternative)
+    eza # File listing (`ls` alternative)
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
-    ffmpeg # Audio video manipulation
+    ffmpeg-full # Audio video manipulation
     gitleaks # Git repository secrets checker
     gparted # Disk partition tool
+    hdparm # Disk utility (set/get parameters, read-only speed test)
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
+    mediainfo # Media file information
     neofetch # System information
     nmap # Network exploration
-    ripgrep # Fast grep
     p7zip # Compression tool
     powertop # Power consumption
+    ripgrep # Fast grep
     taskwarrior # Task manager
     tig # git text-mode interface
     tldr # Help pages
     tree # Display directory struture
+    unetbootin # Bootable USB creator
     unzip # Zip decompress
+    usbutils # USB tools (lsusb)
+    v4l-utils # Video for Linux utilities
+    woeusb # Bootable USB creator for Windows media
     zip # Zip compress
 
     # Apps
     audacity # Audio editor
+    avidemux # Video editor
+    brasero # CD/DVD burner
+    devede # CD/DVD creator
     filezilla # FTP client
     gimp # Image editor
     inkscape # SVG editor
     libreoffice # Office suite
     meld # Diff tools
+    telegram-desktop # Messaging
     subversion # Software version control
     vlc # Media player
+
+    obsidian # Notes
 
     # Browsers
     chromium
 
     # Fonts
+    (google-fonts.override {
+      fonts = [
+        "Teko"
+        "RedHatDisplay"
+      ];
+    })
     (nerdfonts.override {
       fonts = [
         "DejaVuSansMono"
@@ -96,11 +126,12 @@
     ./configs/gh.nix
     ./configs/git.nix
     ./configs/neovim.nix
+    ./configs/obs.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
     ./configs/starship.nix
     ./configs/tmux.nix
-    ./configs/vscodium.nix
+    ./configs/vscode.nix
     # ./configs/zsh.nix
   ];
 

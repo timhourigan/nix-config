@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
   ];
+
+  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
 
   # Feature onfiguration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -13,7 +15,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-    # Filesystem support
+  # Filesystem support
   boot.supportedFilesystems = [ "ntfs" ];
 
   # Networking
@@ -35,12 +37,28 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
+  # DisplayLink - https://nixos.wiki/wiki/Displaylink
+  # External Monitors
+  # Requires:
+  #  - (Feb 2024) `nix-prefetch-url --name displaylink-580.zip https://www.synaptics.com/sites/default/files/exe_files/2023-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.8-EXE.zip`
+  #  OR
+  #  - Download latest to $PWD: https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-5.8
+  #  - mv $PWD/"DisplayLink USB Graphics Software for Ubuntu5.8-EXE.zip" $PWD/displaylink-580.zip
+  #  - nix-prefetch-url file://$PWD/displaylink-580.zip
+  #
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "displaylink" ];
+  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+
   # Printing
   services.printing.enable = true;
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
   # For WiFi printers
   services.avahi.openFirewall = true;
+
+  # Scaanners
+  # SANE support
+  hardware.sane.enable = true;
 
   # Sound via Pipewire
   sound.enable = true;
@@ -81,7 +99,9 @@
   users.users.timh = {
     isNormalUser = true;
     description = "timh";
-    extraGroups = [ "networkmanager" "wheel" ];
+    # "scanner" for scanners
+    # "lp" for printer/scanners
+    extraGroups = [ "networkmanager" "wheel" "scanner" "lp" ];
     packages = with pkgs; [ firefox git bottom ];
     shell = pkgs.bash;
   };
@@ -91,9 +111,6 @@
   # programs.zsh.enable = true;
   # Include zsh in /etc/shells
   # environment.shells = with pkgs; [ zsh ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # System packages
   environment.systemPackages = with pkgs; [
