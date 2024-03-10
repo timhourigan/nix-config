@@ -1,0 +1,18 @@
+# Workflow to test the flake
+name: test-flake
+run-name: Test flake
+on:
+  push:
+    # branches:
+    #   - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  run-make-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run make test
+        run: make test
