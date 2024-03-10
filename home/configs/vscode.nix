@@ -9,6 +9,7 @@
       # https://search.nixos.org/packages?channel=22.05type=packages&query=vscode-extensions
       # Languages
       wholroyd.jinja # Jinja
+      ms-vscode.makefile-tools # Makefile
       yzhang.markdown-all-in-one # Markdown
       bbenoist.nix # Nix
       ms-python.python # Python
@@ -22,6 +23,7 @@
       github.copilot
       github.copilot-chat
       github.vscode-pull-request-github
+      github.vscode-github-actions
       # Editor appearance
       johnpapa.vscode-peacock
       pkief.material-icon-theme
