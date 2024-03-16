@@ -1,6 +1,6 @@
 # Workflow to check/test the flake
 name: check-flake
-run-name: Check flake
+run-name: Check Flake
 on:
   push:
   pull_request:
