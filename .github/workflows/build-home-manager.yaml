@@ -23,10 +23,10 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Build
         run: |
-          $HOSTNAME make bootstrap-hm
+          HOSTNAME=$HOSTNAME USER=$USER make bootstrap-hm
         env:
-          USER: ${{ matrix.account }}
           HOSTNAME: x13
+          USER: ${{ matrix.account }}
 
 
 
