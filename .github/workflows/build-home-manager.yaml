@@ -8,7 +8,7 @@ jobs:
   build-hm:
     strategy:
       matrix:
-        user: [timh]
+        account: [timh]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +23,16 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Build
         run: |
-          nix build --no-link .#homeConfigurations.${{ matrix.user }}@x13.activationPackage
-          `nix path-info .#homeConfigurations.${{ matrix.user }}@x13.activationPackage`/activate
-          home-manager --version
+          make bootstrap-hm
+        env:
+          USER: ${{ matrix.account }}
+          HOST: x13
+
+
+
+
+
+        # run: |
+        #   nix build --no-link .#homeConfigurations.${{ matrix.user }}@x13.activationPackage
+        #   `nix path-info .#homeConfigurations.${{ matrix.user }}@x13.activationPackage`/activate
+        #   home-manager --version
