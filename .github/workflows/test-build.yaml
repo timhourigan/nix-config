@@ -15,8 +15,7 @@ jobs:
         uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-23.11
-      - name: Run make build
-        run: make build
-        env:
-          USER: timh
-          HOSTNAME: x13
+      - name: Build
+      # Using he equivalent of `nixos-rebuild build --flake .#x13` as
+      # the nix action does not have nixos-rebuild
+        run: nix build .#nixosConfigurations.x13.config.system.build.toplevel
