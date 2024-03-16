@@ -1,4 +1,4 @@
-HOSTNAME=$(shell hostname)
+HOSTNAME?=$(shell hostname)
 
 .PHONY: default
 default: help
