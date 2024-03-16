@@ -23,6 +23,6 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Build
         run: |
-          nix build --no-link .#homeConfigurations.${{ matrix.host }}@x13.activationPackage
-          `nix path-info .#homeConfigurations.${{ matrix.host }}@x13.activationPackage`/activate
+          nix build --no-link .#homeConfigurations.${{ user.host }}@x13.activationPackage
+          `nix path-info .#homeConfigurations.${{ user.host }}@x13.activationPackage`/activate
           home-manager --version
