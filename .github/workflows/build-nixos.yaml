@@ -18,6 +18,9 @@ jobs:
         uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-23.11
+      # https://github.com/DeterminateSystems/magic-nix-cache-action
+      - name: Cache Nix store
+        uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Build
       # Using he equivalent of `nixos-rebuild build --flake .` as
       # the nix action does not have `nixos-rebuild``
