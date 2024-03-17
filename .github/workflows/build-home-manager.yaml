@@ -29,6 +29,7 @@ jobs:
         env:
           HOSTNAME: x13
           USER: ${{ matrix.account }}
+          HOME: /home/${{ matrix.account }}
 
 
 #          make bootstrap-hm
