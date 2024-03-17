@@ -23,7 +23,9 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Build
         run: |
-          make bootstrap-hm
+          nix build --no-link .#homeConfigurations.timh@x13.activationPackage
+          `nix path-info .#homeConfigurations.timh@x13.activationPackage`/activate
+
         env:
           HOSTNAME: x13
           USER: ${{ matrix.account }}
