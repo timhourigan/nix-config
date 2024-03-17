@@ -8,7 +8,8 @@ jobs:
   build-hm:
     strategy:
       matrix:
-        account: [timh]
+        user: [timh]
+        host: [x13, x1c]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +26,4 @@ jobs:
       # It isn't possible to build and activate completely due to home directory limitations
       # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
         run: |
-          nix build --no-link .#homeConfigurations.$USER@$HOSTNAME.activationPackage
-        env:
-          HOSTNAME: x13
-          USER: ${{ matrix.account }}
+          nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage
