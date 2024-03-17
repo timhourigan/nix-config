@@ -22,23 +22,10 @@ jobs:
       - name: Cache Nix store
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Build
-      # It isn't possible to build and activate completely due to home directory permissions
-      # Just build - See `make bootstrap-hm`
+      # It isn't possible to build and activate completely due to home directory limitations
+      # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
         run: |
           nix build --no-link .#homeConfigurations.$USER@$HOSTNAME.activationPackage
         env:
           HOSTNAME: x13
           USER: ${{ matrix.account }}
-
-
-#          make bootstrap-hm
-
-          # nix build --no-link .#homeConfigurations.timh@x13.activationPackage
-          # nix path-info .#homeConfigurations.timh@x13.activationPackage
-
-
-
-        # run: |
-        #   nix build --no-link .#homeConfigurations.${{ matrix.user }}@x13.activationPackage
-        #   `nix path-info .#homeConfigurations.${{ matrix.user }}@x13.activationPackage`/activate
-        #   home-manager --version
