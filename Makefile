@@ -12,6 +12,11 @@ build-nixos: ## Build NixOS configuration
 	nixos-rebuild build --flake .
 
 # `nixos-rebuild` will use the current host, if none is specified
+.PHONY: build-nixos-dry-run
+build-nixos-dry-run: ## Build NixOS configuration (dry-run)
+	nixos-rebuild dry-build --flake .
+
+# `nixos-rebuild` will use the current host, if none is specified
 .PHONY: switch-nixos
 switch-nixos: ## Switch NixOS configuration
 	nixos-rebuild switch --flake .
@@ -31,6 +36,9 @@ switch-hm: ## Switch Home-Manager configuration
 
 .PHONY: build
 build: build-nixos build-hm ## Build
+
+.PHONY: build-dry-run
+build-dry-run: build-nixos-dry-run ## Build (dry-run)
 
 .PHONY: test
 test: ## Test
