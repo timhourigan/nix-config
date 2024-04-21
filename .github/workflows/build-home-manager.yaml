@@ -11,6 +11,7 @@ jobs:
         user: [timh]
         host: [x13, x1c]
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,3 +25,4 @@ jobs:
       # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
         run: |
           nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage
+        timeout-minutes: 15
