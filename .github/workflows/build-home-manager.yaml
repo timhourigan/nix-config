@@ -24,5 +24,5 @@ jobs:
       # It isn't possible to build and activate completely due to home directory limitations
       # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
         run: |
-          nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage
+          nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage --debug --verbose
         timeout-minutes: 15
