@@ -21,10 +21,10 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-23.11
       - name: Build
-      # It isn't possible to build and activate completely due to home directory limitations
-      # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
+      # Only doing `dry-run` as a full build has begun to
+      # hang at `hm_fontconfigconf.d10hmfonts.conf.drv`
         run: |
-          nix-shell -p home-manager gnumake --run "make build-hm"
+          nix-shell -p home-manager gnumake --run "make build-hm-dry-run"
         env:
           USER: ${{ matrix.user }}
           HOSTNAME: ${{ matrix.host }}
