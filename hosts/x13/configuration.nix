@@ -54,7 +54,7 @@
   services.xserver.desktopManager.cinnamon.enable = true;
 
   # DisplayLink
-  services.xserver.displaylink.enable = true;
+  mine.services.xserver.displaylink.enable = true;
 
   # Printing
   services.printing.enable = true;

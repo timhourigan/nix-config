@@ -11,12 +11,11 @@
 #
 
 let
-  # Not sure what is the best/standard way for naming configs and options, going with this for now
-  cfg = config.services.xserver.displaylink;
+  cfg = config.mine.services.xserver.displaylink;
 in
 {
   options = {
-    services.xserver.displaylink = {
+    mine.services.xserver.displaylink = {
       enable = lib.mkEnableOption "DisplayLink USB Graphics" // {
         description = "Enable support for DisplayLink USB Graphics devices";
         default = false;
