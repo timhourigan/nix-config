@@ -28,7 +28,7 @@ bootstrap-hm: ## Bootstrap Home-Manager configuration
 
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
-	home-manager build --flake .#$(USER)@$(HOSTNAME)
+	home-manager build --flake .#$(USER)@$(HOSTNAME) --verbose
 
 .PHONY: build-hm-dry-run
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
