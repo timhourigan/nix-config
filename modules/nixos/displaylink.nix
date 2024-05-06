@@ -11,11 +11,12 @@
 #
 
 let
-  cfg = config.mine.services.xserver.displaylink;
+  # Not sure if this should be named more uniquely or not e.g. config.custom.services.xserver.displaylink
+  cfg = config.services.xserver.displaylink;
 in
 {
   options = {
-    mine.services.xserver.displaylink = {
+    services.xserver.displaylink = {
       enable = lib.mkEnableOption "DisplayLink USB Graphics" // {
         description = "Enable support for DisplayLink USB Graphics devices";
         default = false;
