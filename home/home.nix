@@ -46,6 +46,7 @@
     p7zip # Compression tool
     powertop # Power consumption
     ripgrep # Fast grep
+    rpi-imager # Raspberry Pi OS image writer
     taskwarrior # Task manager
     tig # git text-mode interface
     tldr # Help pages
