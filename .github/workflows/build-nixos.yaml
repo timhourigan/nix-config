@@ -21,7 +21,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-23.11
       # https://nix.dev/tutorials/nixos/continuous-integration-github-actions
       - name: Cachix cache
-        uses: cachix/cachix-action@v14
+        uses: cachix/cachix-action@v15
         with:
           name: timhourigan
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
