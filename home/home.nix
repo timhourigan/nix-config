@@ -3,7 +3,7 @@
 {
   nixpkgs = {
     config = {
-       allowUnfree = true;
+      allowUnfree = true;
       permittedInsecurePackages = [
         "electron-25.9.0" # 20240104 - Needed for Obsidian v1.4
       ];
@@ -46,6 +46,7 @@
     p7zip # Compression tool
     powertop # Power consumption
     ripgrep # Fast grep
+    rpi-imager # Raspberry Pi OS image writer
     taskwarrior # Task manager
     tig # git text-mode interface
     tldr # Help pages

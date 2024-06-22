@@ -33,6 +33,8 @@
       editorconfig.editorconfig
       # Spelling
       streetsidesoftware.code-spell-checker
+      # Remote SSH development
+      ms-vscode-remote.remote-ssh
     ];
     userSettings = {
       # Material Icons
