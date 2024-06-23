@@ -1,3 +1,4 @@
+---
 # Workflow to check/test the flake
 name: check-flake
 run-name: Check Flake

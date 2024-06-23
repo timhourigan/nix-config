@@ -1,3 +1,4 @@
+---
 # Workflow to build Home Manager configuration from the flake
 name: build-home-manager
 run-name: Build Home Manager
@@ -38,6 +39,12 @@ jobs:
         #
         # It isn't possible to build and activate completely due to home directory limitations
         # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
+        # run: |
+        #   nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage
         run: |
-          nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage
+          nix-shell -p home-manager gnumake --run "make build-hm"
+        env:
+          # Used by the makefile
+          USER: ${{ matrix.user }}
+          HOSTNAME: ${{ matrix.host }}
         timeout-minutes: 15

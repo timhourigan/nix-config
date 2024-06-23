@@ -30,8 +30,10 @@
   # X11
   services.xserver = {
     enable = true;
-    layout = "ie";
-    xkbVariant = "";
+    xkb = {
+      layout = "ie";
+      variant = "";
+    };
   };
 
   # Desktop - Cinnamon
@@ -44,7 +46,7 @@
   # Printing
   services.printing.enable = true;
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi.nssmdns4 = true;
   # For WiFi printers
   services.avahi.openFirewall = true;
 
