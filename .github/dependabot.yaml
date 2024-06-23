@@ -5,12 +5,9 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      github-actions:
+      actions:
         applies-to: version-updates
         patterns:
           - "*"
     commit-message:
       prefix: "chore(deps):"
-      include: "scope"
-    reviewers:
-      - "timhourigan"
