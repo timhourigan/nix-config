@@ -1,3 +1,4 @@
+---
 # Workflow to build Home Manager configuration from the flake
 name: build-home-manager
 run-name: Build Home Manager
@@ -19,7 +20,7 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@V27
         with:
-          nix_path: nixpkgs=channel:nixos-23.11
+          nix_path: nixpkgs=channel:nixos-24.05
       # https://nix.dev/tutorials/nixos/continuous-integration-github-actions
       - name: Cachix cache
         uses: cachix/cachix-action@v15
@@ -27,17 +28,10 @@ jobs:
           name: timhourigan
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build
-        # Only doing `dry-run` - See below for the previous version of the `Build` step
         run: |
-          nix-shell -p home-manager gnumake --run "make build-hm-dry-run"
+          nix-shell -p home-manager gnumake --run "make build-hm"
         env:
           # Used by the makefile
           USER: ${{ matrix.user }}
           HOSTNAME: ${{ matrix.host }}
-        # Previous version of the `Build` step, which started to hang at `hm_fontconfigconf.d10hmfonts.conf.drv`
-        #
-        # It isn't possible to build and activate completely due to home directory limitations
-        # in the GitHub Actions environment. So just build - See `make bootstrap-hm`
-        # run: |
-        #   nix build --no-link .#homeConfigurations.${{ matrix.user }}@${{ matrix.host }}.activationPackage
         timeout-minutes: 15
