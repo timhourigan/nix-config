@@ -82,10 +82,22 @@
   # System packages
   environment.systemPackages = with pkgs; [
     bash-completion
+    git
     gnumake
     vim
     wget
   ];
+
+  # Virtualisation - Containers
+  virtualisation = {
+    podman = {
+      enable = true;
+      # Create a `docker` alias for podman
+      dockerCompat = true;
+      # Allow containers controlled by compose to communicate
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   # Services
   services.openssh.enable = true;
