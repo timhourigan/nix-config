@@ -97,11 +97,13 @@
   users.users.timh = {
     isNormalUser = true;
     description = "timh";
-    # "adbusers" for adb/Android
-    # "scanner" for scanners
-    # "lp" for printer/scanners
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "scanner" "lp" ];
-    packages = with pkgs; [ bottom firefox git heimdall];
+    # adb/Android: "adbusers"
+    # Networking: "networkmanager"
+    # Printers/Scanners: "lp"
+    # Scanners: "scanner"
+    # sudo: "wheel"
+    extraGroups = [ "adbusers" "lp" "networkmanager" "scanner" "wheel" ];
+    packages = with pkgs; [ bottom firefox git heimdall ];
     shell = pkgs.bash;
   };
 
