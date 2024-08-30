@@ -22,6 +22,9 @@
   outputs = { nixpkgs, home-manager, ... }@inputs: {
     # NixOS Configurations
     nixosConfigurations = {
+      opx7070 = nixpkgs.lib.nixosSystem {
+        modules = [ ./hosts/opx7070/configuration.nix ];
+      };
       x1c = nixpkgs.lib.nixosSystem {
         modules = [ ./hosts/x1c/configuration.nix ];
       };
@@ -31,6 +34,12 @@
     };
 
     # Home-Manager Configurations
+    homeConfigurations = {
+      "timh@opx7070" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./home/home.nix ];
+        extraSpecialArgs = { inherit inputs; };
+      };
     homeConfigurations = {
       "timh@x1c" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
