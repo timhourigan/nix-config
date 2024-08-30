@@ -95,7 +95,6 @@
         "Terminus"
       ];
     })
-    impact-fonts
     noto-fonts-emoji
     powerline-fonts
     twitter-color-emoji
