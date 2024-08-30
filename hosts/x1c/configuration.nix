@@ -114,6 +114,9 @@
     wget
   ];
 
+  # zram swap / RAM disk
+  zramSwap.enable = true;
+
   # Release version of first install
   system.stateVersion = "22.05";
 }
