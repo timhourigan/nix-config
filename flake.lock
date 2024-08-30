@@ -14,19 +14,19 @@
         "rev": "c69eb4e8e18829a8180783f744ef47557414bea1",
         "type": "gitlab"
       },
-      "original": {
+      "original": {Update to 24.05
         "dir": "pkgs/firefox-addons",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "type": "gitlab"
+        "type":Update to 24.05 "gitlab"
       }
-    },
+    },Update to 24.05
     "flake-utils": {
       "locked": {
         "lastModified": 1629284811,
         "narHash": "sha256-JHgasjPR0/J1J3DRm4KxM4zTyAj4IOJY8vIl75v/kPI=",
         "owner": "numtide",
-        "repo": "flake-utils",
+        "rUpdate to 24.05epo": "flake-utils",
         "rev": "c5d161cc0af116a2e17f54316f0bf43f0819785c",
         "type": "github"
       },
@@ -52,7 +52,7 @@
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-23.11",
+        "ref": Update to 24.05"release-24.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -84,7 +84,7 @@
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-23.11",
+        "ref": "nixos-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
