@@ -22,6 +22,7 @@
   # Networking
   networking.hostName = "x1c";
   networking.networkmanager.enable = true;
+  services.tailscale.enable = true;
 
   # Localisation
   time.timeZone = "Europe/Dublin";
@@ -65,6 +66,9 @@
     pulse.enable = true;
   };
 
+  # Android
+  programs.adb.enable = true;
+
   # Power management
   # tlp - https://linrunner.de/tlp/settings
   services.tlp = {
@@ -93,10 +97,13 @@
   users.users.timh = {
     isNormalUser = true;
     description = "timh";
-    # "scanner" for scanners
-    # "lp" for printer/scanners
-    extraGroups = [ "networkmanager" "wheel" "scanner" "lp" ];
-    packages = with pkgs; [ firefox git bottom ];
+    # adb/Android: "adbusers"
+    # Networking: "networkmanager"
+    # Printers/Scanners: "lp"
+    # Scanners: "scanner"
+    # sudo: "wheel"
+    extraGroups = [ "adbusers" "lp" "networkmanager" "scanner" "wheel" ];
+    packages = with pkgs; [ bottom firefox git heimdall ];
     shell = pkgs.bash;
   };
 
