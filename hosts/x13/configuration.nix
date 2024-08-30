@@ -151,6 +151,7 @@
   # System packages
   environment.systemPackages = with pkgs; [
     bash-completion
+    git
     gnumake
     vim
     wget
