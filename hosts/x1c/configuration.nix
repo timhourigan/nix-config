@@ -8,7 +8,7 @@
 
   # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
 
-  # Feature onfiguration
+  # Feature configuration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
@@ -27,6 +27,20 @@
   # Localisation
   time.timeZone = "Europe/Dublin";
   i18n.defaultLocale = "en_IE.utf8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_IE.UTF-8";
+    LC_IDENTIFICATION = "en_IE.UTF-8";
+    LC_MEASUREMENT = "en_IE.UTF-8";
+    LC_MONETARY = "en_IE.UTF-8";
+    LC_NAME = "en_IE.UTF-8";
+    LC_NUMERIC = "en_IE.UTF-8";
+    LC_PAPER = "en_IE.UTF-8";
+    LC_TELEPHONE = "en_IE.UTF-8";
+    LC_TIME = "en_IE.UTF-8";
+  };
+
+  # Configure console keymap
+  console.keyMap = "ie";
 
   # X11
   services.xserver = {
@@ -51,7 +65,7 @@
   # For WiFi printers
   services.avahi.openFirewall = true;
 
-  # Scaanners
+  # Scanners
   # SANE support
   hardware.sane.enable = true;
 
@@ -116,6 +130,7 @@
   # System packages
   environment.systemPackages = with pkgs; [
     bash-completion
+    git
     gnumake
     vim
     wget
