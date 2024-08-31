@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./home-assistant.nix
   ];
 
   # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
