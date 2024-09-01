@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/displaylink.nix
+    ../../modules/services/displaylink.nix
   ];
 
   # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
@@ -56,7 +56,7 @@
   services.xserver.desktopManager.cinnamon.enable = true;
 
   # DisplayLink
-  services.xserver.displaylink.enable = true;
+  modules.services.xserver.displaylink.enable = true;
 
   # Printing
   services.printing.enable = true;
