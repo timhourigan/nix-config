@@ -6,7 +6,7 @@
     ../../modules/services/displaylink.nix
   ];
 
-  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
+  # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
 
   # Feature configuration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

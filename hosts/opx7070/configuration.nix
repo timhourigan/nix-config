@@ -3,10 +3,12 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./home-assistant.nix
+    ../../modules/services/hass.nix
+    ../../modules/services/ssh.nix
+    ../../modules/services/podman.nix
   ];
 
-  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
+  # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
 
   # Feature configuration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -62,6 +64,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [ ];
     shell = pkgs.bash;
+    # TODO - Add keys
+    openssh.authorizedKeys.keys = [
+    ];
   };
 
   # System packages
@@ -73,8 +78,23 @@
     wget
   ];
 
-  # Services
-  services.openssh.enable = true;
+  modules = {
+    services = {
+      hass = {
+        enable = true;
+        extraOptions = [
+          "--network=host"
+          "--device=/dev/ttyUSB0:/dev/ttyUSB0"
+        ];
+        image = "ghcr.io/home-assistant/home-assistant:2024.7.1";
+        volumes = [ "/var/lib/hass/config:/config" ];
+      };
+      podman.enable = true;
+      ssh.enable = true;
+      # TODO - Remove once keys are in place
+      ssh.passwordAuthentication = true;
+    };
+  };
 
   # Release version of first install
   system.stateVersion = "24.05";
