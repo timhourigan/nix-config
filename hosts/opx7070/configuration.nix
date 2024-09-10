@@ -77,6 +77,9 @@
     wget
   ];
 
+  # Added to allow vscode server to work
+  programs.nix-ld.enable = true;
+
   modules = {
     services = {
       podman.enable = true;
