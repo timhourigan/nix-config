@@ -64,8 +64,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [ ];
     shell = pkgs.bash;
-    # TODO - Add keys
-    openssh.authorizedKeys.keys = [
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdPJVS2P6fNEMuIAuJqCMtqLU4LAI50SeoAF5GyCFFl"
     ];
   };
 
@@ -80,6 +79,10 @@
 
   modules = {
     services = {
+      podman.enable = true;
+      ssh.enable = true;
+      # TODO - Remove once keys are in place
+      ssh.passwordAuthentication = true;
       hass = {
         enable = true;
         extraOptions = [
@@ -89,10 +92,6 @@
         image = "ghcr.io/home-assistant/home-assistant:2024.7.1";
         volumes = [ "/var/lib/hass/config:/config" ];
       };
-      podman.enable = true;
-      ssh.enable = true;
-      # TODO - Remove once keys are in place
-      ssh.passwordAuthentication = true;
     };
   };
 
