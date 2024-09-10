@@ -1,5 +1,7 @@
 { lib, config, options, ... }:
 
+# Home Assistant
+
 let
   cfg = config.modules.services.hass;
 in
@@ -28,14 +30,9 @@ in
         default = [];
       };
       image = lib.mkOption {
-        description = "Home Assistant image";
+        description = "Container image";
         type = lib.types.str;
         default = "ghcr.io/home-assistant/home-assistant:stable";
-      };
-      volumes = lib.mkOption {
-        description = "Volumes to mount";
-        type = lib.types.listOf lib.types.str;
-        default = [ "home-assistant:/config" ];
       };
     };
   };
@@ -43,13 +40,18 @@ in
   config = lib.mkIf cfg.enable {
     virtualisation.oci-containers = {
       backend = cfg.backend;
-      containers.homeassistant = {
+      containers.hass = {
         autoStart = true;
-        volumes = cfg.volumes;
+        volumes = [ "/var/lib/hass:/config" ];
         environment.TZ = cfg.environment.TZ;
         image = cfg.image;
         extraOptions = cfg.extraOptions;
       };
+    };
+
+    # Results in the creation of /var/lib/hass
+    systemd.services."${config.virtualisation.oci-containers.backend}-hass".serviceConfig = {
+      StateDirectory = "hass";
     };
 
     networking.firewall.allowedTCPPorts = [ 8123 ];

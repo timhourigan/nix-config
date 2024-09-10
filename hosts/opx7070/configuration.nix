@@ -77,23 +77,21 @@
     wget
   ];
 
-  # Added to allow vscode server to work
+  # Allow vscode code server to work
   programs.nix-ld.enable = true;
 
   modules = {
     services = {
       podman.enable = true;
       ssh.enable = true;
-      # TODO - Remove once keys are in place
-      ssh.passwordAuthentication = true;
       hass = {
         enable = true;
         extraOptions = [
           "--network=host"
-          "--device=/dev/ttyUSB0:/dev/ttyUSB0"
+          # TODO
+          # "--device=/dev/ttyUSB0:/dev/ttyUSB0"
         ];
         image = "ghcr.io/home-assistant/home-assistant:2024.7.1";
-        volumes = [ "/var/lib/hass/config:/config" ];
       };
     };
   };
