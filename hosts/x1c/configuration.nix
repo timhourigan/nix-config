@@ -1,10 +1,20 @@
-{ config, pkgs, lib, ... }:
+{ config, outputs, pkgs, lib, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/services/displaylink.nix
   ];
+
+  nixpkgs = {
+    overlays = [
+      # Allow unstable packages at unstable.<package>
+      outputs.overlays.unstable-packages
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
 

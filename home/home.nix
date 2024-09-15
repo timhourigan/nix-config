@@ -1,7 +1,11 @@
-{ config, pkgs, ... }:
+{ config, outputs, pkgs, ... }:
 
 {
   nixpkgs = {
+    overlays = [
+      # Allow unstable packages at unstable.<package>
+      outputs.overlays.unstable-packages
+    ];
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
@@ -103,6 +107,7 @@
     nodejs
 
     # Python
+    unstable.ruff # Formatter
     (python310.withPackages (ps: with ps; [ black flake8 pip pipx ]))
 
     # Compilers
