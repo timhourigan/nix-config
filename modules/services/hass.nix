@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, pkgs, options, ... }:
 
 # Home Assistant
 # - Mosquitto service
@@ -56,6 +56,7 @@ in
 
     # zigbee2mqtt service
     services.zigbee2mqtt = {
+      package = pkgs.unstable.zigbee2mqtt;
       enable = true;
       # https://www.zigbee2mqtt.io/guide/configuration/
       settings = {
