@@ -64,7 +64,8 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [ ];
     shell = pkgs.bash;
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdPJVS2P6fNEMuIAuJqCMtqLU4LAI50SeoAF5GyCFFl"
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdPJVS2P6fNEMuIAuJqCMtqLU4LAI50SeoAF5GyCFFl"
     ];
   };
 

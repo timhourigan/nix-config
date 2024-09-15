@@ -1,9 +1,14 @@
 { lib, config, options, ... }:
 
 # Home Assistant
+# - Mosquitto service
+# - zigbee2mqtt service
+# - Home Assistant container
 
 let
   cfg = config.modules.services.hass;
+  hassPort = 8123;
+  z2mPort = 8124;
 in
 {
   options = {
@@ -27,7 +32,7 @@ in
       extraOptions = lib.mkOption {
         description = "Extra options";
         type = lib.types.listOf lib.types.str;
-        default = [];
+        default = [ ];
       };
       image = lib.mkOption {
         description = "Container image";
@@ -38,6 +43,47 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+
+    # Mosquitto service
+    services.mosquitto = {
+      enable = true;
+      listeners = [{
+        address = "127.0.0.1";
+        settings.allow_anonymous = true;
+        acl = [ "topic readwrite #" ];
+      }];
+    };
+
+    # zigbee2mqtt service
+    services.zigbee2mqtt = {
+      enable = true;
+      # https://www.zigbee2mqtt.io/guide/configuration/
+      settings = {
+        advanced = {
+          channel = 25;
+          last_seen = "ISO_8601_local";
+          transmit_power = 20;
+        };
+        availability = {
+          active.timeout = 10;
+          passive.timeout = 1500;
+        };
+        frontend.port = z2mPort;
+        homeassistant = true;
+        mqtt = {
+          server = "mqtt://localhost:1883";
+          base_topic = "zigbee2mqtt";
+        };
+        serial = {
+          port = "tcp://192.168.90.100:6638";
+          baudrate = 115200;
+          adapter = "ember";
+          rtscts = false;
+        };
+      };
+    };
+
+    # Home Assistant container
     virtualisation.oci-containers = {
       backend = cfg.backend;
       containers.hass = {
@@ -48,12 +94,11 @@ in
         extraOptions = cfg.extraOptions;
       };
     };
-
     # Results in the creation of /var/lib/hass
     systemd.services."${config.virtualisation.oci-containers.backend}-hass".serviceConfig = {
       StateDirectory = "hass";
     };
 
-    networking.firewall.allowedTCPPorts = [ 8123 ];
+    networking.firewall.allowedTCPPorts = [ hassPort z2mPort ];
   };
 }
