@@ -47,6 +47,7 @@
     mediainfo # Media file information
     neofetch # System information
     nmap # Network exploration
+    nvd # Nix diff tool
     p7zip # Compression tool
     powertop # Power consumption
     ripgrep # Fast grep

@@ -99,10 +99,8 @@
         enable = true;
         extraOptions = [
           "--network=host"
-          # TODO
-          # "--device=/dev/ttyUSB0:/dev/ttyUSB0"
         ];
-        image = "ghcr.io/home-assistant/home-assistant:2024.7.1";
+        image = "ghcr.io/home-assistant/home-assistant:2024.9.3";
       };
     };
   };

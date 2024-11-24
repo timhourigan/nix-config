@@ -96,6 +96,9 @@ in
       };
     };
     # Results in the creation of /var/lib/hass
+    # User and Group could be specified here but it would breake the container,
+    # as the container is running as root - See https://github.com/NixOS/nixpkgs/issues/207050
+    # For now, the files will be owned as root
     systemd.services."${config.virtualisation.oci-containers.backend}-hass".serviceConfig = {
       StateDirectory = "hass";
     };
