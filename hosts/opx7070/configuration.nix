@@ -1,11 +1,24 @@
-{ config, pkgs, lib, ... }:
+{ config, outputs, pkgs, lib, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/services/hass.nix
+    ../../modules/services/ssh.nix
+    ../../modules/services/podman.nix
   ];
 
-  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
+  nixpkgs = {
+    overlays = [
+      # Allow unstable packages at unstable.<package>
+      outputs.overlays.unstable-packages
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
 
   # Feature configuration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -61,6 +74,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [ ];
     shell = pkgs.bash;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdPJVS2P6fNEMuIAuJqCMtqLU4LAI50SeoAF5GyCFFl"
+    ];
   };
 
   # System packages
@@ -72,8 +88,22 @@
     wget
   ];
 
-  # Services
-  services.openssh.enable = true;
+  # Allow vscode code server to work
+  programs.nix-ld.enable = true;
+
+  modules = {
+    services = {
+      podman.enable = true;
+      ssh.enable = true;
+      hass = {
+        enable = true;
+        extraOptions = [
+          "--network=host"
+        ];
+        image = "ghcr.io/home-assistant/home-assistant:2024.9.3";
+      };
+    };
+  };
 
   # Release version of first install
   system.stateVersion = "24.05";

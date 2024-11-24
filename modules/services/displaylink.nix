@@ -11,12 +11,11 @@
 #
 
 let
-  # Not sure if this should be named more uniquely or not e.g. config.custom.services.xserver.displaylink
-  cfg = config.services.xserver.displaylink;
+  cfg = config.modules.services.xserver.displaylink;
 in
 {
   options = {
-    services.xserver.displaylink = {
+    modules.services.xserver.displaylink = {
       enable = lib.mkEnableOption "DisplayLink USB Graphics" // {
         description = "Enable support for DisplayLink USB Graphics devices";
         default = false;

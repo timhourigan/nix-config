@@ -1,12 +1,22 @@
-{ config, pkgs, lib, ... }:
+{ config, outputs, pkgs, lib, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/displaylink.nix
+    ../../modules/services/displaylink.nix
   ];
 
-  # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
+  nixpkgs = {
+    overlays = [
+      # Allow unstable packages at unstable.<package>
+      outputs.overlays.unstable-packages
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
 
   # Feature configuration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -56,7 +66,7 @@
   services.xserver.desktopManager.cinnamon.enable = true;
 
   # DisplayLink
-  services.xserver.displaylink.enable = true;
+  modules.services.xserver.displaylink.enable = true;
 
   # Printing
   services.printing.enable = true;
