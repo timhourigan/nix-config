@@ -3,8 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/displaylink.nix
-    ../../modules/nixos/abcde.nix
+    ../../modules/services/displaylink.nix
+    ../../modules/services/abcde.nix
   ];
 
   nixpkgs = {
