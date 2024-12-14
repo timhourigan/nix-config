@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, outputs, pkgs, lib, ... }:
 
 {
   imports = [
@@ -6,6 +6,16 @@
     ../../modules/nixos/displaylink.nix
     ../../modules/nixos/abcde.nix
   ];
+
+  nixpkgs = {
+    overlays = [
+      # Allow unstable packages at unstable.<package>
+      outputs.overlays.unstable-packages
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
 
@@ -57,7 +67,7 @@
   services.xserver.desktopManager.cinnamon.enable = true;
 
   # DisplayLink
-  services.xserver.displaylink.enable = true;
+  modules.services.xserver.displaylink.enable = true;
 
   # Printing
   services.printing.enable = true;

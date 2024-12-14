@@ -1,7 +1,11 @@
-{ config, pkgs, ... }:
+{ config, outputs, pkgs, ... }:
 
 {
   nixpkgs = {
+    overlays = [
+      # Allow unstable packages at unstable.<package>
+      outputs.overlays.unstable-packages
+    ];
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
@@ -43,6 +47,7 @@
     mediainfo # Media file information
     neofetch # System information
     nmap # Network exploration
+    nvd # Nix diff tool
     p7zip # Compression tool
     powertop # Power consumption
     ripgrep # Fast grep
@@ -103,6 +108,7 @@
     nodejs
 
     # Python
+    unstable.ruff # Formatter
     (python310.withPackages (ps: with ps; [ black flake8 pip pipx ]))
 
     # Compilers
