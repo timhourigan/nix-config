@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/displaylink.nix
+    ../../modules/nixos/abcde.nix
   ];
 
   # Use `nixos-options` to see configuration options e.g. `nixos-options service.<service-name>`
@@ -141,6 +142,9 @@
     vim
     wget
   ];
+
+  # Module packages
+  packages.abcde.enable = true;
 
   # zram swap / RAM disk
   zramSwap.enable = true;
