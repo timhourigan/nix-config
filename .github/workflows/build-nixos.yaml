@@ -30,6 +30,6 @@ jobs:
       # Using he equivalent of `nixos-rebuild build --flake .` as
       # the nix action does not have `nixos-rebuild``
         run: |
-          nix-prefetch-url --name displaylink-580.zip https://www.synaptics.com/sites/default/files/exe_files/2023-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.8-EXE.zip
+          nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
           nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
         timeout-minutes: 15
