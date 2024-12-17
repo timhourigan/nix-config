@@ -56,6 +56,7 @@ in
 
     # zigbee2mqtt service
     services.zigbee2mqtt = {
+      # Version: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
       package = pkgs.unstable.zigbee2mqtt;
       enable = true;
       # https://www.zigbee2mqtt.io/guide/configuration/

@@ -100,7 +100,8 @@
         extraOptions = [
           "--network=host"
         ];
-        image = "ghcr.io/home-assistant/home-assistant:2024.9.3";
+        # https://github.com/home-assistant/core/releases
+        image = "ghcr.io/home-assistant/home-assistant:2024.11.3";
       };
     };
   };
