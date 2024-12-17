@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/services/displaylink.nix
+    ../../modules/services/abcde.nix
   ];
 
   nixpkgs = {
@@ -151,6 +152,9 @@
     vim
     wget
   ];
+
+  # Module packages
+  packages.abcde.enable = true;
 
   # zram swap / RAM disk
   zramSwap.enable = true;
