@@ -121,6 +121,7 @@
 
   # Programs and configurations to be installed
   imports = [
+    ./configs/abcde.nix
     ./configs/alacritty.nix
     ./configs/autojump.nix
     ./configs/bash.nix
