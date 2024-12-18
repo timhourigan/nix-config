@@ -22,7 +22,6 @@
       # CoC / Conquer of Completion
       vimPlugins.coc-pairs
       vimPlugins.coc-snippets
-      vimPlugins.coc-python
       vimPlugins.coc-pyright
       vimPlugins.coc-go
       vimPlugins.coc-yaml
