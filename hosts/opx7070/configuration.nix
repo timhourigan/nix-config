@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/packages/glances.nix
+    ../../modules/services/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/ssh.nix
     ../../modules/services/podman.nix
