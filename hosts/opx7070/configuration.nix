@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/packages/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/ssh.nix
     ../../modules/services/podman.nix
@@ -91,10 +92,16 @@
   # Allow vscode code server to work
   programs.nix-ld.enable = true;
 
+  # Modules
   modules = {
     services = {
+      # Glances monitoring service
+      glances.enable = true;
+      # Podman virtualisation
       podman.enable = true;
+      # SSH server
       ssh.enable = true;
+      # Home Assistant
       hass = {
         enable = true;
         extraOptions = [

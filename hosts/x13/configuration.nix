@@ -3,8 +3,9 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/packages/abcde.nix
     ../../modules/services/displaylink.nix
-    ../../modules/services/abcde.nix
+    ../../modules/services/glances.nix
   ];
 
   nixpkgs = {
@@ -65,9 +66,6 @@
   # Desktop - Cinnamon
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
-
-  # DisplayLink
-  modules.services.xserver.displaylink.enable = true;
 
   # Printing
   services.printing.enable = true;
@@ -152,8 +150,19 @@
     wget
   ];
 
-  # Module packages
-  packages.abcde.enable = true;
+  # Modules
+  modules = {
+    packages = {
+      # abcde CD ripper
+      abcde.enable = true;
+    };
+    services = {
+      # Glances monitoring service
+      glances.enable = true;
+      # DisplayLink USB graphics
+      xserver.displaylink.enable = true;
+    };
+  };
 
   # zram swap / RAM disk
   zramSwap.enable = true;
