@@ -1,11 +1,11 @@
 { config, lib, options, pkgs, ... }:
 
 let
-  cfg = config.packages.abcde;
+  cfg = config.modules.packages.abcde;
 in
 {
   options = {
-    packages.abcde = {
+    modules.packages.abcde = {
       enable = lib.mkEnableOption "abcde" // {
         description = "Enable abcde CD ripper package";
         default = false;
