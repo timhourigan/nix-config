@@ -52,7 +52,7 @@
     powertop # Power consumption
     ripgrep # Fast grep
     rpi-imager # Raspberry Pi OS image writer
-    taskwarrior # Task manager
+    taskwarrior3 # Task manager
     tig # git text-mode interface
     tldr # Help pages
     tree # Display directory struture
