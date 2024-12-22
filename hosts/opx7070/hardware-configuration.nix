@@ -14,19 +14,26 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/ac007a31-ea38-4286-9094-db16a0775130";
+      device = "/dev/disk/by-label/os";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/3216-A955";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/mnt/backup" =
+    {
+      device = "/dev/disk/by-label/backup";
+      fsType = "ext4";
+      options = [ "nofail" ]; # Allow system to boot without this device
+    };
+
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/7d5d88ce-c315-4ec0-8e43-db991d58b40b"; }];
+    [{ device = "/dev/disk/by-label/swap"; }];
 
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
