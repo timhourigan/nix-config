@@ -73,6 +73,7 @@
     inkscape # SVG editor
     libreoffice # Office suite
     meld # Diff tools
+    remmina # Remove desktop client
     telegram-desktop # Messaging
     subversion # Software version control
     vlc # Media player
