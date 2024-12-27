@@ -36,6 +36,7 @@
     ddrescue # dd, with extra functionality
     du-dust # Disk space usage (`du` alternative)
     eza # File listing (`ls` alternative)
+    fastfetch # System information
     fd # Find files/folders (`find` alternative)
     feh # Command line image viewer
     ffmpeg-full # Audio video manipulation
@@ -45,7 +46,6 @@
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
     mediainfo # Media file information
-    neofetch # System information
     nmap # Network exploration
     nvd # Nix diff tool
     p7zip # Compression tool
@@ -68,17 +68,18 @@
     avidemux # Video editor
     brasero # CD/DVD burner
     devede # CD/DVD creator
+    freetube # Youtube client
     filezilla # FTP client
     gimp # Image editor
     inkscape # SVG editor
     libreoffice # Office suite
     meld # Diff tools
-    remmina # Remove desktop client
-    telegram-desktop # Messaging
-    subversion # Software version control
-    vlc # Media player
-
     obsidian # Notes
+    remmina # Remove desktop client
+    subversion # Software version control
+    telegram-desktop # Messaging
+    vlc # Media player
+    zed-editor # Text editor
 
     # Browsers
     chromium
