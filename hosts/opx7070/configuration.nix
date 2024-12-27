@@ -67,6 +67,11 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
+  # Remote Desktop - Xrdp - Commented out for now
+  # services.xrdp.enable = true;
+  # services.xrdp.defaultWindowManager = "/run/current-system/sw/bin/cinnamon";
+  # networking.firewall.allowedTCPPorts = [ 3389 ];
+
   users.users.timh = {
     isNormalUser = true;
     description = "timh";
