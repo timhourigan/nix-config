@@ -98,7 +98,7 @@
 
     # Python
     unstable.ruff # Formatter
-    (python313.withPackages (ps: with ps; [ black flake8 pip pipx ]))
+    (python312.withPackages (ps: with ps; [ black flake8 pip pipx ]))
 
     # Compilers
     gcc
