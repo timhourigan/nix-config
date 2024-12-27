@@ -18,6 +18,7 @@
       timerConfig = {
         OnCalendar = "hourly";
         Persistent = true;
+        RandomizedDelaySec = "1800";
       };
       pruneOpts = [
         "--keep-hourly 24"
@@ -36,6 +37,7 @@
       timerConfig = {
         OnCalendar = "hourly";
         Persistent = true;
+        RandomizedDelaySec = "1800";
       };
       pruneOpts = [
         "--keep-hourly 24"
