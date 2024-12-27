@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./backups.nix
     ./hardware-configuration.nix
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
