@@ -14,18 +14,18 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/3cafcfb3-3beb-4544-8f0b-1aa6e040f1ac";
+      device = "/dev/disk/by-label/os";
       fsType = "ext4";
     };
 
   fileSystems."/boot/efi" =
     {
-      device = "/dev/disk/by-uuid/B07E-F799";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/c7bfdeeb-66d8-4b96-a250-f5c7929c3d61"; }];
+    [{ device = "/dev/disk/by-label/swap"; }];
 
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
