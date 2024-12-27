@@ -2,12 +2,13 @@
 
 {
   imports = [
-    ./backups.nix
-    ./hardware-configuration.nix
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
-    ../../modules/services/ssh.nix
     ../../modules/services/podman.nix
+    ../../modules/services/ssh.nix
+    ../common/garbage-collection.nix
+    ./backups.nix
+    ./hardware-configuration.nix
   ];
 
   nixpkgs = {

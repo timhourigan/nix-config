@@ -2,10 +2,11 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ../../modules/packages/abcde.nix
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
+    ../common/garbage-collection.nix
+    ./hardware-configuration.nix
   ];
 
   nixpkgs = {

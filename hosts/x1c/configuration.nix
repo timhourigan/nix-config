@@ -2,8 +2,9 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ../../modules/services/displaylink.nix
+    ../common/garbage-collection.nix
+    ./hardware-configuration.nix
   ];
 
   nixpkgs = {
