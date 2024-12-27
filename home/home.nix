@@ -72,7 +72,7 @@
     filezilla # FTP client
     gimp # Image editor
     inkscape # SVG editor
-    libreoffice # Office suite
+    # libreoffice # Office suite
     meld # Diff tools
     obsidian # Notes
     remmina # Remove desktop client

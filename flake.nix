@@ -55,7 +55,7 @@
         };
         "timh@x13" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home/home.nix ./home/workstation.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };
