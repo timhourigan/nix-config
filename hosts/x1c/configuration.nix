@@ -2,8 +2,8 @@
 
 {
   imports = [
+    ../../modules/services/gc.nix
     ../../modules/services/displaylink.nix
-    ../common/garbage-collection.nix
     ./hardware-configuration.nix
   ];
 
@@ -145,6 +145,22 @@
     vim
     wget
   ];
+
+  # Modules
+  modules = {
+    packages = {
+      # abcde CD ripper
+      abcde.enable = true;
+    };
+    services = {
+      # Garbage collection
+      gc.enable = true;
+      # Glances monitoring service
+      glances.enable = true;
+      # DisplayLink USB graphics
+      xserver.displaylink.enable = true;
+    };
+  };
 
   # zram swap / RAM disk
   zramSwap.enable = true;

@@ -3,9 +3,9 @@
 {
   imports = [
     ../../modules/packages/abcde.nix
+    ../../modules/services/gc.nix
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
-    ../common/garbage-collection.nix
     ./hardware-configuration.nix
   ];
 
@@ -158,6 +158,8 @@
       abcde.enable = true;
     };
     services = {
+      # Garbage collection
+      gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
       # DisplayLink USB graphics
