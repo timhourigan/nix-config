@@ -2,7 +2,9 @@
 
 {
   imports = [
+    ../../modules/packages/abcde.nix
     ../../modules/services/gc.nix
+    ../../modules/services/glances.nix
     ../../modules/services/displaylink.nix
     ./hardware-configuration.nix
   ];
@@ -65,9 +67,6 @@
   # Desktop - Cinnamon
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
-
-  # DisplayLink
-  modules.services.xserver.displaylink.enable = true;
 
   # Printing
   services.printing.enable = true;
