@@ -8,9 +8,6 @@
     ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "electron-25.9.0" # 20240104 - Needed for Obsidian v1.4
-      ];
     };
   };
 
@@ -64,22 +61,12 @@
     zip # Zip compress
 
     # Apps
-    audacity # Audio editor
-    avidemux # Video editor
-    brasero # CD/DVD burner
-    devede # CD/DVD creator
-    freetube # Youtube client
     filezilla # FTP client
-    gimp # Image editor
-    inkscape # SVG editor
-    libreoffice # Office suite
     meld # Diff tools
     obsidian # Notes
     remmina # Remove desktop client
     subversion # Software version control
-    telegram-desktop # Messaging
     vlc # Media player
-    zed-editor # Text editor
 
     # Browsers
     chromium
@@ -111,7 +98,7 @@
 
     # Python
     unstable.ruff # Formatter
-    (python310.withPackages (ps: with ps; [ black flake8 pip pipx ]))
+    (python312.withPackages (ps: with ps; [ black flake8 pip pipx ]))
 
     # Compilers
     gcc
@@ -123,7 +110,6 @@
 
   # Programs and configurations to be installed
   imports = [
-    ./configs/abcde.nix
     ./configs/alacritty.nix
     ./configs/autojump.nix
     ./configs/bash.nix
@@ -134,7 +120,6 @@
     ./configs/gh.nix
     ./configs/git.nix
     ./configs/neovim.nix
-    ./configs/obs.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
     ./configs/starship.nix

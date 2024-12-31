@@ -2,10 +2,11 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ../../modules/packages/abcde.nix
+    ../../modules/services/gc.nix
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
+    ./hardware-configuration.nix
   ];
 
   nixpkgs = {
@@ -157,6 +158,8 @@
       abcde.enable = true;
     };
     services = {
+      # Garbage collection
+      gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
       # DisplayLink USB graphics

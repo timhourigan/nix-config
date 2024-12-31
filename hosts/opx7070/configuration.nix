@@ -2,12 +2,13 @@
 
 {
   imports = [
-    ./backups.nix
-    ./hardware-configuration.nix
+    ../../modules/services/gc.nix
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
-    ../../modules/services/ssh.nix
     ../../modules/services/podman.nix
+    ../../modules/services/ssh.nix
+    ./backups.nix
+    ./hardware-configuration.nix
   ];
 
   nixpkgs = {
@@ -101,6 +102,8 @@
   # Modules
   modules = {
     services = {
+      # Garbage collection
+      gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
       # Podman virtualisation
