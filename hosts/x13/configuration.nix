@@ -178,7 +178,7 @@
   # zram swap / RAM disk
   zramSwap.enable = true;
 
-  # Secrets management
+  # Secrets
   sops = {
     secrets = {
       sample = { };
