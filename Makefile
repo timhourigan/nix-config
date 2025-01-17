@@ -44,6 +44,14 @@ build: build-nixos build-hm ## Build
 .PHONY: build-dry-run
 build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 
+.PHONY: modify-secrets
+modify-secrets: ## Modify secrets
+	nix shell nixpkgs#sops -c sops secrets/secrets.yaml
+
+.PHONY: update-secrets
+update-secrets: ## Update secrets for added/removed keys
+	nix shell nixpkgs#sops -c sops updatekeys secrets/secrets.yaml
+
 .PHONY: test
 test: ## Test
 	nix flake check

@@ -27,6 +27,7 @@
   # Packages to be installed
   home.packages = with pkgs; [
     # Tools
+    age # Age encryption/decryption
     appimage-run # Run AppImage files
     bat # `cat` clone
     bottom # Display process information (`top` alternative)
@@ -49,6 +50,8 @@
     powertop # Power consumption
     ripgrep # Fast grep
     rpi-imager # Raspberry Pi OS image writer
+    ssh-to-age # SSH to Age key converter
+    sops # Secrets management
     taskwarrior3 # Task manager
     tig # git text-mode interface
     tldr # Help pages
