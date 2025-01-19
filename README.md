@@ -67,8 +67,8 @@ keys:
   - &primary age1...
 creation_rules:
   - path_regex: secrets/secrets.yaml$
-	key_groups:
-	  age:
+    key_groups:
+      age:
         - *primary
 ```
 
