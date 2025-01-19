@@ -34,7 +34,7 @@ in
       age = {
         # Import host SSH keys as age keys
         sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-        # Specify the key file to use, generating it, if not present
+        # Specify the key file to use, generating it if not present
         keyFile = "/var/lib/sops-nix/key.txt";
         generateKey = true;
       };
