@@ -180,10 +180,7 @@
 
   # Secrets
   sops = {
-    secrets = {
-      sample = { };
-      "hosts/opx7070/ip" = { };
-    };
+    secrets = { };
   };
 
   # Release version of first install
