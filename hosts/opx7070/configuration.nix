@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/services/gc.nix
+    ../../modules/secrets/sops-nix.nix  
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/podman.nix
@@ -101,6 +102,10 @@
 
   # Modules
   modules = {
+    secrets = {
+      # sops-nix secrets management
+      sops-nix.enable = true;
+    };
     services = {
       # Garbage collection
       gc.enable = true;
@@ -119,6 +124,14 @@
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2024.12.4";
       };
+    };
+  };
+
+  # Secrets
+  sops = {
+    secrets = {
+      sample = { };
+      "hosts/opx7070/ip" = { };
     };
   };
 

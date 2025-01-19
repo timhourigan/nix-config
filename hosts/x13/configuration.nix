@@ -3,9 +3,11 @@
 {
   imports = [
     ../../modules/packages/abcde.nix
+    ../../modules/secrets/sops-nix.nix
     ../../modules/services/gc.nix
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
+    ../../modules/services/ssh.nix
     ./hardware-configuration.nix
   ];
 
@@ -157,6 +159,10 @@
       # abcde CD ripper
       abcde.enable = true;
     };
+    secrets = {
+      # sops-nix secrets management
+      sops-nix.enable = true;
+    };
     services = {
       # Garbage collection
       gc.enable = true;
@@ -164,11 +170,21 @@
       glances.enable = true;
       # DisplayLink USB graphics
       xserver.displaylink.enable = true;
+      # SSH
+      ssh.enable = true;
     };
   };
 
   # zram swap / RAM disk
   zramSwap.enable = true;
+
+  # Secrets
+  sops = {
+    secrets = {
+      sample = { };
+      "hosts/opx7070/ip" = { };
+    };
+  };
 
   # Release version of first install
   system.stateVersion = "22.05";

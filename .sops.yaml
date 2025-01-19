@@ -1,0 +1,17 @@
+keys:
+  - &users:
+    # User public Age keys, generated from private Age keys
+    # nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+    - &timh age1k3w94slqeqla972g9lkvp7dwuc4vwhjw0470v76ae73qfd68juvs9wq0zu
+  - &hosts:
+    # Host public Age keys, generated from public SSH keys
+    # nix run nixpkgs#ssh-to-age -- -i /etc/ssh/ssh_host_ed25519_key.pub
+    - &x13 age1u607fee8zt995gmlkz74hku7q5j2pnd8d6vjfkey27xn495k4chq88zj4m
+    - &opx7070 age1k890jnlyhnv0lcl64ymqzn9mfaf6v98w3c2n5qs473cu2gyyr99s9uw9va
+creation_rules:
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+      - age:
+        - *timh
+        - *x13
+        - *opx7070
