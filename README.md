@@ -52,7 +52,8 @@ nix flake update
 > nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
 age1...
 
-# Optional - If the public key needs to be retrieved at a later point, use the following command
+# Optional - If the public key needs to be retrieved at a later point,
+# use the following command
 > nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 age1...
 ```
@@ -73,7 +74,8 @@ creation_rules:
 ```
 
 > [!NOTE]
-> This is a basic example. See `.sops.yaml` in this repository, for a more complete setup, with multiple public keys from users and hosts.
+> This is a basic example. See `.sops.yaml` in this repository, for a more
+> complete setup, with multiple public keys from users and hosts.
 
 ### Create Secrets
 
@@ -91,7 +93,8 @@ creation_rules:
 
 ### Nix Configuration
 
-* See `flake.nix`, `modules/secrets/sops-nix.nix` and `hosts/opx7070/configuration.nix`, as an example.
+See `flake.nix`, `modules/secrets/sops-nix.nix` and `hosts/opx7070/configuration.nix`,
+as an example.
 
 ## Make Options
 
