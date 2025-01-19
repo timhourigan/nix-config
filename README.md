@@ -91,7 +91,7 @@ creation_rules:
 
 ### Nix Configuration
 
-* See `modules/secrets/sops-nix.nix` and `hosts/opx7070/configuration.nix`, as an example.
+* See `flake.nix`, `modules/secrets/sops-nix.nix` and `hosts/opx7070/configuration.nix`, as an example.
 
 ## Make Options
 
