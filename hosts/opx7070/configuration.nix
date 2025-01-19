@@ -3,7 +3,7 @@
 {
   imports = [
     ../../modules/services/gc.nix
-    ../../modules/secrets/sops-nix.nix  
+    ../../modules/secrets/sops-nix.nix
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/podman.nix
@@ -130,8 +130,8 @@
   # Secrets
   sops = {
     secrets = {
-      sample = { };
-      "hosts/opx7070/ip" = { };
+      "mqtt/valetudo/larry/password" = { };
+      "mqtt/valetudo/harry/password" = { };
     };
   };
 

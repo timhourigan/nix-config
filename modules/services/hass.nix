@@ -8,6 +8,7 @@
 let
   cfg = config.modules.services.hass;
   hassPort = 8123;
+  mosquittoPort = 1883;
   z2mPort = 8124;
 in
 {
@@ -48,10 +49,35 @@ in
     services.mosquitto = {
       enable = true;
       listeners = [{
+        # Trust local - Test with:
+        # nix shell nixpkgs#mosquitto --command mosquitto_pub -h 127.0.0.1 -t 'test/topic' -m 'hello world'
         address = "127.0.0.1";
         settings.allow_anonymous = true;
         acl = [ "topic readwrite #" ];
-      }];
+      }
+        # TODO - Below is no longer generic
+        {
+          # Require auth for non-local - Test with:
+          # nix shell nixpkgs#mosquitto --command mosquitto_pub -h <ip-address> -t '<topic>' -m 'hello world' -u <user> -P <password>
+          address = "192.168.90.10";
+          settings.allow_anonymous = false;
+
+          # Valetudo Larry
+          users.larry = {
+            # Not necessary to add `topic` here, it ends up in the acl automatically.
+            # See `/etc/mosquitto/acl-X.conf` 
+            acl = [ "readwrite valetudo/Larry/#" ];
+            # During discovery/setup, it is necessary to give wider permissions,
+            # presumably to allow Valetudo to write to the homeassistant topic
+            # acl = [ "readwrite #" ];
+            passwordFile = "${config.sops.secrets."mqtt/valetudo/larry/password".path}";
+          };
+          # Valetudo Harry
+          users.harry = {
+            acl = [ "readwrite valetudo/Harry/#" ];
+            passwordFile = "${config.sops.secrets."mqtt/valetudo/harry/password".path}";
+          };
+        }];
     };
 
     # zigbee2mqtt service
@@ -104,6 +130,6 @@ in
       StateDirectory = "hass";
     };
 
-    networking.firewall.allowedTCPPorts = [ hassPort z2mPort ];
+    networking.firewall.allowedTCPPorts = [ hassPort mosquittoPort z2mPort ];
   };
 }
