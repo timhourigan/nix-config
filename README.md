@@ -4,13 +4,13 @@ NixOS and Home-Manager configuration.
 
 ## Update NixOS Configuration
 
-* Build:
+- Build:
 
 ```shell
 nixos-rebuild build --flake .#<hostname>
 ```
 
-* Switch (usually requires `sudo`):
+- Switch (usually requires `sudo`):
 
 ```shell
 nixos-rebuild switch --flake .#<hostname>
@@ -18,13 +18,13 @@ nixos-rebuild switch --flake .#<hostname>
 
 ## Update Home-Manager Configuration
 
-* Build:
+- Build:
 
 ```shell
 home-manager build --flake .#<username>@<hostname>
 ```
 
-* Switch:
+- Switch:
 
 ```shell
 home-manager switch --flake .#<username>@<hostname>
@@ -36,17 +36,82 @@ home-manager switch --flake .#<username>@<hostname>
 nix flake update
 ```
 
+## Secrets
+
+- Uses [sops-nix](https://github.com/Mic92/sops-nix) and [age encryption](https://github.com/FiloSottile/age).
+
+## Basic Setup
+
+### Create Age Keys
+
+```shell
+# Create path for Age key
+> mkdir -p ~/.config/sops/age
+
+# Create a private key - Taking note of the public key displayed
+> nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
+age1...
+
+# Optional - If the public key needs to be retrieved at a later point, use the following command
+> nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+age1...
+```
+
+### Create SOPS Configuration
+
+- Create a `.sops.yaml` file (at the root of the nix-config folder, alongside `flakes.nix`)
+- Add the public key under keys (**Not** the private key)
+
+```yaml
+keys:
+  - &primary age1...
+creation_rules:
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+      age:
+        - *primary
+```
+
+> [!NOTE]
+> This is a basic example. See `.sops.yaml` in this repository, for a more complete setup, with multiple public keys from users and hosts.
+
+### Create Secrets
+
+```shell
+# Create a secrets folder alongside `.sops.yaml`
+> mkdir secrets
+
+# Create/Modify the secrets file
+> nix shell nixpkgs#sops -c sops secrets/secrets.yaml
+# Add secrets to yaml in the default editor and save the file
+
+# Optional - Update secrets if adding/removing keys to `.sops.yaml`
+> nix shell nixpkgs#sops -c sops updatekeys secrets/secrets.yaml
+```
+
+### Nix Configuration
+
+* See `flake.nix`, `modules/secrets/sops-nix.nix` and `hosts/opx7070/configuration.nix`, as an example.
+
 ## Make Options
 
 ```shell
-$ make
+> make
+all: Lock test format and build
 build-nixos: Build NixOS configuration
+build-nixos-dry-run: Build NixOS configuration (dry-run)
 switch-nixos: Switch NixOS configuration
 bootstrap-hm: Bootstrap Home-Manager configuration
 build-hm: Build Home-Manager configuration
+build-hm-dry-run: Build Home-Manager configuration (dry-run)
 switch-hm: Switch Home-Manager configuration
+build: Build
+build-dry-run: Build (dry-run)
+modify-secrets: Modify secrets
+update-secrets: Update secrets for added/removed keys
+test: Test
 format: Format source
 lock: Update lock file
-gc: Garbage collect
+clean: Garbage collect
 help: This menu
 ```

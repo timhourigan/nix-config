@@ -32,7 +32,7 @@ in
       defaultSopsFile = cfg.defaultSopsFile;
       defaultSopsFormat = cfg.defaultSopsFormat;
       age = {
-        # Import host SSH keys as age keys
+        # Import host SSH keys as Age keys
         sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
         # Specify the key file to use, generating it if not present
         keyFile = "/var/lib/sops-nix/key.txt";
