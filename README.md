@@ -45,7 +45,7 @@ nix flake update
 ### Create Age Keys
 
 ```shell
-# Create path for age key
+# Create path for Age key
 > mkdir -p ~/.config/sops/age
 
 # Create a private key - Taking note of the public key displayed
