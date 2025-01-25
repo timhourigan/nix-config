@@ -169,6 +169,7 @@
       gatus = {
         enable = true;
         package = pkgs.unstable.gatus;
+        configFile = config.sops.secrets."gatus".path;
       };
       # Garbage collection
       gc.enable = true;
