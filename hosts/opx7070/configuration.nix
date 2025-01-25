@@ -4,6 +4,7 @@
   imports = [
     ../../modules/services/gc.nix
     ../../modules/secrets/sops-nix.nix
+    ../../modules/services/chrony.nix
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/podman.nix
@@ -107,6 +108,13 @@
       sops-nix.enable = true;
     };
     services = {
+      # Chrony NTP client and server
+      chrony =
+        {
+          enable = true;
+          # Enable server functionality and allow access from local network
+          extraConfig = "allow 192.168.0.0/16";
+        };
       # Garbage collection
       gc.enable = true;
       # Glances monitoring service
