@@ -65,7 +65,7 @@ in
           # Valetudo Larry
           users.larry = {
             # Not necessary to add `topic` here, it ends up in the acl automatically.
-            # See `/etc/mosquitto/acl-X.conf` 
+            # See `/etc/mosquitto/acl-X.conf`
             acl = [ "readwrite valetudo/Larry/#" ];
             # During discovery/setup, it is necessary to give wider permissions,
             # presumably to allow Valetudo to write to the homeassistant topic
@@ -91,6 +91,18 @@ in
           channel = 25;
           last_seen = "ISO_8601_local";
           transmit_power = 20;
+          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
+          # Version 2.0.0 preparation
+          homeassistant_legacy_entity_attributes = false;
+          homeassistant_legacy_triggers = false;
+          legacy_api = false;
+          legacy_availability_payload = false;
+
+        };
+        device_options = {
+          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
+          # Version 2.0.0 preparation
+          legacy = false;
         };
         availability = {
           active.timeout = 10;
