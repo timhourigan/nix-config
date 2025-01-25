@@ -9,6 +9,25 @@
 
 {
   services.restic.backups = {
+    gatus-local = {
+      initialize = true;
+      paths = [ "/var/lib/gatus" ];
+      repository = "/mnt/backup/gatus";
+      passwordFile = "/etc/nixos/secrets/restic-gatus-local";
+      timerConfig = {
+        OnCalendar = "hourly";
+        Persistent = true;
+        RandomizedDelaySec = "1800";
+      };
+      pruneOpts = [
+        "--keep-hourly 24"
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+        "--keep-yearly 20"
+      ];
+    };
+
     hass-local = {
       initialize = true;
       paths = [ "/var/lib/hass" ];

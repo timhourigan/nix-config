@@ -5,6 +5,7 @@
     ../../modules/services/gc.nix
     ../../modules/secrets/sops-nix.nix
     ../../modules/services/chrony.nix
+    ../../modules/services/gatus.nix
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/podman.nix
@@ -115,6 +116,13 @@
           # Enable server functionality and allow access from local network
           extraConfig = "allow 192.168.0.0/16";
         };
+      # Gatus
+      gatus = {
+        enable = true;
+        openFirewall = true;
+        package = pkgs.unstable.gatus;
+        configFile = config.sops.secrets."gatus".path;
+      };
       # Garbage collection
       gc.enable = true;
       # Glances monitoring service
@@ -138,6 +146,7 @@
   # Secrets
   sops = {
     secrets = {
+      gatus = { };
       "mqtt/valetudo/larry/password" = { };
       "mqtt/valetudo/harry/password" = { };
     };
