@@ -65,7 +65,7 @@ in
           # Valetudo Larry
           users.larry = {
             # Not necessary to add `topic` here, it ends up in the acl automatically.
-            # See `/etc/mosquitto/acl-X.conf` 
+            # See `/etc/mosquitto/acl-X.conf`
             acl = [ "readwrite valetudo/Larry/#" ];
             # During discovery/setup, it is necessary to give wider permissions,
             # presumably to allow Valetudo to write to the homeassistant topic
@@ -91,13 +91,42 @@ in
           channel = 25;
           last_seen = "ISO_8601_local";
           transmit_power = 20;
+          # Version 2.0.0 preparation
+          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
+          # - Leaving the top two out to keep sensor.*_action entities
+          #   working, until automations can be mirgrated to event.*_action
+          # homeassistant_legacy_entity_attributes = false;
+          # homeassistant_legacy_triggers = false;
+          legacy_api = false;
+          legacy_availability_payload = false;
+
+        };
+        device_options = {
+          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
+          # Version 2.0.0 preparation
+          legacy = false;
         };
         availability = {
           active.timeout = 10;
           passive.timeout = 1500;
         };
         frontend.port = z2mPort;
-        homeassistant = true;
+        homeassistant = {
+          enable = true;
+          discovery_topic = "homeassistant";
+          status_topic = "homeassistant/status";
+          # Version 2.0.0 preparation
+          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
+          # Version 2.0.0 will remove all action sensors (sensor.*_action entities)
+          # Options:
+          # 1. Use MQTT trigers, which use device ids and so not desired
+          # https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html#via-mqtt-device-trigger-recommended 
+          # 2. Restore action sensors in 2.0.0:
+          # legacy_action_sensor = true;
+          # 3. Migrate automations to experimental event type:
+          # -  Adding event.*action entities to enable testing
+          experimental_event_entities = true;
+        };
         mqtt = {
           server = "mqtt://localhost:1883";
           base_topic = "zigbee2mqtt";
