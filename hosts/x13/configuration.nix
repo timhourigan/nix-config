@@ -4,6 +4,7 @@
   imports = [
     ../../modules/packages/abcde.nix
     ../../modules/secrets/sops-nix.nix
+    ../../modules/services/gatus.nix
     ../../modules/services/gc.nix
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
@@ -164,6 +165,11 @@
       sops-nix.enable = true;
     };
     services = {
+      # Gatus
+      gatus = {
+        enable = true;
+        package = pkgs.unstable.gatus;
+      };
       # Garbage collection
       gc.enable = true;
       # Glances monitoring service
@@ -180,7 +186,9 @@
 
   # Secrets
   sops = {
-    secrets = { };
+    secrets = {
+      gatus = { };
+    };
   };
 
   # Release version of first install
