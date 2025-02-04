@@ -120,7 +120,7 @@ in
           # Version 2.0.0 will remove all action sensors (sensor.*_action entities)
           # Options:
           # 1. Use MQTT trigers, which use device ids and so not desired
-          # https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html#via-mqtt-device-trigger-recommended 
+          # https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html#via-mqtt-device-trigger-recommended
           # 2. Restore action sensors in 2.0.0:
           # legacy_action_sensor = true;
           # 3. Migrate automations to experimental event type:
@@ -152,7 +152,7 @@ in
       };
     };
     # Results in the creation of /var/lib/hass
-    # User and Group could be specified here but it would breake the container,
+    # User and Group could be specified here but it would breaks the container,
     # as the container is running as root - See https://github.com/NixOS/nixpkgs/issues/207050
     # For now, the files will be owned as root
     systemd.services."${config.virtualisation.oci-containers.backend}-hass".serviceConfig = {
