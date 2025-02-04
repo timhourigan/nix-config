@@ -37,6 +37,10 @@
           modules = [ ./hosts/opx7070/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
         };
+        sid = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/sid/configuration.nix ];
+          specialArgs = { inherit inputs outputs; };
+        };
         x1c = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/x1c/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
@@ -50,6 +54,11 @@
       # Home-Manager Configurations
       homeConfigurations = {
         "timh@opx7070" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home/home.nix ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "timh@sid" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home/home.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
