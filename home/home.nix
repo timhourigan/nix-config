@@ -60,6 +60,7 @@
     unetbootin # Bootable USB creator
     unzip # Zip decompress
     usbutils # USB tools (lsusb)
+    ventoy # Bootable USB creator
     v4l-utils # Video for Linux utilities
     woeusb # Bootable USB creator for Windows media
     zip # Zip compress
