@@ -1,4 +1,4 @@
-# Generated with ‘nixos-generate-config’
+# Generate with ‘ nixos-generate-config --show-hardware-config’
 { config, lib, pkgs, modulesPath, ... }:
 
 {

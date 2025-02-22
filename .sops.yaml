@@ -8,6 +8,7 @@ keys:
     # nix run nixpkgs#ssh-to-age -- -i /etc/ssh/ssh_host_ed25519_key.pub
     - &x13 age1u607fee8zt995gmlkz74hku7q5j2pnd8d6vjfkey27xn495k4chq88zj4m
     - &opx7070 age1k890jnlyhnv0lcl64ymqzn9mfaf6v98w3c2n5qs473cu2gyyr99s9uw9va
+    - &sid age1ykrjzhy6y3c03erc6j6sfswpmd0me6ecmq5z9kt0687zglrdna4qkmdy2a
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
@@ -15,3 +16,4 @@ creation_rules:
         - *timh
         - *x13
         - *opx7070
+        - *sid
