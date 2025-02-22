@@ -27,6 +27,12 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/mnt/zpool/test" =
+    {
+      device = "zpool/test";
+      fsType = "zfs";
+    };
+
   swapDevices =
     [{ device = "/dev/disk/by-label/swap"; }];
 

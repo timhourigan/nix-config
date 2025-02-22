@@ -29,11 +29,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Filesystem support
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [ "ntfs" "zfs" ];
+  boot.zfs.forceImportRoot = false; # Recommended setting
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "*-*-1,15 04:00:00"; # 1st and 15th of every month at 4am
+  };
 
   # Networking
   networking.hostName = "sid";
   networking.networkmanager.enable = true;
+  # Required for ZFS
+  networking.hostId = "eef01409"; # `head -c4 /dev/urandom | od -A none -t x4`
 
   # Localisation
   time.timeZone = "Europe/Dublin";
@@ -81,6 +88,7 @@
     shell = pkgs.bash;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdPJVS2P6fNEMuIAuJqCMtqLU4LAI50SeoAF5GyCFFl"
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/Tztty6abMFos05TQbanvo+Y6uwZKNnhG1I+bkikgzeM7+Tz9Vx5xlodTqko71Ipn/dR66mpyADaPV0kE1MPdK7oBZdxaDKBGD/zo1Rm3fH4BVPk5z0g7cwaBKNRq8UvNcFy10ksNCeDZQYfMdWXnpYUj7WYjsIAmOV+FARz6NakmAsCh/A7vzBsFoFZ4JzayE/vGCHdQc1ecw6QF40yBqZA8Ufpft//VG2SfXPoLHlYFdTxp4AjvlMJ2mjoDnBem1n+6aBl2qMDA7PQqFse2mJLZhnCncuLImJH05rwCCPf1wEb1NpzpLwvPBt8cTNx/S/hJ4fQ5fmsxJlkzUdvOPCDM9yy/ITg++hrJHPGA9sdXRuO42OKoT25U65fCFM2PzrmSTPRLRsR4KxiPvMay4fQS4JfAOD5LOrecuLYMiL1rJrjzp/IaIgF5CylVx5NFlA4AzicmNI2A5/I2YeBX3yc2IAhcMjgTRYUbI0H9P21g4Yre+o4CSjuhmoO27eBtb4M02OnGXhzg7IsASDmyQRwJbqNyFAYnmS9tSX7H7BQ/+DbC7vak2sNidnJ8hc2jGtauQwsUeZlalYy3NM+ePL7eCm6GnYNQOFnnzAlYKBSTw+NymJY7WYOeb+woe2pgOPzK7fLggXgxxVlrsYpwbG1KyrCBP3l+Ie3HdCLxuw=="
     ];
   };
 
