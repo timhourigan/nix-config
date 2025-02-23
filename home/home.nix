@@ -98,9 +98,6 @@
     powerline-fonts
     twitter-color-emoji
 
-    # Node
-    nodejs
-
     # Python
     unstable.ruff # Formatter
     (python312.withPackages (ps: with ps; [ black flake8 pip pipx ]))
