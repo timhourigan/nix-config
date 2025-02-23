@@ -138,7 +138,7 @@
           "--network=host"
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2025.1.4";
+        image = "ghcr.io/home-assistant/home-assistant:2025.2.4";
       };
     };
   };
