@@ -13,9 +13,10 @@
     freetube # Youtube client
     gimp # Image editor
     inkscape # SVG editor
-    libreoffice # Office suite
-    telegram-desktop # Messaging
-    zed-editor # Text editor
+    # FIXME Test
+    # libreoffice # Office suite
+    # telegram-desktop # Messaging
+    # zed-editor # Text editor
   ];
 
   # Programs and configurations to be installed
