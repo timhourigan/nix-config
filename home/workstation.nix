@@ -16,7 +16,7 @@
     # FIXME Test
     # libreoffice # Office suite
     # telegram-desktop # Messaging
-    # zed-editor # Text editor
+    zed-editor # Text editor
   ];
 
   # Programs and configurations to be installed
