@@ -24,7 +24,24 @@
   # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
 
   # Feature configuration
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    # Enable Flakes
+    experimental-features = [ "nix-command" "flakes" ];
+
+    # Allow user to specify additional substituters
+    trusted-users = [ "timh" ];
+
+    # Substituters to be considered before cache.nixos.org
+    substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+
+    # Accept flake configuration without prompt
+    accept-flake-config = true;
+  };
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
