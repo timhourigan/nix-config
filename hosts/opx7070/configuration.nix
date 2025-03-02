@@ -9,6 +9,7 @@
     ../../modules/services/glances.nix
     ../../modules/services/hass.nix
     ../../modules/services/podman.nix
+    ../../modules/services/slimserver.nix
     ../../modules/services/ssh.nix
     ./backups.nix
     ./hardware-configuration.nix
@@ -129,6 +130,11 @@
       glances.enable = true;
       # Podman virtualisation
       podman.enable = true;
+      # Slimserver / LMS / Lyrion
+      slimserver = {
+        enable = true;
+        package = pkgs.unstable.slimserver;
+      };
       # SSH server
       ssh.enable = true;
       # Home Assistant
@@ -139,6 +145,8 @@
         ];
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2025.2.4";
+        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
+        z2mPackage = pkgs.unstable.zigbee2mqtt_1;
       };
     };
   };
