@@ -11,6 +11,7 @@
     ../../modules/services/podman.nix
     ../../modules/services/slimserver.nix
     ../../modules/services/ssh.nix
+    ../common/users-groups.nix
     ./backups.nix
     ./hardware-configuration.nix
   ];
@@ -35,11 +36,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Filesystem support
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [ "ntfs" "zfs" ];
+  boot.zfs.forceImportRoot = false; # Recommended setting
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "*-*-1,15 04:00:00"; # 1st and 15th of every month at 4am
+  };
 
   # Networking
   networking.hostName = "opx7070";
   networking.networkmanager.enable = true;
+  # Required for ZFS
+  networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
   services.tailscale.enable = true;
 
   # Localisation
@@ -77,19 +85,6 @@
   # services.xrdp.enable = true;
   # services.xrdp.defaultWindowManager = "/run/current-system/sw/bin/cinnamon";
   # networking.firewall.allowedTCPPorts = [ 3389 ];
-
-  users.users.timh = {
-    isNormalUser = true;
-    description = "timh";
-    # Networking: "networkmanager"
-    # sudo: "wheel"
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
-    shell = pkgs.bash;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdPJVS2P6fNEMuIAuJqCMtqLU4LAI50SeoAF5GyCFFl"
-    ];
-  };
 
   # System packages
   environment.systemPackages = with pkgs; [
