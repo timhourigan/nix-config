@@ -6,7 +6,9 @@
 
 let
   cfg = config.modules.services.slimserver;
-  port = 9000;
+  slimServerPort = 9000;
+  slimServerCliPort = 9090;
+  playerPort = 3483;
 in
 {
   options = {
@@ -32,6 +34,6 @@ in
       dataDir = cfg.dataDir;
     };
 
-    networking.firewall.allowedTCPPorts = [ port ];
+    networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];
   };
 }
