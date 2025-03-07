@@ -35,5 +35,6 @@ in
     };
 
     networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];
+    networking.firewall.allowedUDPPorts = [ slimServerPort slimServerCliPort playerPort ];
   };
 }
