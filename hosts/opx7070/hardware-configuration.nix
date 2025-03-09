@@ -32,6 +32,13 @@
       options = [ "nofail" ]; # Allow system to boot without this device
     };
 
+  fileSystems."/mnt/zpool/audio" =
+    {
+      device = "zpool/audio";
+      fsType = "zfs";
+      options = [ "nofail" ]; # Allow system to boot without this device
+    };
+
   swapDevices =
     [{ device = "/dev/disk/by-label/swap"; }];
 

@@ -40,6 +40,11 @@ in
         type = lib.types.str;
         default = "ghcr.io/home-assistant/home-assistant:stable";
       };
+      z2mPackage = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.zigbee2mqtt;
+        description = "Zigbee2MQTT package to use";
+      };
     };
   };
 
@@ -82,8 +87,7 @@ in
 
     # zigbee2mqtt service
     services.zigbee2mqtt = {
-      # Version: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-      package = pkgs.unstable.zigbee2mqtt;
+      package = cfg.z2mPackage;
       enable = true;
       # https://www.zigbee2mqtt.io/guide/configuration/
       settings = {

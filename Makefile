@@ -38,6 +38,10 @@ build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
 switch-hm: ## Switch Home-Manager configuration
 	home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
+.PHONY: news-hm
+news-hm: ## Home-Manager news
+	home-manager news --flake .#$(USER)@$(HOSTNAME)
+
 .PHONY: build
 build: build-nixos build-hm ## Build
 

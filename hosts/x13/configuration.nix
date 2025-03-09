@@ -8,6 +8,7 @@
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
     ../../modules/services/ssh.nix
+    ../common/users-groups.nix
     ./hardware-configuration.nix
   ];
 
@@ -124,25 +125,6 @@
   # services.thermald = {
   #   enable = true;
   # };
-
-  users.users.timh = {
-    isNormalUser = true;
-    description = "timh";
-    # adb/Android: "adbusers"
-    # Networking: "networkmanager"
-    # Printers/Scanners: "lp"
-    # Scanners: "scanner"
-    # sudo: "wheel"
-    extraGroups = [ "adbusers" "lp" "networkmanager" "scanner" "wheel" ];
-    packages = with pkgs; [ bottom firefox git heimdall ];
-    shell = pkgs.bash;
-  };
-
-  # FIXME - zsh
-  # Enable zsh system wide
-  # programs.zsh.enable = true;
-  # Include zsh in /etc/shells
-  # environment.shells = with pkgs; [ zsh ];
 
   # System packages
   environment.systemPackages = with pkgs; [
