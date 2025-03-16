@@ -15,7 +15,9 @@
     inkscape # SVG editor
     libreoffice # Office suite
     telegram-desktop # Messaging
-    zed-editor # Text editor
+    # FIXME - Removing for now as it causes a compilation,
+    # which fails in GitHub Actions, due to time and space 
+    # zed-editor # Text editor
   ];
 
   # Programs and configurations to be installed
