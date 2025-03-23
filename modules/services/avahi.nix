@@ -32,18 +32,24 @@ in
         type = lib.types.bool;
         default = true;
       };
+      enableReflector = lib.mkOption {
+        description = "Enable Avahi reflector";
+        type = lib.types.bool;
+        default = true;
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     services.avahi = {
       enable = true;
-        nssmdns4 = cfg.nssmdns4;
-        publish = {
-            enable = cfg.enablePublish;
-            addresses = cfg.enablePublishAddresses;
-            domain = cfg.enablePublishDomain;
-        };
+      nssmdns4 = cfg.nssmdns4;
+      publish = {
+        enable = cfg.enablePublish;
+        addresses = cfg.enablePublishAddresses;
+        domain = cfg.enablePublishDomain;
+      };
+      reflector = cfg.enableReflector;
     };
   };
 }
