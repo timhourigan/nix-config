@@ -37,6 +37,9 @@
   networking.hostName = "x1c";
   networking.networkmanager.enable = true;
   services.tailscale.enable = true;
+  # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
+  # https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # Localisation
   time.timeZone = "Europe/Dublin";
