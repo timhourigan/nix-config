@@ -126,7 +126,7 @@ in
           # 1. Use MQTT trigers, which use device ids and so not desired
           # https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html#via-mqtt-device-trigger-recommended
           # 2. Restore action sensors in 2.0.0:
-          legacy_action_sensor = true;
+          # legacy_action_sensor = true;
           # 3. Migrate automations to experimental event type:
           # -  Adding event.*action entities to enable testing
           experimental_event_entities = true;
@@ -143,8 +143,8 @@ in
         };
       };
     };
-    # z2m stops (with exit 0) when the adaptor disconnects or isn't available
-    # yet, so restart "always"   
+    # z2m stops (with exit 0) when the adaptor disconnects or isn't
+    # available yet, so restart "always"
     systemd.services.zigbee2mqtt.serviceConfig = {
       Restart = lib.mkForce "always";
       RestartSec = "10";

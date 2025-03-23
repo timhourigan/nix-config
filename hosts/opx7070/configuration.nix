@@ -4,6 +4,7 @@
   imports = [
     ../../modules/services/gc.nix
     ../../modules/secrets/sops-nix.nix
+    ../../modules/services/avahi.nix
     ../../modules/services/chrony.nix
     ../../modules/services/gatus.nix
     ../../modules/services/glances.nix
@@ -108,6 +109,8 @@
       sops-nix.enable = true;
     };
     services = {
+      # Avahi service discovery
+      avahi.enable = true;
       # Chrony NTP client and server
       chrony =
         {
@@ -144,7 +147,7 @@
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2025.3.4";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.unstable.zigbee2mqtt_2;
+        z2mPackage = pkgs.unstable.zigbee2mqtt_1;
       };
     };
   };
