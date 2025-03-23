@@ -49,6 +49,9 @@
   # Required for ZFS
   networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
   services.tailscale.enable = true;
+  # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
+  # https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # Localisation
   time.timeZone = "Europe/Dublin";
@@ -139,7 +142,7 @@
           "--network=host"
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2025.3.3";
+        image = "ghcr.io/home-assistant/home-assistant:2025.3.4";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
         z2mPackage = pkgs.unstable.zigbee2mqtt_1;
       };
