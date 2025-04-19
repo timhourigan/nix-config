@@ -4,6 +4,7 @@
   imports = [
     ../../modules/services/gc.nix
     ../../modules/secrets/sops-nix.nix
+    ../../modules/services/avahi.nix
     ../../modules/services/chrony.nix
     ../../modules/services/gatus.nix
     ../../modules/services/glances.nix
@@ -112,6 +113,8 @@
       sops-nix.enable = true;
     };
     services = {
+      # Avahi service discovery
+      avahi.enable = true;
       # Chrony NTP client and server
       chrony =
         {
