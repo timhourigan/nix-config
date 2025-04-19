@@ -4,6 +4,7 @@
   imports = [
     ../../modules/packages/abcde.nix
     ../../modules/secrets/sops-nix.nix
+    ../../modules/services/avahi.nix
     ../../modules/services/gc.nix
     ../../modules/services/displaylink.nix
     ../../modules/services/glances.nix
@@ -149,6 +150,8 @@
       sops-nix.enable = true;
     };
     services = {
+      # Avahi service discovery
+      avahi.enable = true;
       # Garbage collection
       gc.enable = true;
       # Glances monitoring service

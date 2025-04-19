@@ -11,12 +11,16 @@ all: lock test format build ## Lock test format and build
 build-nixos: ## Build NixOS configuration
 	nixos-rebuild build --flake .
 
-# `nixos-rebuild` will use the current host, if none is specified
+.PHONY: build-nixos-all
+build-nixos-all: ## Build NixOS configuration for all hosts
+	nixos-rebuild build --flake . --target-host opx7070
+	nixos-rebuild build --flake . --target-host sid.local
+	nixos-rebuild build --flake . --target-host x13
+
 .PHONY: build-nixos-dry-run
 build-nixos-dry-run: ## Build NixOS configuration (dry-run)
 	nixos-rebuild dry-build --flake .
 
-# `nixos-rebuild` will use the current host, if none is specified
 .PHONY: switch-nixos
 switch-nixos: ## Switch NixOS configuration
 	nixos-rebuild switch --flake .

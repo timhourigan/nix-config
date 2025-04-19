@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/packages/abcde.nix
+    ../../modules/services/avahi.nix
     ../../modules/services/gc.nix
     ../../modules/services/glances.nix
     ../../modules/services/displaylink.nix
@@ -137,6 +138,8 @@
       abcde.enable = true;
     };
     services = {
+      # Avahi service discovery
+      avahi.enable = true;
       # Garbage collection
       gc.enable = true;
       # Glances monitoring service

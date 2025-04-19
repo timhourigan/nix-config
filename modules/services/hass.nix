@@ -143,6 +143,12 @@ in
         };
       };
     };
+    # z2m stops (with exit 0) when the adapter disconnects or isn't
+    # available yet, so restart "always"
+    systemd.services.zigbee2mqtt.serviceConfig = {
+      Restart = lib.mkForce "always";
+      RestartSec = "10";
+    };
 
     # Home Assistant container
     virtualisation.oci-containers = {
