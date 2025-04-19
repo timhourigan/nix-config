@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ config, inputs, outputs, pkgs, ... }:
 
 {
   nixpkgs = {
@@ -131,6 +131,9 @@
     ./configs/tmux.nix
     ./configs/vscode.nix
     # ./configs/zsh.nix
+
+    # NUR modules
+    inputs.nur.modules.homeManager.default
   ];
 
   systemd.user.services.polybar = {
