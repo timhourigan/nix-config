@@ -8,9 +8,11 @@
       id = 0;
       name = "Default";
       extensions = [
-        inputs.firefox-addons.packages.${pkgs.system}.darkreader
-        inputs.firefox-addons.packages.${pkgs.system}.privacy-badger
-        inputs.firefox-addons.packages.${pkgs.system}.ublock-origin
+        pkgs.nur.repos.rycee.firefox-addons.consent-o-matic
+        pkgs.nur.repos.rycee.firefox-addons.darkreader
+        pkgs.nur.repos.rycee.firefox-addons.privacy-badger
+        pkgs.nur.repos.rycee.firefox-addons.sponsorblock
+        pkgs.nur.repos.rycee.firefox-addons.ublock-origin
       ];
       search = {
         default = "DuckDuckGo";
