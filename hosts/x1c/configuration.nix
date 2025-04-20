@@ -7,6 +7,7 @@
     ../../modules/services/gc.nix
     ../../modules/services/glances.nix
     ../../modules/services/displaylink.nix
+    ../common/localisation.nix
     ../common/users-groups.nix
     ./hardware-configuration.nix
   ];
@@ -41,24 +42,6 @@
   # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
-
-  # Localisation
-  time.timeZone = "Europe/Dublin";
-  i18n.defaultLocale = "en_IE.utf8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_IE.UTF-8";
-    LC_IDENTIFICATION = "en_IE.UTF-8";
-    LC_MEASUREMENT = "en_IE.UTF-8";
-    LC_MONETARY = "en_IE.UTF-8";
-    LC_NAME = "en_IE.UTF-8";
-    LC_NUMERIC = "en_IE.UTF-8";
-    LC_PAPER = "en_IE.UTF-8";
-    LC_TELEPHONE = "en_IE.UTF-8";
-    LC_TIME = "en_IE.UTF-8";
-  };
-
-  # Configure console keymap
-  console.keyMap = "ie";
 
   # X11
   services.xserver = {
