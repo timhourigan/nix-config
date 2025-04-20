@@ -7,6 +7,7 @@
     ../../modules/services/gc.nix
     ../../modules/services/glances.nix
     ../../modules/services/displaylink.nix
+    ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix
     ./hardware-configuration.nix
@@ -42,19 +43,6 @@
   # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
-
-  # X11
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "ie";
-      variant = "";
-    };
-  };
-
-  # Desktop - Cinnamon
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
 
   # Printing
   services.printing.enable = true;

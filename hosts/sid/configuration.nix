@@ -7,6 +7,7 @@
     ../../modules/secrets/sops-nix.nix
     ../../modules/services/glances.nix
     ../../modules/services/ssh.nix
+    ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix
     ./hardware-configuration.nix
@@ -48,24 +49,6 @@
   networking.networkmanager.enable = true;
   # Required for ZFS
   networking.hostId = "eef01409"; # `head -c4 /dev/urandom | od -A none -t x4`
-
-  # X11
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "ie";
-      variant = "";
-    };
-  };
-
-  # Desktop - Cinnamon
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
-
-  # Remote Desktop - Xrdp - Commented out for now
-  # services.xrdp.enable = true;
-  # services.xrdp.defaultWindowManager = "/run/current-system/sw/bin/cinnamon";
-  # networking.firewall.allowedTCPPorts = [ 3389 ];
 
   # System packages
   environment.systemPackages = with pkgs; [

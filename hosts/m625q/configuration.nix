@@ -6,6 +6,7 @@
     ../../modules/services/gc.nix
     ../../modules/secrets/sops-nix.nix
     ../../modules/services/glances.nix
+    ../../modules/services/podman.nix
     ../../modules/services/ssh.nix
     ../common/desktop-xfce.nix
     ../common/localisation.nix
@@ -40,6 +41,8 @@
   # Networking
   networking.hostName = "m625q";
   networking.networkmanager.enable = true;
+  # Don't want wireless
+  networking.wireless.enable = false;
 
   # System packages
   environment.systemPackages = with pkgs; [

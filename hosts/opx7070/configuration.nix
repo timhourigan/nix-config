@@ -12,6 +12,7 @@
     ../../modules/services/podman.nix
     ../../modules/services/slimserver.nix
     ../../modules/services/ssh.nix
+    ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix
     ./backups.nix
@@ -58,24 +59,6 @@
   # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
-
-  # X11
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "ie";
-      variant = "";
-    };
-  };
-
-  # Desktop - Cinnamon
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
-
-  # Remote Desktop - Xrdp - Commented out for now
-  # services.xrdp.enable = true;
-  # services.xrdp.defaultWindowManager = "/run/current-system/sw/bin/cinnamon";
-  # networking.firewall.allowedTCPPorts = [ 3389 ];
 
   # System packages
   environment.systemPackages = with pkgs; [
