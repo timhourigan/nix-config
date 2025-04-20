@@ -7,6 +7,7 @@
     ../../modules/secrets/sops-nix.nix
     ../../modules/services/glances.nix
     ../../modules/services/ssh.nix
+    ../common/desktop-xfce.nix
     ../common/localisation.nix
     ../common/users-groups.nix
     ./hardware-configuration.nix
@@ -40,24 +41,6 @@
   networking.hostName = "m625q";
   networking.networkmanager.enable = true;
 
-  # X11
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "ie";
-      variant = "";
-    };
-  };
-
-  # Desktop - XFCE
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-
-  # Remote Desktop - Xrdp - Commented out for now
-  # services.xrdp.enable = true;
-  # services.xrdp.defaultWindowManager = "/run/current-system/sw/bin/xfce4-session";
-  # networking.firewall.allowedTCPPorts = [ 3389 ];
-
   # System packages
   environment.systemPackages = with pkgs; [
     bash-completion
@@ -83,6 +66,8 @@
       gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
+      # Podman virtualisation
+      podman.enable = true;
       # SSH server
       ssh.enable = true;
     };
