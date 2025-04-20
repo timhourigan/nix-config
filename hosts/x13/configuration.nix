@@ -46,7 +46,7 @@
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   # Add hosts to /etc/hosts
   networking.extraHosts =
-  ''
+    ''
   '';
 
   # X11
