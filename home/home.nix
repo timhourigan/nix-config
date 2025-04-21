@@ -32,6 +32,7 @@
     bat # `cat` clone
     bottom # Display process information (`top` alternative)
     ddrescue # dd, with extra functionality
+    dig # DNS lookup
     du-dust # Disk space usage (`du` alternative)
     eza # File listing (`ls` alternative)
     fastfetch # System information

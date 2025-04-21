@@ -6,14 +6,18 @@ keys:
   - &hosts:
     # Host public Age keys, generated from public SSH keys
     # nix run nixpkgs#ssh-to-age -- -i /etc/ssh/ssh_host_ed25519_key.pub
-    - &x13 age1u607fee8zt995gmlkz74hku7q5j2pnd8d6vjfkey27xn495k4chq88zj4m
+    - &m625q age1c6wlttxq8wvyxznjjwymadwjk376t6vvy2cnzqtmzcdejkr7548sadp97s
     - &opx7070 age1k890jnlyhnv0lcl64ymqzn9mfaf6v98w3c2n5qs473cu2gyyr99s9uw9va
     - &sid age1ykrjzhy6y3c03erc6j6sfswpmd0me6ecmq5z9kt0687zglrdna4qkmdy2a
+    - &x13 age1u607fee8zt995gmlkz74hku7q5j2pnd8d6vjfkey27xn495k4chq88zj4m
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
+        # Users
         - *timh
-        - *x13
+        # Hosts
+        - *m625q
         - *opx7070
         - *sid
+        - *x13

@@ -6,8 +6,9 @@
     ../../modules/services/gc.nix
     ../../modules/secrets/sops-nix.nix
     ../../modules/services/glances.nix
+    ../../modules/services/podman.nix
     ../../modules/services/ssh.nix
-    ../common/desktop-cinnamon.nix
+    ../common/desktop-xfce.nix
     ../common/localisation.nix
     ../common/users-groups.nix
     ./hardware-configuration.nix
@@ -35,20 +36,13 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Filesystem support
-  boot.supportedFilesystems = [ "ntfs" "zfs" ];
-  boot.zfs.forceImportRoot = false; # Recommended setting
-  services.zfs.autoScrub = {
-    enable = true;
-    interval = "*-*-1,15 04:00:00"; # 1st and 15th of every month at 4am
-  };
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   # Networking
-  networking.hostName = "sid";
+  networking.hostName = "m625q";
   networking.networkmanager.enable = true;
-  # Required for ZFS
-  networking.hostId = "eef01409"; # `head -c4 /dev/urandom | od -A none -t x4`
+  # Don't want wireless
+  networking.wireless.enable = false;
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -75,6 +69,8 @@
       gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
+      # Podman virtualisation
+      podman.enable = true;
       # SSH server
       ssh.enable = true;
     };
@@ -86,5 +82,5 @@
   };
 
   # Release version of first install
-  system.stateVersion = "24.11";
+  system.stateVersion = "22.05";
 }
