@@ -5,6 +5,7 @@
     enable = true;
     package = pkgs.vscode;
     # Let Nix manage  ~/.vscode/extensions/extensions.json
+    # https://github.com/nix-community/home-manager/issues/5372
     mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
       # Search with:
