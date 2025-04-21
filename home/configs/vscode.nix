@@ -4,6 +4,8 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
+    # Let Nix manage  ~/.vscode/extensions/extensions.json
+    mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
       # Search with:
       # https://search.nixos.org/packages?channel=22.05type=packages&query=vscode-extensions
