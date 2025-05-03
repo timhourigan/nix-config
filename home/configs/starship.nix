@@ -57,7 +57,7 @@
         disabled = false;
         ssh_only = false;
         ssh_symbol = "@";
-        format = "[$hostname]($style) ";
+        format = "[$ssh_symbol$hostname]($style) ";
       };
 
       cmd_duration = {
