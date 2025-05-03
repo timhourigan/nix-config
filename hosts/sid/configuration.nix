@@ -2,11 +2,7 @@
 
 {
   imports = [
-    ../../modules/services/avahi.nix
-    ../../modules/services/gc.nix
-    ../../modules/secrets/sops-nix.nix
-    ../../modules/services/glances.nix
-    ../../modules/services/ssh.nix
+    ../../modules
     ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix

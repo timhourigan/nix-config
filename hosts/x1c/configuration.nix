@@ -2,11 +2,7 @@
 
 {
   imports = [
-    ../../modules/packages/abcde.nix
-    ../../modules/services/avahi.nix
-    ../../modules/services/gc.nix
-    ../../modules/services/glances.nix
-    ../../modules/services/displaylink.nix
+    ../../modules
     ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix

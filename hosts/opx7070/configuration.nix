@@ -2,16 +2,7 @@
 
 {
   imports = [
-    ../../modules/services/gc.nix
-    ../../modules/secrets/sops-nix.nix
-    ../../modules/services/avahi.nix
-    ../../modules/services/chrony.nix
-    ../../modules/services/gatus.nix
-    ../../modules/services/glances.nix
-    ../../modules/services/hass.nix
-    ../../modules/services/podman.nix
-    ../../modules/services/slimserver.nix
-    ../../modules/services/ssh.nix
+    ../../modules
     ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix

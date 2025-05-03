@@ -9,7 +9,8 @@
       add_newline = false;
 
       time = {
-        disabled = true;
+        disabled = false;
+        style = "dimmed white";
         format = "[$time]($style) ";
         time_format = "%R";
       };

@@ -16,7 +16,8 @@ in
       };
       defaultSopsFile = lib.mkOption {
         type = lib.types.path;
-        default = ../../secrets/secrets.yaml;
+        # Relative to the root of the repository
+        default = ../../../secrets/secrets.yaml;
         description = "Path to the default sops file";
       };
       defaultSopsFormat = lib.mkOption {

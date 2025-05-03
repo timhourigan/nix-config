@@ -2,12 +2,7 @@
 
 {
   imports = [
-    ../../modules/services/avahi.nix
-    ../../modules/services/gc.nix
-    ../../modules/secrets/sops-nix.nix
-    ../../modules/services/glances.nix
-    ../../modules/services/podman.nix
-    ../../modules/services/ssh.nix
+    ../../modules
     ../common/desktop-xfce.nix
     ../common/localisation.nix
     ../common/users-groups.nix
@@ -69,6 +64,21 @@
       gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
+      # Pi-Hole DNS with Unbound
+      pihole = {
+        enable = true;
+        # Use Unbound, accessing via internal Podman interface
+        environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
+        environmentFiles = [ config.sops.secrets."pihole_env".path ];
+        # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
+        image = "docker.io/pihole/pihole:2025.04.0";
+      };
+      unbound = {
+        enable = true;
+        # Allow access from Podman/Pi-Hole
+        settings.server.interface = [ "10.88.0.1" ];
+        settings.server.access-control = [ "10.88.0.0/16 allow" ];
+      };
       # Podman virtualisation
       podman.enable = true;
       # SSH server
@@ -78,7 +88,9 @@
 
   # Secrets
   sops = {
-    secrets = { };
+    secrets = {
+      pihole_env = { };
+    };
   };
 
   # Release version of first install

@@ -2,13 +2,7 @@
 
 {
   imports = [
-    ../../modules/packages/abcde.nix
-    ../../modules/secrets/sops-nix.nix
-    ../../modules/services/avahi.nix
-    ../../modules/services/gc.nix
-    ../../modules/services/displaylink.nix
-    ../../modules/services/glances.nix
-    ../../modules/services/ssh.nix
+    ../../modules
     ../common/desktop-cinnamon.nix
     ../common/localisation.nix
     ../common/users-groups.nix
@@ -135,6 +129,23 @@
       xserver.displaylink.enable = true;
       # SSH
       ssh.enable = true;
+      # Pi-Hole DNS with Unbound
+      podman.enable = true;
+      pihole = {
+        enable = true;
+        # Use Unbound, accessing via internal Podman interface
+        environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
+        environmentFiles = [ config.sops.secrets."pihole_env".path ];
+        # environment.FTLCONF_webserver_api_password = "pihole";
+        # environment.FTLCONF_dns_hosts = "127.0.0.1 blah;127.0.0.2 blah2";
+        image = "docker.io/pihole/pihole:2025.04.0";
+      };
+      unbound = {
+        enable = true;
+        # Allow access from Podman/Pi-Hole
+        settings.server.interface = [ "10.88.0.1" ];
+        settings.server.access-control = [ "10.88.0.0/16 allow" ];
+      };
     };
   };
 
@@ -143,7 +154,9 @@
 
   # Secrets
   sops = {
-    secrets = { };
+    secrets = {
+      pihole_env = { };
+    };
   };
 
   # Release version of first install
