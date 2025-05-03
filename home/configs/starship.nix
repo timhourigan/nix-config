@@ -46,11 +46,18 @@
       };
 
       memory_usage = {
-        disabled = true;
-        threshold = -1;
+        disabled = false;
+        threshold = 90;
         symbol = " ";
-        style = "bold dimmed green";
+        style = "bold red";
         format = "[$ram]($style) ";
+      };
+
+      hostname = {
+        disabled = false;
+        ssh_only = false;
+        ssh_symbol = "@";
+        format = "[$hostname]($style) ";
       };
 
       cmd_duration = {
