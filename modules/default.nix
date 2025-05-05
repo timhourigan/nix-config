@@ -1,9 +1,9 @@
 { ... }:
 
 {
-    imports = [
-        ./packages
-        ./secrets
-        ./services
-    ];
+  imports = [
+    ./packages
+    ./secrets
+    ./services
+  ];
 }

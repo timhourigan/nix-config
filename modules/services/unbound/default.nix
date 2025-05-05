@@ -56,6 +56,12 @@ in
         description = "Enable unbound DNS resolver";
         default = false;
       };
+      # When true, /etc/resolv.conf will be updated to point to 127.0.0.1
+      resolveLocalQueries = lib.mkOption {
+        description = "Resolve local queries";
+        type = lib.types.bool;
+        default = false;
+      };
       settings = lib.mkOption {
         description = "Unbound settings";
         type = lib.types.attrsOf lib.types.anything;
@@ -77,6 +83,7 @@ in
 
     services.unbound = {
       enable = true;
+      resolveLocalQueries = cfg.resolveLocalQueries;
       # Merge defaults with user settings
       # TODO - Consider updating, to remove duplicate settings
       settings =

@@ -5,6 +5,7 @@
 let
   cfg = config.modules.services.pihole;
   dnsPort = 53;
+  httpPort = 80;
 in
 {
   options = {
@@ -57,7 +58,7 @@ in
         ports = [
           "53:53/tcp"
           "53:53/udp"
-          "8053:80/tcp"
+          "80:80/tcp"
         ];
       };
     };
@@ -74,6 +75,6 @@ in
     };
 
     networking.firewall.allowedUDPPorts = [ dnsPort ];
-    networking.firewall.allowedTCPPorts = [ dnsPort ];
+    networking.firewall.allowedTCPPorts = [ dnsPort httpPort ];
   };
 }

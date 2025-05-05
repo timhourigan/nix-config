@@ -38,6 +38,8 @@
   networking.networkmanager.enable = true;
   # Don't want wireless
   networking.wireless.enable = false;
+  # Backup DNS server / Quad9
+  networking.nameservers = [ "9.9.9.9" ];
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -67,17 +69,27 @@
       # Pi-Hole DNS with Unbound
       pihole = {
         enable = true;
+        extraOptions = [
+          "--network=host"
+        ];
+        # FIXME
+        # extraOptions = [
+        #   "--add-cap=NET_BIND_SERVICE"
+        # ];
         # Use Unbound, accessing via internal Podman interface
-        environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
+        environment.FTLCONF_dns_upstreams = "127.0.0.1#5335";
+        # FIXME
+        # environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
         # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
         image = "docker.io/pihole/pihole:2025.04.0";
       };
       unbound = {
         enable = true;
+        # FIXME
         # Allow access from Podman/Pi-Hole
-        settings.server.interface = [ "10.88.0.1" ];
-        settings.server.access-control = [ "10.88.0.0/16 allow" ];
+        # settings.server.interface = [ "10.88.0.1" ];
+        # settings.server.access-control = [ "10.88.0.0/16 allow" ];
       };
       # Podman virtualisation
       podman.enable = true;

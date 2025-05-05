@@ -1,7 +1,7 @@
 { ... }:
 
 {
-    imports = [
-        ./sops-nix
-    ];
+  imports = [
+    ./sops-nix
+  ];
 }
