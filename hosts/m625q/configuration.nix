@@ -74,7 +74,7 @@
         ];
         # FIXME
         # extraOptions = [
-        #   "--add-cap=NET_BIND_SERVICE"
+        #   "--cap-add=NET_BIND_SERVICE"
         # ];
         # Use Unbound, accessing via internal Podman interface
         environment.FTLCONF_dns_upstreams = "127.0.0.1#5335";
