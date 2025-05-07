@@ -137,6 +137,7 @@
 
   # Secrets
   sops = {
+    secrets = { };
   };
 
   # Release version of first install
