@@ -2,12 +2,7 @@
 
 {
   imports = [
-    ../../modules/services/avahi.nix
-    ../../modules/services/gc.nix
-    ../../modules/secrets/sops-nix.nix
-    ../../modules/services/glances.nix
-    ../../modules/services/podman.nix
-    ../../modules/services/ssh.nix
+    ../../modules
     ../common/desktop-xfce.nix
     ../common/localisation.nix
     ../common/users-groups.nix
@@ -43,6 +38,8 @@
   networking.networkmanager.enable = true;
   # Don't want wireless
   networking.wireless.enable = false;
+  # Backup DNS server / Quad9
+  networking.nameservers = [ "9.9.9.9" ];
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -69,6 +66,21 @@
       gc.enable = true;
       # Glances monitoring service
       glances.enable = true;
+      # Pi-Hole DNS with Unbound
+      pihole = {
+        enable = true;
+        extraOptions = [
+          "--network=host"
+          "--dns=9.9.9.9" # Container DNS
+        ];
+        # Use Unbound, accessing via localhost
+        environment.FTLCONF_dns_upstreams = "127.0.0.1#5335";
+        environmentFiles = [ config.sops.secrets."pihole_env".path ];
+        # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
+        image = "docker.io/pihole/pihole:2025.04.0";
+      };
+      # Recursive DNS resolver
+      unbound.enable = true;
       # Podman virtualisation
       podman.enable = true;
       # SSH server
@@ -78,7 +90,9 @@
 
   # Secrets
   sops = {
-    secrets = { };
+    secrets = {
+      pihole_env = { };
+    };
   };
 
   # Release version of first install

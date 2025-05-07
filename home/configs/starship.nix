@@ -9,7 +9,8 @@
       add_newline = false;
 
       time = {
-        disabled = true;
+        disabled = false;
+        style = "dimmed white";
         format = "[$time]($style) ";
         time_format = "%R";
       };
@@ -45,11 +46,18 @@
       };
 
       memory_usage = {
-        disabled = true;
-        threshold = -1;
+        disabled = false;
+        threshold = 90;
         symbol = " ";
-        style = "bold dimmed green";
+        style = "bold red";
         format = "[$ram]($style) ";
+      };
+
+      hostname = {
+        disabled = false;
+        ssh_only = false;
+        ssh_symbol = "@";
+        format = "[$ssh_symbol$hostname]($style) ";
       };
 
       cmd_duration = {
