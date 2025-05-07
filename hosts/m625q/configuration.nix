@@ -71,26 +71,16 @@
         enable = true;
         extraOptions = [
           "--network=host"
+          "--dns=9.9.9.9" # Container DNS
         ];
-        # FIXME
-        # extraOptions = [
-        #   "--cap-add=NET_BIND_SERVICE"
-        # ];
-        # Use Unbound, accessing via internal Podman interface
+        # Use Unbound, accessing via localhost
         environment.FTLCONF_dns_upstreams = "127.0.0.1#5335";
-        # FIXME
-        # environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
         # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
         image = "docker.io/pihole/pihole:2025.04.0";
       };
-      unbound = {
-        enable = true;
-        # FIXME
-        # Allow access from Podman/Pi-Hole
-        # settings.server.interface = [ "10.88.0.1" ];
-        # settings.server.access-control = [ "10.88.0.0/16 allow" ];
-      };
+      # Recursive DNS resolver
+      unbound.enable = true;
       # Podman virtualisation
       podman.enable = true;
       # SSH server
