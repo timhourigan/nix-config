@@ -46,7 +46,12 @@
   networking.networkmanager.enable = true;
   # Required for ZFS
   networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraUpFlags = [
+      "--accept-dns=false"
+    ];
+  };
   # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
