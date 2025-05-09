@@ -29,7 +29,7 @@ in
         enable = true;
         dockerCompat = if cfg.dockerCompat then true else false;
         autoPrune.enable = if cfg.autoPrune then true else false;
-        autoPrune.dates = if cfg.autoPrune then [ "weekly" ] else [ ];
+        autoPrune.dates = if cfg.autoPrune then "weekly" else "";
         autoPrune.flags = if cfg.autoPrune then [ "--all" ] else [ ];
       };
     };
