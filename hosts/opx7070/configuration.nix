@@ -96,7 +96,10 @@
       # Glances monitoring service
       glances.enable = true;
       # Podman virtualisation
-      podman.enable = true;
+      podman = {
+        enable = true;
+        autoPrune = true;
+      };
       # Slimserver / LMS / Lyrion
       slimserver = {
         enable = true;
