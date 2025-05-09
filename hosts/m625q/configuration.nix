@@ -82,7 +82,10 @@
       # Recursive DNS resolver
       unbound.enable = true;
       # Podman virtualisation
-      podman.enable = true;
+      podman = {
+        enable = true;
+        autoPrune = true;
+      };
       # SSH server
       ssh.enable = true;
     };

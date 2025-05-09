@@ -33,6 +33,11 @@ in
       package = cfg.package;
       dataDir = cfg.dataDir;
     };
+    systemd.services.slimserver = {
+      # Ensure network is up before starting
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    };
 
     networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];
     networking.firewall.allowedUDPPorts = [ slimServerPort slimServerCliPort playerPort ];

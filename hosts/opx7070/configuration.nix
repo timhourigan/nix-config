@@ -46,7 +46,12 @@
   networking.networkmanager.enable = true;
   # Required for ZFS
   networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraUpFlags = [
+      "--accept-dns=false"
+    ];
+  };
   # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
@@ -91,7 +96,10 @@
       # Glances monitoring service
       glances.enable = true;
       # Podman virtualisation
-      podman.enable = true;
+      podman = {
+        enable = true;
+        autoPrune = true;
+      };
       # Slimserver / LMS / Lyrion
       slimserver = {
         enable = true;
@@ -104,9 +112,10 @@
         enable = true;
         extraOptions = [
           "--network=host"
+          "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2025.4.3";
+        image = "ghcr.io/home-assistant/home-assistant:2025.4.4";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
         z2mPackage = pkgs.unstable.zigbee2mqtt_1;
       };
