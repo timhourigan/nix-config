@@ -109,6 +109,7 @@
         enable = true;
         extraOptions = [
           "--network=host"
+          "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2025.4.4";
