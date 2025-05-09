@@ -111,7 +111,7 @@
           "--network=host"
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2025.4.3";
+        image = "ghcr.io/home-assistant/home-assistant:2025.4.4";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
         z2mPackage = pkgs.unstable.zigbee2mqtt_1;
       };
