@@ -70,17 +70,24 @@
       pihole = {
         enable = true;
         extraOptions = [
-          "--network=host"
+          "--cap-add=NET_BIND_SERVICE" # Allow binding to ports below 1024
           "--dns=9.9.9.9" # Container DNS
         ];
-        # Use Unbound, accessing via localhost
-        environment.FTLCONF_dns_upstreams = "127.0.0.1#5335";
+        # Use Unbound, accessing via Podman interface
+        environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
+        # Needed when using container bridged mode
+        environment.FTLCONF_dns_listeningMode = "all";
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
         # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
         image = "docker.io/pihole/pihole:2025.04.0";
       };
       # Recursive DNS resolver
-      unbound.enable = true;
+      unbound = {
+        enable = true;
+        # Allow access from Podman interface (PiHole)
+        settings.server.interface = [ "10.88.0.1" ];
+        settings.server.access-control = [ "10.88.0.0/16 allow" ];
+      };
       # Podman virtualisation
       podman = {
         enable = true;
