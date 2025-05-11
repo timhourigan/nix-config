@@ -33,10 +33,6 @@
   # Networking
   networking.hostName = "x13";
   networking.networkmanager.enable = true;
-  services.tailscale.enable = true;
-  # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
-  # https://github.com/NixOS/nixpkgs/issues/180175
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   # Add hosts to /etc/hosts
   networking.extraHosts =
     ''
@@ -117,6 +113,11 @@
       glances.enable = true;
       xserver.displaylink.enable = true;
       ssh.enable = true;
+      tailscale =
+        {
+          enable = true;
+          enableDNS = false;
+        };
     };
   };
 

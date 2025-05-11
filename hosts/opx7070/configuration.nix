@@ -44,15 +44,6 @@
   networking.networkmanager.enable = true;
   # Required for ZFS
   networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
-  services.tailscale = {
-    enable = true;
-    extraUpFlags = [
-      "--accept-dns=false"
-    ];
-  };
-  # Workaround - Tailscale causing NetworkManager-wait-online to fail on start
-  # https://github.com/NixOS/nixpkgs/issues/180175
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -86,15 +77,6 @@
       };
       gc.enable = true;
       glances.enable = true;
-      podman = {
-        enable = true;
-        autoPrune = true;
-      };
-      slimserver = {
-        enable = true;
-        package = pkgs.unstable.slimserver;
-      };
-      ssh.enable = true;
       hass = {
         enable = true;
         extraOptions = [
@@ -106,6 +88,20 @@
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
         z2mPackage = pkgs.unstable.zigbee2mqtt_1;
       };
+      podman = {
+        enable = true;
+        autoPrune = true;
+      };
+      slimserver = {
+        enable = true;
+        package = pkgs.unstable.slimserver;
+      };
+      ssh.enable = true;
+      tailscale =
+        {
+          enable = true;
+          enableDNS = false;
+        };
     };
   };
 

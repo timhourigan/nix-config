@@ -6,7 +6,10 @@ in
 {
   options = {
     modules.desktops.xfce = {
-      enable = lib.mkEnableOption "Enable XFCE desktop";
+      enable = lib.mkEnableOption "xfce" // {
+        description = "Enable XFCE desktop";
+        default = false;
+      };
       enableRDP = lib.mkOption {
         type = lib.types.bool;
         default = true;
