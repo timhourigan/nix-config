@@ -3,9 +3,7 @@
 {
   imports = [
     ../../modules
-    ../common/desktop-xfce.nix
-    ../common/localisation.nix
-    ../common/users-groups.nix
+    ../common
     ./hardware-configuration.nix
   ];
 
@@ -55,18 +53,12 @@
 
   # Modules
   modules = {
-    secrets = {
-      # sops-nix secrets management
-      sops-nix.enable = true;
-    };
+    desktops.xfce.enable = true;
+    secrets.sops-nix.enable = true;
     services = {
-      # Avahi service discovery
       avahi.enable = true;
-      # Garbage collection
       gc.enable = true;
-      # Glances monitoring service
       glances.enable = true;
-      # Pi-Hole DNS with Unbound
       pihole = {
         enable = true;
         extraOptions = [
@@ -81,19 +73,16 @@
         # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
         image = "docker.io/pihole/pihole:2025.04.0";
       };
-      # Recursive DNS resolver
       unbound = {
         enable = true;
         # Allow access from Podman interface (PiHole)
         settings.server.interface = [ "10.88.0.1" ];
         settings.server.access-control = [ "10.88.0.0/16 allow" ];
       };
-      # Podman virtualisation
       podman = {
         enable = true;
         autoPrune = true;
       };
-      # SSH server
       ssh.enable = true;
     };
   };

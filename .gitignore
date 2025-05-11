@@ -1,3 +1,6 @@
 # Build files
 result
 *.qcow2
+
+# Editors
+.vscode
