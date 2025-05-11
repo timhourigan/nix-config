@@ -35,7 +35,7 @@ in
         description = "Enable tlp";
         default = false;
       };
-      defaultSettings = lib.mkOption {
+      settings = lib.mkOption {
         description = "tlp settings";
         type = lib.types.attrs;
         default = defaultSettings;
@@ -46,7 +46,7 @@ in
   config = lib.mkIf cfg.enable {
     services.tlp = {
       enable = true;
-      settings = cfg.defaultSettings;
+      settings = cfg.settings;
     };
   };
 }
