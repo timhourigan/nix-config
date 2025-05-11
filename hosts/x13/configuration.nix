@@ -62,30 +62,6 @@
   # Android
   programs.adb.enable = true;
 
-  # Power management
-  # tlp - https://linrunner.de/tlp/settings
-  services.tlp = {
-    enable = true;
-    settings = {
-      # CPU
-      # See options with `sudo tlp-stat -p`
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
-      # Battery
-      # Start charging at 75%, stop charging at 85%
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 85;
-      RESTORE_THRESHOLDS_ON_BAT = 1;
-      # Platform
-      # See options with `sudo tlp-stat -p`
-      PLATFORM_PROFILE_ON_AC = "performance";
-      PLATFORM_PROFILE_ON_BAT = "low-power";
-    };
-  };
   # Thermald (Intel only) - https://wiki.debian.org/thermald
   # To be investigated if any benefit - Doesn't currently work due
   # to lap detection, which can be ignored with `--ignore-cpuid-check`
@@ -109,15 +85,16 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
+      displaylink.enable = true;
       gc.enable = true;
       glances.enable = true;
-      xserver.displaylink.enable = true;
       ssh.enable = true;
       tailscale =
         {
           enable = true;
           enableDNS = false;
         };
+      tlp.enable = true;
     };
   };
 
