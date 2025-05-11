@@ -1,5 +1,7 @@
 { lib, config, options, ... }:
 
+# https://wiki.nixos.org/wiki/Tailscale
+
 let
   cfg = config.modules.services.tailscale;
 in
