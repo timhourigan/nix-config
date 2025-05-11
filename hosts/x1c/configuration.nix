@@ -3,9 +3,7 @@
 {
   imports = [
     ../../modules
-    ../common/desktop-cinnamon.nix
-    ../common/localisation.nix
-    ../common/users-groups.nix
+    ../common
     ./hardware-configuration.nix
   ];
 
@@ -100,18 +98,12 @@
 
   # Modules
   modules = {
-    packages = {
-      # abcde CD ripper
-      abcde.enable = true;
-    };
+    desktops.cinnamon.enable = true;
+    packages.abcde.enable = true;
     services = {
-      # Avahi service discovery
       avahi.enable = true;
-      # Garbage collection
       gc.enable = true;
-      # Glances monitoring service
       glances.enable = true;
-      # DisplayLink USB graphics
       xserver.displaylink.enable = true;
     };
   };

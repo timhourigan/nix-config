@@ -3,9 +3,7 @@
 {
   imports = [
     ../../modules
-    ../common/desktop-cinnamon.nix
-    ../common/localisation.nix
-    ../common/users-groups.nix
+    ../common
     ./backups.nix
     ./hardware-configuration.nix
   ];
@@ -70,44 +68,33 @@
 
   # Modules
   modules = {
-    secrets = {
-      # sops-nix secrets management
-      sops-nix.enable = true;
-    };
+    desktops.xfce.enable = true;
+    secrets.sops-nix.enable = true;
     services = {
-      # Avahi service discovery
       avahi.enable = true;
-      # Chrony NTP client and server
       chrony =
         {
           enable = true;
           # Enable server functionality and allow access from local network
           extraConfig = "allow 192.168.0.0/16";
         };
-      # Gatus
       gatus = {
         enable = true;
         openFirewall = true;
         package = pkgs.unstable.gatus;
         configFile = config.sops.secrets."gatus".path;
       };
-      # Garbage collection
       gc.enable = true;
-      # Glances monitoring service
       glances.enable = true;
-      # Podman virtualisation
       podman = {
         enable = true;
         autoPrune = true;
       };
-      # Slimserver / LMS / Lyrion
       slimserver = {
         enable = true;
         package = pkgs.unstable.slimserver;
       };
-      # SSH server
       ssh.enable = true;
-      # Home Assistant
       hass = {
         enable = true;
         extraOptions = [
