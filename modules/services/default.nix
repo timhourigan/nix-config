@@ -14,6 +14,7 @@
     ./slimserver
     ./ssh
     ./tailscale
+    ./tlp
     ./unbound
   ];
 }

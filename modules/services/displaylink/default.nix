@@ -11,11 +11,11 @@
 #
 
 let
-  cfg = config.modules.services.xserver.displaylink;
+  cfg = config.modules.services.displaylink;
 in
 {
   options = {
-    modules.services.xserver.displaylink = {
+    modules.services.displaylink = {
       enable = lib.mkEnableOption "DisplayLink USB Graphics" // {
         description = "Enable support for DisplayLink USB Graphics devices";
         default = false;
