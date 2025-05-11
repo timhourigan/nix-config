@@ -6,7 +6,10 @@ in
 {
   options = {
     modules.desktops.cinnamon = {
-      enable = lib.mkEnableOption "Enable Cinnamon desktop";
+      enable = lib.mkEnableOption "cinnamon" // {
+        description = "Enable Cinnamon desktop";
+        default = false;
+      };
       enableRDP = lib.mkOption {
         type = lib.types.bool;
         default = true;

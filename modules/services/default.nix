@@ -13,6 +13,7 @@
     ./podman
     ./slimserver
     ./ssh
+    ./tailscale
     ./unbound
   ];
 }
