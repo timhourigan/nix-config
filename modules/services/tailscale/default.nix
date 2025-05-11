@@ -23,6 +23,7 @@ in
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
+      # DNS is enabled by default
       extraUpFlags = if cfg.enableDNS then [ ] else [ "--accept-dns=false" ];
     };
 
