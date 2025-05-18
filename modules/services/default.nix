@@ -9,6 +9,7 @@
     ./gc
     ./glances
     ./hass
+    ./jellyfin
     ./pihole
     ./podman
     ./slimserver
