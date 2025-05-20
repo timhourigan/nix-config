@@ -55,11 +55,11 @@ build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
-	nix shell nixpkgs#sops -c sops secrets/secrets.yaml
+	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
 
 .PHONY: update-secrets
 update-secrets: ## Update secrets for added/removed keys
-	nix shell nixpkgs#sops -c sops updatekeys secrets/secrets.yaml
+	nix shell nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
 
 .PHONY: test
 test: ## Test
