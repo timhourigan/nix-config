@@ -21,7 +21,7 @@ indent_style = tab
 trim_trailing_whitespace = false
 
 [*.nix]
-ident_size = 2
+indent_size = 2
 
 [*.yaml]
 indent_size = 2

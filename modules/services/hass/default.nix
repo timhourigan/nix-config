@@ -129,7 +129,7 @@ in
           # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
           # Version 2.0.0 will remove all action sensors (sensor.*_action entities)
           # Options:
-          # 1. Use MQTT trigers, which use device ids and so not desired
+          # 1. Use MQTT triggers, which use device ids and so not desired
           # https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html#via-mqtt-device-trigger-recommended
           # 2. Restore action sensors in 2.0.0:
           # legacy_action_sensor = true;

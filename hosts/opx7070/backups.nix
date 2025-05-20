@@ -15,8 +15,8 @@
     gatus-local = {
       initialize = true;
       # /var/lib/gatus is a symbolic link to /var/lib/private/gatus
-      # Restic doesn't follow symbolic links 
-      # - https://restic.readthedocs.io/en/stable/040_backup.html#backing-up-special-items-and-metadata 
+      # Restic doesn't follow symbolic links
+      # - https://restic.readthedocs.io/en/stable/040_backup.html#backing-up-special-items-and-metadata
       paths = [ "/var/lib/private/gatus" ];
       repository = "/mnt/backup/gatus";
       passwordFile = "/etc/nixos/secrets/restic-gatus-local";

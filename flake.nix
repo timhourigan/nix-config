@@ -24,12 +24,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Pre-Commit Hooks
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # FIXME - Others to consider
     # Hardware
     # hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, pre-commit-hooks, ... }@inputs:
     let
       inherit (self) outputs;
     in
@@ -90,12 +96,19 @@
       # Overlays
       overlays = import ./overlays { inherit inputs; };
 
+      # Dev Shells
+      devShells.x86_64-linux = {
+        default = with nixpkgs.legacyPackages.x86_64-linux; mkShell {
+          inherit (self.checks.x86_64-linux.pre-commit) shellHook;
+          buildInputs = self.checks.x86_64-linux.pre-commit.enabledPackages;
+        };
+      };
+
       # Formatter Configuration
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       # Checks
       checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
-
         checkmake = runCommand "checkmake"
           {
             buildInputs = [ checkmake ];
@@ -104,7 +117,6 @@
             mkdir $out
             checkmake ${./Makefile}
           '';
-
         markdownlint = runCommand "mdl"
           {
             buildInputs = [ mdl ];
@@ -113,6 +125,39 @@
             mkdir $out
             mdl ${./README.md}
           '';
+        pre-commit = pre-commit-hooks.lib.x86_64-linux.run {
+          src = ./.;
+          # TODO - Re-enable
+          hooks = {
+            # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
+            # Formatters
+            # TODO - Enable Prettier
+            # prettier.enable = true;
+            # Editors
+            # editorconfig-checker.enable = true;
+            # Makefile
+            # checkmake.enable = true;
+            # Markdown
+            # markdownlint.enable = true;
+            # # Nix
+            # deadnix.enable = true;
+            # flake-checker =
+            #   {
+            #     enable = true;
+            #     args = [ "--no-telemetry" ];
+            #   };
+            # nixpkgs-fmt.enable = true;
+            # statix.enable = true;
+            # # Secrets
+            # trufflehog.enable = true;
+            # # Shell
+            # shellcheck.enable = true;
+            # # Spelling
+            # typos.enable = true;
+            # # YAML
+            # yamllint.enable = true;
+          };
+        };
       };
     };
 }

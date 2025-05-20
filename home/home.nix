@@ -57,7 +57,7 @@
     taskwarrior3 # Task manager
     tig # git text-mode interface
     tldr # Help pages
-    tree # Display directory struture
+    tree # Display directory structure
     unetbootin # Bootable USB creator
     unzip # Zip decompress
     usbutils # USB tools (lsusb)

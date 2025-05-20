@@ -14,10 +14,10 @@ creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
-        # Users
-        - *timh
-        # Hosts
-        - *m625q
-        - *opx7070
-        - *sid
-        - *x13
+          # Users
+          - *timh
+          # Hosts
+          - *m625q
+          - *opx7070
+          - *sid
+          - *x13

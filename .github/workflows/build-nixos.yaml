@@ -27,8 +27,8 @@ jobs:
           name: timhourigan
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build
-      # Using he equivalent of `nixos-rebuild build --flake .` as
-      # the nix action does not have `nixos-rebuild``
+        # Using he equivalent of `nixos-rebuild build --flake .` as
+        # the nix action does not have `nixos-rebuild``
         run: |
           nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
           nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
