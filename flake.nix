@@ -40,6 +40,10 @@
           modules = [ ./hosts/m625q/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
         };
+        mm = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/mm/configuration.nix ];
+          specialArgs = { inherit inputs outputs; };
+        };
         opx7070 = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/opx7070/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
@@ -61,6 +65,11 @@
       # Home-Manager Configurations
       homeConfigurations = {
         "timh@m625q" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home/home.nix ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "timh@mm" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home/home.nix ];
           extraSpecialArgs = { inherit inputs outputs; };
