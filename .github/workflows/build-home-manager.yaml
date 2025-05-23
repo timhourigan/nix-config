@@ -3,7 +3,6 @@
 name: build-home-manager
 run-name: Build Home Manager
 on:
-  push:
   pull_request:
 jobs:
   build-hm:

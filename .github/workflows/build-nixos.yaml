@@ -3,7 +3,6 @@
 name: build-nixos
 run-name: Build NixOS
 on:
-  push:
   pull_request:
 jobs:
   build-os:
