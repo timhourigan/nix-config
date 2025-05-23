@@ -24,6 +24,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Treefmt
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Pre-Commit Hooks
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
@@ -105,7 +111,17 @@
       };
 
       # Formatter Configuration
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.x86_64-linux =
+        inputs.treefmt-nix.lib.mkWrapper
+          inputs.nixpkgs.legacyPackages.x86_64-linux
+          {
+            projectRootFile = "flake.nix";
+            programs = {
+              nixpkgs-fmt.enable = true;
+              deadnix.enable = true;
+              statix.enable = true;
+            };
+          };
 
       # Checks
       checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
@@ -129,18 +145,27 @@
           src = ./.;
           # TODO - Re-enable
           hooks = {
-            # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
-            # Formatters
-            # TODO - Enable Prettier
-            # prettier.enable = true;
-            # Editors
+            # # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
+            # # Formatters
+            # prettier = {
+            #       enable = true;
+            #       settings = {
+            #         write = true;
+            #       };
+            #     };
+            # # Editors
             # editorconfig-checker.enable = true;
-            # Makefile
+            # # GitHub Actions
+            # actionlint.enable = true;
+            # # Makefile
             # checkmake.enable = true;
-            # Markdown
+            # # Markdown
             # markdownlint.enable = true;
             # # Nix
-            # deadnix.enable = true;
+            # deadnix = {
+            #       enable = true;
+            #       settings.edit = true;
+            #     };
             # flake-checker =
             #   {
             #     enable = true;
