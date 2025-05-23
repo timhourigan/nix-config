@@ -31,9 +31,9 @@ in
   config = lib.mkIf cfg.enable {
     nix.gc = {
       automatic = true;
-      persistent = cfg.persistent;
-      dates = cfg.dates;
-      options = cfg.options;
+      inherit (cfg) persistent;
+      inherit (cfg) dates;
+      inherit (cfg) options;
     };
   };
 }

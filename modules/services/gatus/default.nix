@@ -46,9 +46,9 @@ in
 
     services.gatus = {
       enable = true;
-      package = cfg.package;
-      openFirewall = cfg.openFirewall;
-      configFile = cfg.configFile;
+      inherit (cfg) package;
+      inherit (cfg) openFirewall;
+      inherit (cfg) configFile;
     };
   };
 }

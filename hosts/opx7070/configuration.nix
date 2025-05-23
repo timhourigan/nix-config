@@ -28,22 +28,30 @@
   nix.settings.trusted-users = [ "timh" ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   # Filesystem support
-  boot.supportedFilesystems = [ "ntfs" "zfs" ];
-  boot.zfs.forceImportRoot = false; # Recommended setting
+  boot = {
+    supportedFilesystems = [ "ntfs" "zfs" ];
+    zfs.forceImportRoot = false; # Recommended setting
+  };
   services.zfs.autoScrub = {
     enable = true;
     interval = "*-*-1,15 04:00:00"; # 1st and 15th of every month at 4am
   };
 
   # Networking
-  networking.hostName = "opx7070";
-  networking.networkmanager.enable = true;
-  # Required for ZFS
-  networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
+  networking = {
+    hostName = "opx7070";
+    networkmanager.enable = true;
+    # Required for ZFS
+    hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
+  };
 
   # System packages
   environment.systemPackages = with pkgs; [

@@ -30,8 +30,8 @@ in
   config = lib.mkIf cfg.enable {
     services.slimserver = {
       enable = true;
-      package = cfg.package;
-      dataDir = cfg.dataDir;
+      inherit (cfg) package;
+      inherit (cfg) dataDir;
     };
     systemd.services.slimserver = {
       # Ensure network is up before starting

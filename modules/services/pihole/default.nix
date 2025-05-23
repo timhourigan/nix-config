@@ -46,15 +46,15 @@ in
 
   config = lib.mkIf cfg.enable {
     virtualisation.oci-containers = {
-      backend = cfg.backend;
+      inherit (cfg) backend;
       containers.pihole = {
         # https://github.com/pi-hole/docker-pi-hole
         autoStart = true;
         volumes = [ "/var/lib/pihole:/etc/pihole" ];
-        environment = cfg.environment;
-        environmentFiles = cfg.environmentFiles;
-        image = cfg.image;
-        extraOptions = cfg.extraOptions;
+        inherit (cfg) environment;
+        inherit (cfg) environmentFiles;
+        inherit (cfg) image;
+        inherit (cfg) extraOptions;
         ports = [
           "53:53/tcp"
           "53:53/udp"

@@ -31,12 +31,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.hostName = "mm";
-  networking.networkmanager.enable = true;
-  # Don't want wireless
-  networking.wireless.enable = false;
-  # Backup DNS server / Quad9
-  networking.nameservers = [ "9.9.9.9" ];
+  networking = {
+    hostName = "mm";
+    networkmanager.enable = true;
+    # Don't want wireless
+    wireless.enable = false;
+    # Backup DNS server / Quad9
+    nameservers = [ "9.9.9.9" ];
+  };
 
   # System packages
   environment.systemPackages = with pkgs; [

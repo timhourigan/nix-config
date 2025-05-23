@@ -126,9 +126,12 @@
           {
             projectRootFile = "flake.nix";
             programs = {
-              # nixpkgs-fmt.enable = true;
+              # https://github.com/numtide/treefmt-nix?tab=readme-ov-file#supported-programs
+              actionlint.enable = true;
               deadnix.enable = true;
-              # statix.enable = true;
+              nixpkgs-fmt.enable = true;
+              mdformat.enable = true;
+              statix.enable = true;
             };
           };
 
@@ -136,41 +139,46 @@
       checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
         pre-commit = pre-commit-hooks.lib.x86_64-linux.run {
           src = ./.;
-          # TODO - Re-enable
           hooks = {
-            # # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
-            # # Formatters
-            # prettier = {
-            #       enable = true;
-            #       settings = {
-            #         write = true;
-            #       };
-            #     };
-            # # Editors
-            # editorconfig-checker.enable = true;
-            # # GitHub Actions
-            # actionlint.enable = true;
-            # # Makefile
-            # checkmake.enable = true;
-            # # Markdown
-            # markdownlint.enable = true;
-            # # Nix
+            # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
+            # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
+            # Editors
+            editorconfig-checker = {
+              enable = true;
+              excludes = [
+                "flake.lock"
+              ];
+            };
+            # GitHub Actions
+            actionlint.enable = true;
+            # Makefile
+            checkmake.enable = true;
+            # Markdown
+            markdownlint.enable = true;
+            # Nix
             deadnix.enable = true;
-            # flake-checker =
-            #   {
-            #     enable = true;
-            #     args = [ "--no-telemetry" ];
-            #   };
-            # nixpkgs-fmt.enable = true;
-            # statix.enable = true;
-            # # Secrets
-            # trufflehog.enable = true;
-            # # Shell
-            # shellcheck.enable = true;
-            # # Spelling
-            # typos.enable = true;
-            # # YAML
-            # yamllint.enable = true;
+            flake-checker =
+              {
+                enable = true;
+                args = [ "--no-telemetry" ];
+              };
+            nixpkgs-fmt.enable = true;
+            statix = {
+              enable = true;
+              settings.ignore = [ "**/hardware-configuration.nix" ];
+            };
+            # Secrets
+            trufflehog.enable = true;
+            # Shell
+            shellcheck.enable = true;
+            # Spelling
+            typos = {
+              enable = true;
+              settings.exclude =
+                "secrets/*";
+            };
+            # YAML
+            yamllint.enable = true;
           };
         };
       };

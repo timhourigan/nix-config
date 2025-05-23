@@ -27,17 +27,25 @@
   nix.settings.trusted-users = [ "timh" ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+  };
 
   # Networking
-  networking.hostName = "m625q";
-  networking.networkmanager.enable = true;
-  # Don't want wireless
-  networking.wireless.enable = false;
-  # Backup DNS server / Quad9
-  networking.nameservers = [ "9.9.9.9" ];
+  networking = {
+    hostName = "m625q";
+    networkmanager.enable = true;
+    # Don't want wireless
+    wireless.enable = false;
+    # Backup DNS server / Quad9
+    nameservers = [ "9.9.9.9" ];
+  };
 
   # System packages
   environment.systemPackages = with pkgs; [

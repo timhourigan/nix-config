@@ -30,7 +30,7 @@ in
     services.glances = {
       enable = true;
       openFirewall = true;
-      port = cfg.port;
+      inherit (cfg) port;
       extraArgs = if cfg.webserver then [ "--webserver" ] else [ ];
     };
   };

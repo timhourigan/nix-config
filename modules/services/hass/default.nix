@@ -49,7 +49,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     # Mosquitto service
     services.mosquitto = {
       enable = true;
@@ -84,11 +83,16 @@ in
           };
         }];
     };
+
     # Service can return `Error: Cannot assign requested address` on boot
     # so restart "always"
-    systemd.services.mosquitto.serviceConfig = {
-      Restart = lib.mkForce "always";
-      RestartSec = "10";
+    systemd = {
+      services.mosquitto = {
+        serviceConfig = {
+          Restart = lib.mkForce "always";
+          RestartSec = "10";
+        };
+      };
     };
 
     # zigbee2mqtt service
@@ -149,29 +153,33 @@ in
         };
       };
     };
-    systemd.services.zigbee2mqtt = {
-      serviceConfig = {
-        # z2m stops (with exit 0) when the adapter disconnects or isn't
-        # available yet, so restart "always"
-        Restart = lib.mkForce "always";
-        RestartSec = "10";
+
+    systemd = {
+      services.zigbee2mqtt = {
+        serviceConfig = {
+          # z2m stops (with exit 0) when the adapter disconnects or isn't
+          # available yet, so restart "always"
+          Restart = lib.mkForce "always";
+          RestartSec = "10";
+        };
+        # Ensure network is up before starting
+        wants = [ "network-online.target" ];
+        after = [ "network-online.target" ];
       };
-      # Ensure network is up before starting
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     };
 
     # Home Assistant container
     virtualisation.oci-containers = {
-      backend = cfg.backend;
+      inherit (cfg) backend;
       containers.hass = {
         autoStart = true;
         volumes = [ "/var/lib/hass:/config" ];
         environment.TZ = cfg.environment.TZ;
-        image = cfg.image;
-        extraOptions = cfg.extraOptions;
+        inherit (cfg) image;
+        inherit (cfg) extraOptions;
       };
     };
+
     systemd.services."${config.virtualisation.oci-containers.backend}-hass" = {
       # Results in the creation of /var/lib/hass
       # User and Group could be specified here but it would break the container,

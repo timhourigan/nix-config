@@ -1,4 +1,4 @@
-{ ... }:
+_:
 
 # restic
 # https://mynixos.com/nixpkgs/options/services.restic.backups.%3Cname%3E

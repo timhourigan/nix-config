@@ -77,7 +77,7 @@ creation_rules:
 
 <!--- editorconfig-checker-enable --->
 
-> [!NOTE]
+> \[!NOTE\]
 > This is a basic example. See `.sops.yaml` in this repository, for a more
 > complete setup, with multiple public keys from users and hosts.
 

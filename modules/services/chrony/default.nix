@@ -37,9 +37,9 @@ in
   config = lib.mkIf cfg.enable {
     services.chrony = {
       enable = true;
-      extraConfig = cfg.extraConfig;
-      servers = cfg.servers;
-      serverOption = cfg.serverOption;
+      inherit (cfg) extraConfig;
+      inherit (cfg) servers;
+      inherit (cfg) serverOption;
     };
 
     # If extraConfig contains `allow` assume external access and update the firewall
