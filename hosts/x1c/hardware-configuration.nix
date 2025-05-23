@@ -1,5 +1,5 @@
 # Generate with `nixos-generate-config --show-hardware-config`
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, modulesPath, ... }:
 
 {
   imports =

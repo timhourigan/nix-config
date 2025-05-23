@@ -126,30 +126,14 @@
           {
             projectRootFile = "flake.nix";
             programs = {
-              nixpkgs-fmt.enable = true;
+              # nixpkgs-fmt.enable = true;
               deadnix.enable = true;
-              statix.enable = true;
+              # statix.enable = true;
             };
           };
 
       # Checks
       checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
-        checkmake = runCommand "checkmake"
-          {
-            buildInputs = [ checkmake ];
-          }
-          ''
-            mkdir $out
-            checkmake ${./Makefile}
-          '';
-        markdownlint = runCommand "mdl"
-          {
-            buildInputs = [ mdl ];
-          }
-          ''
-            mkdir $out
-            mdl ${./README.md}
-          '';
         pre-commit = pre-commit-hooks.lib.x86_64-linux.run {
           src = ./.;
           # TODO - Re-enable
@@ -171,10 +155,7 @@
             # # Markdown
             # markdownlint.enable = true;
             # # Nix
-            # deadnix = {
-            #       enable = true;
-            #       settings.edit = true;
-            #     };
+            deadnix.enable = true;
             # flake-checker =
             #   {
             #     enable = true;

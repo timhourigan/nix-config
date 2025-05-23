@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ pkgs, ... }:
 
 # `workstation` hosts
 
