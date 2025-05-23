@@ -25,8 +25,39 @@
         extraSpecialArgs = { inherit inputs outputs; };
     };
     ```
+
   - Update the matrix in `.github/workflows/build-home-manager.yaml` to include the new host
   - Update the matrix in `.github/workflows/build-nixos.yaml` to include the new host
 
-- Commit the changes to a branch and check out the changes on the new host
-- TODO - sops
+- Commit the changes to a branch
+- On the new host, temporarily install `vim`
+
+  ```shell
+  nix-shell -p vim
+  ```
+
+- Modify the `/etc/nixos/configuration.nix` with `sudo vim`
+  - To change the hostname to the new name
+  - To enable SSH
+- Build the changes and switch to them
+
+  ```shell
+  sudo nixos-rebuild switch
+  ```
+
+- Copy the installation configurations to a different host
+
+```shell
+scp <username>@<ip-address>:/etc/nixos/configuration.nix ./hosts/<hostname>/configuration-installer.nix
+# Replacing the existing
+scp <username>@<ip-address>:/etc/nixos/hardware-configuration.nix ./hosts/<hostname>/hardware-configuration.nix
+```
+- Update `boot.loader` in `./hosts/<hostname>/configuration.nix` to match the settings in `configuration-installer.nix` and delete `configuration-installer.nix`
+- Commit the changes to the branch
+- SSH to the new host
+- Check out the changes on the new host
+- On the new host, temporarily install `git` and `GNU make`
+
+  ```shell
+  nix-shell -p git gnumake
+  ```
