@@ -1,6 +1,9 @@
 { lib, config, options, ... }:
 
 # https://github.com/lovelaze/nebula-sync
+#
+# Required on replicas in PiHole env vars for Nebula Sync to work
+# FTLCONF_webserver_api_app_sudo = "true";
 
 let
   cfg = config.modules.services.nebulaSync;
