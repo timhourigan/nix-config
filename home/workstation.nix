@@ -14,6 +14,7 @@
     gimp # Image editor
     inkscape # SVG editor
     libreoffice # Office suite
+    mqtt-explorer # MQTT client/explorer
     telegram-desktop # Messaging
     # FIXME - Removing for now as it causes a compilation,
     # which fails in GitHub Actions, due to time and space

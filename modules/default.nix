@@ -6,5 +6,6 @@
     ./packages
     ./secrets
     ./services
+    ./system
   ];
 }

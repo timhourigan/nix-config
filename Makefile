@@ -13,9 +13,10 @@ build-nixos: ## Build NixOS configuration
 
 .PHONY: build-nixos-all
 build-nixos-all: ## Build NixOS configuration for all hosts
-	nixos-rebuild build --flake . --target-host m625q.local
+	nixos-rebuild build --flake . --target-host m625q
+	nixos-rebuild build --flake . --target-host mm
 	nixos-rebuild build --flake . --target-host opx7070
-	nixos-rebuild build --flake . --target-host sid.local
+	nixos-rebuild build --flake . --target-host sid
 	nixos-rebuild build --flake . --target-host x13
 
 .PHONY: build-nixos-dry-run
