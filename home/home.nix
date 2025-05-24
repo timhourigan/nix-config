@@ -46,7 +46,6 @@
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
     mediainfo # Media file information
-    mqtt-explorer # MQTT client/explorer
     nmap # Network exploration
     nvd # Nix diff tool
     p7zip # Compression tool

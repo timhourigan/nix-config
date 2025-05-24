@@ -86,6 +86,11 @@
       };
       ssh.enable = true;
     };
+    system.autoUpgrade = {
+      enable = true;
+      dates = "06:00";
+      flake = "github:timhourigan/nix-config";
+    };
   };
 
   # Secrets
