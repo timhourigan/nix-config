@@ -23,8 +23,8 @@ in
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
-      # DNS is enabled by default
-      extraUpFlags = if cfg.enableDNS then [ ] else [ "--accept-dns=false" ];
+      # DNS is enabled by default, so disable it if preferred
+      extraSetFlags = if cfg.enableDNS then [ ] else [ "--accept-dns=false" ];
     };
 
     # WORKAROUND - Tailscale causing NetworkManager-wait-online to fail on start
