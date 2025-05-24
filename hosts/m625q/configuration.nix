@@ -107,7 +107,6 @@
   # Secrets
   sops = {
     secrets = {
-      nebula_sync_env = { };
       pihole_env = { };
     };
   };
