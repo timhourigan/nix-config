@@ -81,6 +81,11 @@
         # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
         image = "docker.io/pihole/pihole:2025.04.0";
       };
+      nebulaSync = {
+        enable = true;
+        environmentFiles = [ config.sops.secrets."nebula_sync_env".path ];
+        image = "ghcr.io/lovelaze/nebula-sync:v0.11.0";
+      };
       unbound = {
         enable = true;
         # Allow access from Podman interface (PiHole)
@@ -103,6 +108,7 @@
   # Secrets
   sops = {
     secrets = {
+      nebula_sync_env = { };
       pihole_env = { };
     };
   };

@@ -9,6 +9,7 @@
     ./gc
     ./glances
     ./hass
+    ./nebula-sync
     ./pihole
     ./podman
     ./slimserver
