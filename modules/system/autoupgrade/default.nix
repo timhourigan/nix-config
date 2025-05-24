@@ -1,10 +1,11 @@
-{ lib, config, options, ... }:
+{ lib, config, options, pkgs, ... }:
 
 # System Upgrade
 # https://mynixos.com/options/system.autoUpgrade
 
 let
   cfg = config.modules.system.autoUpgrade;
+  logfile = "/var/log/nixos-upgrade.log";
 in
 {
   options = {
@@ -61,7 +62,14 @@ in
     };
 
     systemd.services.nixos-upgrade.serviceConfig = {
-      StandardOutput = "append:/var/log/nixos-upgrade.log";
+      # Setup log file, with start and end timestamps
+      ExecStartPre = ''
+        ${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/date --rfc-3339=seconds | ${pkgs.findutils}/bin/xargs -I{} ${pkgs.coreutils}/bin/echo "[{}] === Auto Upgrade started ===" >> ${logfile}'
+      '';
+      ExecStartPost = ''
+        ${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/date --rfc-3339=seconds | ${pkgs.findutils}/bin/xargs -I{} ${pkgs.coreutils}/bin/echo "[{}] === Auto Upgrade finished ===" >> ${logfile}'
+      '';
+      StandardOutput = "append:${logfile}";
       StandardError = "inherit";
     };
   };
