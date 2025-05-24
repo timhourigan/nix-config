@@ -14,12 +14,13 @@
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
-  # Home Manager release
-  home.stateVersion = "23.05";
-
-  # User info
-  home.username = "timh";
-  home.homeDirectory = "/home/timh";
+  home = {
+    # Home Manager release
+    stateVersion = "23.05";
+    # User info
+    username = "timh";
+    homeDirectory = "/home/timh";
+  };
 
   # Allow fontconfig to discover installed fonts and configurations
   fonts.fontconfig.enable = true;
@@ -57,7 +58,7 @@
     taskwarrior3 # Task manager
     tig # git text-mode interface
     tldr # Help pages
-    tree # Display directory struture
+    tree # Display directory structure
     unetbootin # Bootable USB creator
     unzip # Zip decompress
     usbutils # USB tools (lsusb)

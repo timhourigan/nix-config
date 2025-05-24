@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ pkgs, ... }:
 
 # `workstation` hosts
 
@@ -16,7 +16,7 @@
     libreoffice # Office suite
     telegram-desktop # Messaging
     # FIXME - Removing for now as it causes a compilation,
-    # which fails in GitHub Actions, due to time and space 
+    # which fails in GitHub Actions, due to time and space
     # zed-editor # Text editor
   ];
 

@@ -43,7 +43,7 @@ in
   config = lib.mkIf cfg.enable {
     services.avahi = {
       enable = true;
-      nssmdns4 = cfg.nssmdns4;
+      inherit (cfg) nssmdns4;
       publish = {
         enable = cfg.enablePublish;
         addresses = cfg.enablePublishAddresses;

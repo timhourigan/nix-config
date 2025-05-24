@@ -63,6 +63,8 @@ age1...
 - Create a `.sops.yaml` file (at the root of the nix-config folder, alongside `flakes.nix`)
 - Add the public key under keys (**Not** the private key)
 
+<!--- editorconfig-checker-disable --->
+
 ```yaml
 keys:
   - &primary age1...
@@ -73,7 +75,9 @@ creation_rules:
         - *primary
 ```
 
-> [!NOTE]
+<!--- editorconfig-checker-enable --->
+
+> \[!NOTE\]
 > This is a basic example. See `.sops.yaml` in this repository, for a more
 > complete setup, with multiple public keys from users and hosts.
 

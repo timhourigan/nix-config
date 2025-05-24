@@ -1,0 +1,8 @@
+# https://github.com/crate-ci/typos/blob/master/docs/reference.md
+
+[default.extend-words]
+hass = "hass"
+mosquitto = "mosquitto"
+
+[files]
+extend-exclude = ["secrets/*"]

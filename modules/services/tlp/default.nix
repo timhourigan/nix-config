@@ -46,7 +46,7 @@ in
   config = lib.mkIf cfg.enable {
     services.tlp = {
       enable = true;
-      settings = cfg.settings;
+      inherit (cfg) settings;
     };
   };
 }

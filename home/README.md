@@ -1,5 +1,5 @@
 # Home-Manager
 
-Home-Manager configuration. 
+Home-Manager configuration.
 
-* [Configuration Options](https://nix-community.github.io/home-manager/options.html).
+- [Configuration Options](https://nix-community.github.io/home-manager/options.html).

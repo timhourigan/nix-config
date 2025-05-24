@@ -30,8 +30,8 @@ in
 
   config = lib.mkIf cfg.enable {
     sops = {
-      defaultSopsFile = cfg.defaultSopsFile;
-      defaultSopsFormat = cfg.defaultSopsFormat;
+      inherit (cfg) defaultSopsFile;
+      inherit (cfg) defaultSopsFormat;
       age = {
         # Import host SSH keys as Age keys
         sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];

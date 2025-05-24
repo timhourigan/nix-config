@@ -24,12 +24,24 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Treefmt
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Pre-Commit Hooks
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # FIXME - Others to consider
     # Hardware
     # hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, pre-commit-hooks, ... }@inputs:
     let
       inherit (self) outputs;
     in
@@ -99,29 +111,76 @@
       # Overlays
       overlays = import ./overlays { inherit inputs; };
 
+      # Dev Shells
+      devShells.x86_64-linux = {
+        default = with nixpkgs.legacyPackages.x86_64-linux; mkShell {
+          inherit (self.checks.x86_64-linux.pre-commit) shellHook;
+          buildInputs = self.checks.x86_64-linux.pre-commit.enabledPackages;
+        };
+      };
+
       # Formatter Configuration
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.x86_64-linux =
+        inputs.treefmt-nix.lib.mkWrapper
+          inputs.nixpkgs.legacyPackages.x86_64-linux
+          {
+            projectRootFile = "flake.nix";
+            programs = {
+              # https://github.com/numtide/treefmt-nix?tab=readme-ov-file#supported-programs
+              actionlint.enable = true;
+              deadnix.enable = true;
+              nixpkgs-fmt.enable = true;
+              mdformat.enable = true;
+              statix.enable = true;
+            };
+          };
 
       # Checks
       checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
-
-        checkmake = runCommand "checkmake"
-          {
-            buildInputs = [ checkmake ];
-          }
-          ''
-            mkdir $out
-            checkmake ${./Makefile}
-          '';
-
-        markdownlint = runCommand "mdl"
-          {
-            buildInputs = [ mdl ];
-          }
-          ''
-            mkdir $out
-            mdl ${./README.md}
-          '';
+        pre-commit = pre-commit-hooks.lib.x86_64-linux.run {
+          src = ./.;
+          hooks = {
+            # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
+            # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
+            # Editors
+            editorconfig-checker = {
+              enable = true;
+              excludes = [
+                "flake.lock"
+              ];
+            };
+            # GitHub Actions
+            actionlint.enable = true;
+            # Makefile
+            checkmake.enable = true;
+            # Markdown
+            markdownlint.enable = true;
+            # Nix
+            deadnix.enable = true;
+            flake-checker =
+              {
+                enable = true;
+                args = [ "--no-telemetry" ];
+              };
+            nixpkgs-fmt.enable = true;
+            statix = {
+              enable = true;
+              settings.ignore = [ "**/hardware-configuration.nix" ];
+            };
+            # Secrets
+            trufflehog.enable = true;
+            # Shell
+            shellcheck.enable = true;
+            # Spelling
+            typos = {
+              enable = true;
+              settings.exclude =
+                "secrets/*";
+            };
+            # YAML
+            yamllint.enable = true;
+          };
+        };
       };
     };
 }
