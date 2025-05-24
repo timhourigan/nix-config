@@ -66,13 +66,20 @@
           "--cap-add=NET_BIND_SERVICE" # Allow binding to ports below 1024
           "--dns=9.9.9.9" # Container DNS
         ];
-        # Use Unbound, accessing via Podman interface
-        environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
-        # Needed when using container bridged mode
-        environment.FTLCONF_dns_listeningMode = "all";
+        environment = {
+          # Use Unbound, accessing via Podman interface
+          FTLCONF_dns_upstreams = "10.88.0.1#5335";
+          # Needed when using container bridged mode
+          FTLCONF_dns_listeningMode = "all";
+          # FTLCONF_webserver_api_password = "use-to-set-initial-password";
+        };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
         image = "docker.io/pihole/pihole:2025.04.0";
+      };
+      nebulaSync = {
+        enable = true;
+        environmentFiles = [ config.sops.secrets."nebula_sync_env".path ];
+        image = "ghcr.io/lovelaze/nebula-sync:v0.11.0";
       };
       unbound = {
         enable = true;
@@ -96,6 +103,7 @@
   # Secrets
   sops = {
     secrets = {
+      nebula_sync_env = { };
       pihole_env = { };
     };
   };
