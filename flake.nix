@@ -154,11 +154,10 @@
             # Makefile
             checkmake.enable = true;
             # Markdown
-            # TODO - Re-enable when it supports NixOS 25.05
-            # markdownlint.enable = true;
+            markdownlint.enable = true;
             # Nix
             deadnix.enable = true;
-            # TODO - Re-enable when it supports NixOS 25.05
+            # TODO - Re-enable when it supports NixOS 25.05: https://github.com/DeterminateSystems/flake-checker/pull/182
             # flake-checker =
             #   {
             #     enable = true;
@@ -170,8 +169,9 @@
               settings.ignore = [ "**/hardware-configuration.nix" ];
             };
             # Secrets
-            # TODO - Re-enable when it supports NixOS 25.05
+            # TODO - Fails due to old flag: https://github.com/cachix/git-hooks.nix/pull/591
             # trufflehog.enable = true;
+            ripsecrets.enable = true;
             # Shell
             shellcheck.enable = true;
             # Spelling
