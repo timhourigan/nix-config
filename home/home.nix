@@ -8,6 +8,9 @@
     ];
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "ventoy-1.1.05" # https://github.com/ventoy/Ventoy/issues/3224
+      ];
     };
   };
 
@@ -84,17 +87,16 @@
         "RedHatDisplay"
       ];
     })
-    (nerdfonts.override {
-      fonts = [
-        "DejaVuSansMono"
-        "DroidSansMono"
-        "FiraCode"
-        "Hack"
-        "JetBrainsMono"
-        "LiberationMono"
-        "Terminus"
-      ];
-    })
+
+    pkgs.nerd-fonts._0xproto
+    pkgs.nerd-fonts.dejavu-sans-mono
+    pkgs.nerd-fonts.droid-sans-mono
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.hack
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.liberation
+    pkgs.nerd-fonts.terminess-ttf
+
     noto-fonts-emoji
     powerline-fonts
     twitter-color-emoji

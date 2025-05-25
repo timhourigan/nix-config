@@ -7,7 +7,7 @@
     profiles.default = {
       id = 0;
       name = "Default";
-      extensions = [
+      extensions.packages = [
         pkgs.nur.repos.rycee.firefox-addons.consent-o-matic
         pkgs.nur.repos.rycee.firefox-addons.darkreader
         pkgs.nur.repos.rycee.firefox-addons.privacy-badger
@@ -15,7 +15,7 @@
         pkgs.nur.repos.rycee.firefox-addons.ublock-origin
       ];
       search = {
-        default = "DuckDuckGo";
+        default = "ddg";
         force = true;
         engines = {
           "NixOS Packages" = {

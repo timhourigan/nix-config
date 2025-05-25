@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Community packages
@@ -14,7 +14,7 @@
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -157,18 +157,21 @@
             markdownlint.enable = true;
             # Nix
             deadnix.enable = true;
-            flake-checker =
-              {
-                enable = true;
-                args = [ "--no-telemetry" ];
-              };
+            # TODO - Re-enable when it supports NixOS 25.05: https://github.com/DeterminateSystems/flake-checker/pull/182
+            # flake-checker =
+            #   {
+            #     enable = true;
+            #     args = [ "--no-telemetry" ];
+            #   };
             nixpkgs-fmt.enable = true;
             statix = {
               enable = true;
               settings.ignore = [ "**/hardware-configuration.nix" ];
             };
             # Secrets
-            trufflehog.enable = true;
+            # TODO - Fails due to old flag: https://github.com/cachix/git-hooks.nix/pull/591
+            # trufflehog.enable = true;
+            ripsecrets.enable = true;
             # Shell
             shellcheck.enable = true;
             # Spelling
