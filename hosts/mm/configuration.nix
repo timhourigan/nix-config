@@ -71,10 +71,17 @@
           FTLCONF_dns_upstreams = "10.88.0.1#5335";
           # Needed when using container bridged mode
           FTLCONF_dns_listeningMode = "all";
+          # Allow sudo access to webserver API - Required on replicas for Nebula Sync
+          FTLCONF_webserver_api_app_sudo = "true";
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
         image = "docker.io/pihole/pihole:2025.04.0";
+      };
+      nebulaSync = {
+        enable = true;
+        environmentFiles = [ config.sops.secrets."nebula_sync_env".path ];
+        image = "ghcr.io/lovelaze/nebula-sync:v0.11.0";
       };
       unbound = {
         enable = true;
@@ -98,6 +105,7 @@
   # Secrets
   sops = {
     secrets = {
+      nebula_sync_env = { };
       pihole_env = { };
     };
   };
