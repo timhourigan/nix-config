@@ -11,7 +11,7 @@ in
     # Let Nix manage `~/.vscode/extensions/extensions.json`
     # https://github.com/nix-community/home-manager/issues/5372
     mutableExtensionsDir = false;
-    extensions = with if unstable then pkgs.unstable.vscode-extensions else pkgs.vscode-extensions; [
+    profiles.default.extensions = with if unstable then pkgs.unstable.vscode-extensions else pkgs.vscode-extensions; [
       # Search with:
       # https://search.nixos.org/packages?channel=22.05type=packages&query=vscode-extensions
       # Languages
@@ -43,7 +43,7 @@ in
       # Remote SSH development
       ms-vscode-remote.remote-ssh
     ];
-    userSettings = {
+    profiles.default.userSettings = {
       # Material Icons
       "workbench.iconTheme" = "material-icon-theme";
       # No startup splashscreen
