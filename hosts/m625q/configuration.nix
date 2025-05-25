@@ -82,6 +82,7 @@
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
         image = "docker.io/pihole/pihole:2025.04.0";
+        adListsPath = config.sops.secrets."pihole_adlists".path;
       };
       unbound = {
         enable = true;
@@ -105,6 +106,7 @@
   # Secrets
   sops = {
     secrets = {
+      pihole_adlists = { };
       pihole_env = { };
     };
   };

@@ -39,7 +39,12 @@ in
       image = lib.mkOption {
         description = "Container image";
         type = lib.types.str;
-        default = "docker.io/pihole/pihole:latest";
+        default = "";
+      };
+      adListsPath = lib.mkOption {
+        description = "Path to adlists.list";
+        type = lib.types.path;
+        default = "";
       };
     };
   };
@@ -50,7 +55,14 @@ in
       containers.pihole = {
         # https://github.com/pi-hole/docker-pi-hole
         autoStart = true;
-        volumes = [ "/var/lib/pihole:/etc/pihole" ];
+        volumes =
+          if (cfg.adListsPath != "") then
+            [
+              "/var/lib/pihole:/etc/pihole"
+              "${cfg.adListsPath}:/etc/pihole/adlists.list"
+            ] else [
+            "/var/lib/pihole:/etc/pihole"
+          ];
         inherit (cfg) environment;
         inherit (cfg) environmentFiles;
         inherit (cfg) image;
