@@ -43,8 +43,8 @@ in
       };
       adListsPath = lib.mkOption {
         description = "Path to adlists.list";
-        type = lib.types.path;
-        default = "";
+        type = lib.types.nullOr lib.types.path;
+        default = null;
       };
     };
   };
@@ -56,7 +56,7 @@ in
         # https://github.com/pi-hole/docker-pi-hole
         autoStart = true;
         volumes =
-          if (cfg.adListsPath != "") then
+          if (cfg.adListsPath != null) then
             [
               "/var/lib/pihole:/etc/pihole"
               "${cfg.adListsPath}:/etc/pihole/adlists.list"
