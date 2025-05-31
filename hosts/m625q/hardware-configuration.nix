@@ -25,6 +25,13 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
+  fileSystems."/mnt/backup" =
+    {
+      device = "/dev/disk/by-label/backup";
+      fsType = "ext4";
+      options = [ "nofail" ]; # Allow system to boot without this device
+    };
+
   swapDevices =
     [{ device = "/dev/disk/by-label/swap"; }];
 
