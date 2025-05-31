@@ -14,15 +14,22 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/2b947c4d-2d0c-4dcd-bfe0-e95398858c35";
+      device = "/dev/disk/by-label/os";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/DE62-68BC";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/mnt/backup" =
+    {
+      device = "/dev/disk/by-label/backup";
+      fsType = "ext4";
+      options = [ "nofail" ]; # Allow system to boot without this device
     };
 
   swapDevices =
