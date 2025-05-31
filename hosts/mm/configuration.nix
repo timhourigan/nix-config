@@ -4,6 +4,7 @@
   imports = [
     ../../modules
     ../common
+    ./backups.nix
     ./hardware-configuration.nix
   ];
 
