@@ -93,7 +93,11 @@
   # Modules
   modules = {
     desktops.cinnamon.enable = true;
-    packages.abcde.enable = true;
+    packages = {
+      abcde.enable = true;
+      handbrake.enable = true;
+      makemkv.enable = true;
+    };
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
