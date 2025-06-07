@@ -3,6 +3,7 @@
 {
   imports = [
     ./avahi
+    ./caddy
     ./chrony
     ./displaylink
     ./gatus
