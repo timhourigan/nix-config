@@ -157,12 +157,11 @@
             markdownlint.enable = true;
             # Nix
             deadnix.enable = true;
-            # TODO - Re-enable when it supports NixOS 25.05: https://github.com/DeterminateSystems/flake-checker/pull/182
-            # flake-checker =
-            #   {
-            #     enable = true;
-            #     args = [ "--no-telemetry" ];
-            #   };
+            flake-checker =
+              {
+                enable = true;
+                args = [ "--no-telemetry" ];
+              };
             nixpkgs-fmt.enable = true;
             statix = {
               enable = true;
