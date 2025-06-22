@@ -84,7 +84,7 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2025.06.1";
+        image = "docker.io/pihole/pihole:2025.06.2";
       };
       unbound = {
         enable = true;
