@@ -101,6 +101,11 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
+      # FIXME - Testing
+      # caddy = {
+      #   enable = true;
+      #   configFile = config.sops.secrets."caddy".path;
+      # };
       displaylink.enable = true;
       gc.enable = true;
       glances.enable = true;
@@ -119,7 +124,12 @@
 
   # Secrets
   sops = {
-    secrets = { };
+    secrets = {
+      # FIXME - Testing
+      # caddy = {
+      #   owner = "caddy";
+      # };
+    };
   };
 
   # Release version of first install
