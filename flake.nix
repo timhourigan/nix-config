@@ -168,8 +168,7 @@
               settings.ignore = [ "**/hardware-configuration.nix" ];
             };
             # Secrets
-            # TODO - Fails due to old flag: https://github.com/cachix/git-hooks.nix/pull/591
-            # trufflehog.enable = true;
+            trufflehog.enable = true;
             ripsecrets.enable = true;
             # Shell
             shellcheck.enable = true;
