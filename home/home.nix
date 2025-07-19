@@ -52,6 +52,7 @@
     nmap # Network exploration
     nvd # Nix diff tool
     p7zip # Compression tool
+    pciutils # PCI device utilities (lspci)
     powertop # Power consumption
     ripgrep # Fast grep
     rpi-imager # Raspberry Pi OS image writer
