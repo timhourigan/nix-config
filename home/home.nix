@@ -56,8 +56,9 @@
     powertop # Power consumption
     ripgrep # Fast grep
     rpi-imager # Raspberry Pi OS image writer
-    ssh-to-age # SSH to Age key converter
+    screen # Terminal multiplexer
     sops # Secrets management
+    ssh-to-age # SSH to Age key converter
     taskwarrior3 # Task manager
     tig # git text-mode interface
     tldr # Help pages
@@ -65,8 +66,8 @@
     unetbootin # Bootable USB creator
     unzip # Zip decompress
     usbutils # USB tools (lsusb)
-    ventoy # Bootable USB creator
     v4l-utils # Video for Linux utilities
+    ventoy # Bootable USB creator
     woeusb # Bootable USB creator for Windows media
     zip # Zip compress
 
