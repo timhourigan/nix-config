@@ -11,8 +11,8 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-  # Disable Wifi module (lspci -nnk | grep -i BCM4360 -A3)
-  boot.blacklistedKernelModules = [ "wl" ];
+  # Disable Wifi modules (lspci -nnk | grep -i BCM4360 -A3)
+  boot.blacklistedKernelModules = [ "bcma" "wl" ];
 
   fileSystems."/" =
     {
