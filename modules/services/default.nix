@@ -10,6 +10,7 @@
     ./gc
     ./glances
     ./hass
+    ./homepage-dashboard
     ./nebula-sync
     ./pihole
     ./podman
