@@ -17,7 +17,7 @@
       allowUnfree = true;
       permittedInsecurePackages = [
         # Required for the Broadcom BCM4360 WiFi card - Which is disabled in hardware-configuration.nix
-        "broadcom-sta-6.30.223.271-57-6.12.38"
+        "broadcom-sta-6.30.223.271-57-6.12.39"
       ];
     };
   };
