@@ -17,7 +17,7 @@
       allowUnfree = true;
       permittedInsecurePackages = [
         # Required for the Broadcom BCM4360 WiFi card - Which is disabled in hardware-configuration.nix
-        "broadcom-sta-6.30.223.271-57-6.12.38"
+        "broadcom-sta-6.30.223.271-57-6.12.39"
       ];
     };
   };
@@ -79,7 +79,7 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2025.06.2";
+        image = "docker.io/pihole/pihole:2025.07.1";
       };
       nebulaSync = {
         enable = true;
