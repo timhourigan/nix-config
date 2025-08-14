@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
@@ -67,15 +67,6 @@
 
   # Android
   programs.adb.enable = true;
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
 
   # Modules
   modules = {

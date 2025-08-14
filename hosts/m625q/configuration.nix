@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
@@ -47,15 +47,6 @@
     # Backup DNS server / Quad9
     nameservers = [ "9.9.9.9" ];
   };
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
 
   # Allow vscode code server to work
   programs.nix-ld.enable = true;

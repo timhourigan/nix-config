@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
@@ -17,7 +17,7 @@
       allowUnfree = true;
       permittedInsecurePackages = [
         # Required for the Broadcom BCM4360 WiFi card - Which is disabled in hardware-configuration.nix
-        "broadcom-sta-6.30.223.271-57-6.12.39"
+        "broadcom-sta-6.30.223.271-57-6.12.41"
       ];
     };
   };
@@ -44,15 +44,6 @@
     # Backup DNS server / Quad9
     nameservers = [ "9.9.9.9" ];
   };
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
 
   # Allow vscode code server to work
   programs.nix-ld.enable = true;

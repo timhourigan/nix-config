@@ -1,4 +1,5 @@
 HOSTNAME?=$(shell hostname)
+NOM=--log-format internal-json -v |& nom --json
 
 .PHONY: default
 default: help
@@ -9,15 +10,15 @@ all: lock test format build ## Lock test format and build
 # `nixos-rebuild` will use the current host, if none is specified
 .PHONY: build-nixos
 build-nixos: ## Build NixOS configuration
-	nixos-rebuild build --flake .
+	nixos-rebuild build --flake . $(NOM)
 
 .PHONY: build-nixos-all
 build-nixos-all: ## Build NixOS configuration for all hosts
-	nixos-rebuild build --flake . --target-host m625q.lan
-	nixos-rebuild build --flake . --target-host mm.lan
-	nixos-rebuild build --flake . --target-host opx7070.lan
-	nixos-rebuild build --flake . --target-host sid.lan
-	nixos-rebuild build --flake . --target-host x13
+	nixos-rebuild build --flake . --target-host m625q.lan $(NOM)
+	nixos-rebuild build --flake . --target-host mm.lan $(NOM)
+	nixos-rebuild build --flake . --target-host opx7070.lan $(NOM)
+	nixos-rebuild build --flake . --target-host sid.lan $(NOM)
+	nixos-rebuild build --flake . --target-host x13 $(NOM)
 
 .PHONY: build-nixos-dry-run
 build-nixos-dry-run: ## Build NixOS configuration (dry-run)
@@ -34,7 +35,7 @@ bootstrap-hm: ## Bootstrap Home-Manager configuration
 
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
-	home-manager build --flake .#$(USER)@$(HOSTNAME)
+	home-manager build --flake .#$(USER)@$(HOSTNAME) $(NOM)
 
 .PHONY: build-hm-dry-run
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
@@ -54,6 +55,12 @@ build: build-nixos build-hm ## Build
 .PHONY: build-dry-run
 build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 
+.PHONY: build-diff
+build-diff: ## Show configuration diff
+	nvd diff /run/current-system ./result
+# Built-in alternative to `nvd`
+# nix store diff-closures /run/current-system ./result
+
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
 	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
@@ -65,6 +72,10 @@ update-secrets: ## Update secrets for added/removed keys
 .PHONY: test
 test: ## Test
 	nix flake check
+
+.PHONY: hooks
+hooks: ## Run hooks
+	nix develop --command pre-commit run --all-files
 
 .PHONY: format
 format: ## Format source
