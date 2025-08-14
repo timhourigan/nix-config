@@ -33,4 +33,5 @@ jobs:
           # Used by the makefile
           USER: ${{ matrix.user }}
           HOSTNAME: ${{ matrix.host }}
+          NIX_OUTPUT_MONITOR: ""
         timeout-minutes: 15

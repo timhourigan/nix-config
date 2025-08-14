@@ -1,5 +1,5 @@
 HOSTNAME?=$(shell hostname)
-NOM=--log-format internal-json -v |& nom --json
+NIX_OUTPUT_MONITOR?=--log-format internal-json -v |& nom --json
 
 .PHONY: default
 default: help
@@ -10,15 +10,15 @@ all: lock test format build ## Lock test format and build
 # `nixos-rebuild` will use the current host, if none is specified
 .PHONY: build-nixos
 build-nixos: ## Build NixOS configuration
-	nixos-rebuild build --flake . $(NOM)
+	nixos-rebuild build --flake . $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-nixos-all
 build-nixos-all: ## Build NixOS configuration for all hosts
-	nixos-rebuild build --flake . --target-host m625q.lan $(NOM)
-	nixos-rebuild build --flake . --target-host mm.lan $(NOM)
-	nixos-rebuild build --flake . --target-host opx7070.lan $(NOM)
-	nixos-rebuild build --flake . --target-host sid.lan $(NOM)
-	nixos-rebuild build --flake . --target-host x13 $(NOM)
+	nixos-rebuild build --flake . --target-host m625q.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host mm.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host opx7070.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host sid.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host x13 $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-nixos-dry-run
 build-nixos-dry-run: ## Build NixOS configuration (dry-run)
@@ -35,7 +35,7 @@ bootstrap-hm: ## Bootstrap Home-Manager configuration
 
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
-	home-manager build --flake .#$(USER)@$(HOSTNAME) $(NOM)
+	home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-hm-dry-run
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
