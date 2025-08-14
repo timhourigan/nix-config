@@ -11,7 +11,7 @@ in
   options = {
     modules.services.homepage-dashboard = {
       enable = lib.mkEnableOption "Homepage Dashboard" // {
-        description = "Enable the Homegage Dashboard";
+        description = "Enable the Homepage Dashboard";
         default = false;
       };
       allowedHosts = lib.mkOption {
