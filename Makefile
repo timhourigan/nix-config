@@ -1,5 +1,11 @@
 HOSTNAME?=$(shell hostname)
+
+# Use nix-output-monitor, if available
+ifeq ($(shell command -v nom),)
+NIX_OUTPUT_MONITOR=
+else
 NIX_OUTPUT_MONITOR?=--log-format internal-json -v |& nom --json
+endif
 
 .PHONY: default
 default: help
