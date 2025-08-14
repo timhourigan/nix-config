@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
@@ -49,15 +49,6 @@
     # Required for ZFS
     hostId = "eef01409"; # `head -c4 /dev/urandom | od -A none -t x4`
   };
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
 
   # Allow vscode code server to work
   programs.nix-ld.enable = true;

@@ -1,5 +1,8 @@
-{ config, outputs, pkgs, ... }:
+{ config, outputs, ... }:
 
+let
+  homepageDashboard = import ./homepage-dashboard.nix { };
+in
 {
   imports = [
     ../../modules
@@ -81,15 +84,6 @@
   #   enable = true;
   # };
 
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
-
   # Modules
   modules = {
     desktops.cinnamon.enable = true;
@@ -109,6 +103,17 @@
       displaylink.enable = true;
       gc.enable = true;
       glances.enable = true;
+      # FIXME - Testing
+      homepage-dashboard = {
+        enable = true;
+        environmentFile = config.sops.secrets."homepage_env".path;
+        # Needs env var `HOMEPAGE_ALLOWED_HOSTS=localhost` to be set
+        listenPort = 80;
+        inherit (homepageDashboard) bookmarks;
+        inherit (homepageDashboard) settings;
+        inherit (homepageDashboard) services;
+        inherit (homepageDashboard) widgets;
+      };
       ssh.enable = true;
       tailscale =
         {
@@ -129,6 +134,7 @@
       # caddy = {
       #   owner = "caddy";
       # };
+      homepage_env = { };
     };
   };
 
