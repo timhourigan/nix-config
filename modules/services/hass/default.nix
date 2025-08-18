@@ -127,7 +127,7 @@ in
           # 2. Restore action sensors in 2.0.0 - Going with this for now:
           legacy_action_sensor = true;
           # 3. Migrate automations to experimental event type:
-          # - Adding event.*action entities to enable testin
+          # - Adding event.*action entities to enable testing
           # - One side effect is that automations may need to get more complicated,
           #   as restarts of z2m result in the event being seen again by HA
           #   and so automations might need more checks
