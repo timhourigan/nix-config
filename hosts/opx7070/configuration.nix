@@ -83,7 +83,7 @@
           "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2025.7.4";
+        image = "ghcr.io/home-assistant/home-assistant:2025.8.3";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
         z2mPackage = pkgs.unstable.zigbee2mqtt_2;
       };
