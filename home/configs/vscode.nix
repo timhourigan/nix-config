@@ -20,9 +20,7 @@ in
       yzhang.markdown-all-in-one # Markdown
       bbenoist.nix # Nix
       ms-python.python # Python
-      # FIXME - Removing for now (20250814), as it is causing a mismatch on `rust-analyzer-2025-08-11`
-      # https://github.com/NixOS/nixpkgs/issues/432960
-      # rust-lang.rust-analyzer # Rust
+      rust-lang.rust-analyzer # Rust
       hashicorp.terraform # Terraform
       redhat.vscode-yaml # YAML
       # Git

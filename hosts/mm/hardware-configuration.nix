@@ -10,9 +10,8 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-  # Disable Wifi modules (lspci -nnk | grep -i BCM4360 -A3)
-  boot.blacklistedKernelModules = [ "bcma" "wl" ];
+  # Disabled as `broadcom_sta` is marked as insecure and wifi isn't used on this host
+  # boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   fileSystems."/" =
     {
