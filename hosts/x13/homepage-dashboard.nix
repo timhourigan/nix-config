@@ -37,6 +37,17 @@ _:
 
   services = [
     {
+      "Media" = [
+        {
+          "Lyrion" = {
+            description = "Music Server";
+            icon = "sh-lyrion-media-server";
+            href = "{{HOMEPAGE_VAR_LYRION_URL}}";
+          };
+        }
+      ];
+    }
+    {
       "Home" = [
         {
           "Home Assistant" = {
