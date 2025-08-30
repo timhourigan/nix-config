@@ -1,7 +1,7 @@
 { config, outputs, ... }:
 
 let
-  homepageDashboard = import ./homepage-dashboard.nix { };
+  homepageDashboard = import ../common/homepage-dashboard.nix { };
 in
 {
   imports = [
@@ -103,7 +103,6 @@ in
       displaylink.enable = true;
       gc.enable = true;
       glances.enable = true;
-      # FIXME - Testing
       homepage-dashboard = {
         enable = true;
         environmentFile = config.sops.secrets."homepage_env".path;
