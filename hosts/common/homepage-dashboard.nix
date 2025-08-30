@@ -12,7 +12,7 @@ _:
 {
   bookmarks = [
     {
-      Dev = [
+      Tech = [
         {
           Github = [{
             icon = "si-github";
@@ -37,18 +37,25 @@ _:
 
   services = [
     {
-      "Media" = [
+      Media = [
         {
           "Lyrion" = {
             description = "Music Server";
-            icon = "sh-lyrion-media-server";
+            icon = "sh-lyrion-music-server";
             href = "{{HOMEPAGE_VAR_LYRION_URL}}";
+          };
+        }
+        {
+          "Television" = {
+            description = "STB Interface";
+            icon = "mdi-television";
+            href = "{{HOMEPAGE_VAR_ENIGMA_STB_URL}}";
           };
         }
       ];
     }
     {
-      "Home" = [
+      Home = [
         {
           "Home Assistant" = {
             description = "Home Automation";
@@ -59,7 +66,25 @@ _:
       ];
     }
     {
-      "Networking" = [
+      Appliances = [
+        {
+          "Larry Vacuum" = {
+            description = "Downstairs Vacuum";
+            icon = "sh-valetudo";
+            href = "{{HOMEPAGE_VAR_LARRY_VALETUDO_URL}}";
+          };
+        }
+        {
+          "Harry Vacuum" = {
+            description = "Upstairs Vacuum";
+            icon = "sh-valetudo";
+            href = "{{HOMEPAGE_VAR_HARRY_VALETUDO_URL}}";
+          };
+        }
+      ];
+    }
+    {
+      Networking = [
         {
           "Pi-Hole 1" = {
             description = "Ad Blocker";
@@ -86,10 +111,17 @@ _:
             };
           };
         }
+        {
+          "Zigbee2MQTT" = {
+            description = "Zigbee to MQTT Bridge";
+            icon = "sh-zigbee2mqtt";
+            href = "{{HOMEPAGE_VAR_ZIGBEE2MQTT_URL}}";
+          };
+        }
       ];
     }
     {
-      "Monitoring" = [
+      Monitoring = [
         {
           "Glances" = {
             description = "System Monitoring";
@@ -126,6 +158,46 @@ _:
     background = "{{HOMEPAGE_VAR_BACKGROUND}}";
     theme = "dark";
     color = "stone";
+    layout = [
+      {
+        Media = {
+          tab = "Applications";
+          style = "row";
+          columns = "2";
+        };
+      }
+      {
+        Home = {
+          tab = "Applications";
+        };
+      }
+      {
+        Monitoring = {
+          tab = "System";
+        };
+      }
+      {
+        Networking = {
+          tab = "System";
+          style = "row";
+          columns = "3";
+        };
+      }
+      {
+        Appliances = {
+          tab = "System";
+          style = "row";
+          columns = "2";
+        };
+      }
+      {
+        Tech = {
+          tab = "System";
+          style = "row";
+          columns = "3";
+        };
+      }
+    ];
   };
 
   # Widgets - https://gethomepage.dev/widgets

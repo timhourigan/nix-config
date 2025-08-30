@@ -1,5 +1,8 @@
 { config, outputs, pkgs, ... }:
 
+let
+  homepageDashboard = import ../common/homepage-dashboard.nix { };
+in
 {
   imports = [
     ../../modules
@@ -87,6 +90,16 @@
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
         z2mPackage = pkgs.unstable.zigbee2mqtt_2;
       };
+      homepage-dashboard = {
+        enable = true;
+        environmentFile = config.sops.secrets."homepage_env".path;
+        # Needs env var `HOMEPAGE_ALLOWED_HOSTS=localhost` to be set
+        listenPort = 80;
+        inherit (homepageDashboard) bookmarks;
+        inherit (homepageDashboard) settings;
+        inherit (homepageDashboard) services;
+        inherit (homepageDashboard) widgets;
+      };
       podman = {
         enable = true;
         autoPrune = true;
@@ -114,6 +127,7 @@
   sops = {
     secrets = {
       gatus = { };
+      homepage_env = { };
       "mqtt/valetudo/larry/password" = { };
       "mqtt/valetudo/harry/password" = { };
     };
