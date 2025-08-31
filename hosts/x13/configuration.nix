@@ -1,13 +1,11 @@
 { config, outputs, ... }:
 
-let
-  homepageDashboard = import ../common/homepage-dashboard.nix { };
-in
 {
   imports = [
     ../../modules
     ../common
     ./hardware-configuration.nix
+    ./testing.nix
   ];
 
   nixpkgs = {
@@ -95,24 +93,9 @@ in
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      # FIXME - Testing
-      # caddy = {
-      #   enable = true;
-      #   configFile = config.sops.secrets."caddy".path;
-      # };
       displaylink.enable = true;
       gc.enable = true;
       glances.enable = true;
-      homepage-dashboard = {
-        enable = true;
-        environmentFile = config.sops.secrets."homepage_env".path;
-        # Needs env var `HOMEPAGE_ALLOWED_HOSTS=localhost` to be set
-        listenPort = 80;
-        inherit (homepageDashboard) bookmarks;
-        inherit (homepageDashboard) settings;
-        inherit (homepageDashboard) services;
-        inherit (homepageDashboard) widgets;
-      };
       ssh.enable = true;
       tailscale =
         {
@@ -128,13 +111,7 @@ in
 
   # Secrets
   sops = {
-    secrets = {
-      # FIXME - Testing
-      # caddy = {
-      #   owner = "caddy";
-      # };
-      homepage_env = { };
-    };
+    secrets = { };
   };
 
   # Release version of first install
