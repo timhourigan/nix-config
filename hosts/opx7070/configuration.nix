@@ -1,9 +1,11 @@
 { config, outputs, pkgs, ... }:
 
 let
+  gatusPort = 8080; # Module default
+  hassPort = 8123; # Module default
   homepageDashboard = import ../common/homepage-dashboard.nix { };
   homepageDashboardPort = 8082;
-  gatusPort = 8080; # Module default
+  z2mPort = 8124; # Module default
 in
 {
   imports = [
@@ -155,17 +157,32 @@ in
     enable = true;
     # FreshRSS - Module has builtin configuration
     # Gatus
-    virtualHosts."http://gatus.${config.custom.internalDomain}" = {
-      extraConfig = ''
-        reverse_proxy :${toString gatusPort}
-      '';
-    };
-    # Homepage
-    virtualHosts."http://${config.custom.internalDomain}" = {
-      extraConfig = ''
-        reverse_proxy :${toString homepageDashboardPort}
-      '';
-    };
+    virtualHosts =
+      {
+        "http://gatus.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString gatusPort}
+          '';
+        };
+        # Home Assistant
+        "http://ha.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString hassPort}
+          '';
+        };
+        # Homepage
+        "http://${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString homepageDashboardPort}
+          '';
+        };
+        # zigbee2mqtt
+        "http://z2m.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString z2mPort}
+          '';
+        };
+      };
   };
 
   # Release version of first install
