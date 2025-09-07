@@ -3,6 +3,7 @@
 let
   homepageDashboard = import ../common/homepage-dashboard.nix { };
   homepageDashboardPort = 8082;
+  gatusPort = 8080; # Module default
 in
 {
   imports = [
@@ -152,6 +153,13 @@ in
   networking.firewall.allowedTCPPorts = [ 80 ];
   services.caddy = {
     enable = true;
+    # FreshRSS - Module has builtin configuration
+    # Gatus
+    virtualHosts."http://gatus.${config.custom.internalDomain}" = {
+      extraConfig = ''
+        reverse_proxy :${toString gatusPort}
+      '';
+    };
     # Homepage
     virtualHosts."http://${config.custom.internalDomain}" = {
       extraConfig = ''
