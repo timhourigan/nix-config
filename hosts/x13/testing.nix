@@ -1,40 +1,46 @@
 { config, ... }:
 
 let
-  homepageDashboard = import ../common/homepage-dashboard.nix { };
+  hpConfig = import ../common/homepage-dashboard.nix { };
+  hpPort = 8082;
 in
 {
   # Modules
   modules = {
     services = {
-      # caddy = {
-      #   enable = true;
-      #   configFile = config.sops.secrets."caddy".path;
-      # };
-
       homepage-dashboard = {
-        enable = true;
+        enable = false;
         environmentFile = config.sops.secrets."homepage_env".path;
         # Needs env var `HOMEPAGE_ALLOWED_HOSTS=localhost` to be set
-        listenPort = 80;
-        inherit (homepageDashboard) bookmarks;
-        inherit (homepageDashboard) settings;
-        inherit (homepageDashboard) services;
-        inherit (homepageDashboard) widgets;
+        listenPort = hpPort;
+        inherit (hpConfig) bookmarks;
+        inherit (hpConfig) settings;
+        inherit (hpConfig) services;
+        inherit (hpConfig) widgets;
+      };
+
+      freshrss = {
+        enable = true;
+        authType = "none";
+        webserver = "caddy";
+        virtualHost = "freshrss.${config.custom.internalDomain}";
+        baseUrl = "http://freshrss.${config.custom.internalDomain}";
       };
     };
   };
 
+  # Caddy
+  # Homepage
+  # services.caddy.virtualHosts."${config.custom.internalDomain}" = {
+  #   extraConfig = ''
+  #     reverse_proxy http://${config.custom.internalDomain}:${toString hpPort}
+  #   '';
+  # };
+
   # Secrets
   sops = {
     secrets = {
-      # caddy = {
-      #   owner = "caddy";
-      # };
-
       homepage_env = { };
     };
   };
-
-
 }
