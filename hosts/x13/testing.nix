@@ -11,7 +11,6 @@ in
       homepage-dashboard = {
         enable = false;
         environmentFile = config.sops.secrets."homepage_env".path;
-        # Needs env var `HOMEPAGE_ALLOWED_HOSTS=localhost` to be set
         listenPort = hpPort;
         inherit (hpConfig) bookmarks;
         inherit (hpConfig) settings;
@@ -20,7 +19,7 @@ in
       };
 
       freshrss = {
-        enable = true;
+        enable = false;
         authType = "none";
         webserver = "caddy";
         virtualHost = "freshrss.${config.custom.internalDomain}";
