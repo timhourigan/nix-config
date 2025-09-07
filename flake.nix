@@ -5,8 +5,8 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Pinning to before zigbee2mqtt 2.6.1 - https://github.com/NixOS/nixpkgs/pull/432781
-    nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=133efe0ba985a71ebe0ea8c4bc000dc306074220";
+    # Pinning to zigbee2mqtt 2.6.1 - https://github.com/NixOS/nixpkgs/pull/439341
+    nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=55c49510f6a774e48b22249b063bb25537737321";
 
     # Community packages
     nur = {
