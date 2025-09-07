@@ -102,7 +102,7 @@ in
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2025.8.3";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.pinned.zigbee2mqtt_2;
+        z2mPackage = pkgs.pinned.zigbee2mqtt;
       };
       homepage-dashboard = {
         enable = true;
