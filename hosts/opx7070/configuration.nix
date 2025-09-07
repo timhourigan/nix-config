@@ -1,8 +1,11 @@
 { config, outputs, pkgs, ... }:
 
 let
+  gatusPort = 8080; # Module default
+  hassPort = 8123; # Module default
   homepageDashboard = import ../common/homepage-dashboard.nix { };
   homepageDashboardPort = 8082;
+  z2mPort = 8124; # Module default
 in
 {
   imports = [
@@ -16,6 +19,8 @@ in
     overlays = [
       # Allow unstable packages at unstable.<package>
       outputs.overlays.unstable-packages
+      # Allow pinned packages at pinned.<package>
+      outputs.overlays.pinned-packages
     ];
     config = {
       allowUnfree = true;
@@ -97,7 +102,7 @@ in
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2025.8.3";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.unstable.zigbee2mqtt_2;
+        z2mPackage = pkgs.pinned.zigbee2mqtt_2;
       };
       homepage-dashboard = {
         enable = true;
@@ -150,12 +155,34 @@ in
   networking.firewall.allowedTCPPorts = [ 80 ];
   services.caddy = {
     enable = true;
-    # Homepage
-    virtualHosts."http://${config.custom.internalDomain}" = {
-      extraConfig = ''
-        reverse_proxy :${toString homepageDashboardPort}
-      '';
-    };
+    # FreshRSS - Module has builtin configuration
+    # Gatus
+    virtualHosts =
+      {
+        "http://gatus.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString gatusPort}
+          '';
+        };
+        # Home Assistant
+        "http://ha.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString hassPort}
+          '';
+        };
+        # Homepage
+        "http://${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString homepageDashboardPort}
+          '';
+        };
+        # zigbee2mqtt
+        "http://z2m.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString z2mPort}
+          '';
+        };
+      };
   };
 
   # Release version of first install
