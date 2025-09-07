@@ -5,6 +5,8 @@
     overlays = [
       # Allow unstable packages at unstable.<package>
       outputs.overlays.unstable-packages
+      # Allow pinned packages at pinned.<package>
+      outputs.overlays.pinned-packages
     ];
     config = {
       allowUnfree = true;

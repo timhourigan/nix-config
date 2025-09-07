@@ -16,6 +16,8 @@ in
     overlays = [
       # Allow unstable packages at unstable.<package>
       outputs.overlays.unstable-packages
+      # Allow pinned packages at pinned.<package>
+      outputs.overlays.pinned-packages
     ];
     config = {
       allowUnfree = true;
@@ -97,7 +99,7 @@ in
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2025.8.3";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.unstable.zigbee2mqtt_2;
+        z2mPackage = pkgs.pinned.zigbee2mqtt_2;
       };
       homepage-dashboard = {
         enable = true;

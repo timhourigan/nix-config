@@ -8,4 +8,11 @@
     };
   };
 
+  # Make pinned packages available at pkgs.pinned
+  pinned-packages = final: _prev: {
+    pinned = import inputs.nixpkgs-pinned {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
 }
