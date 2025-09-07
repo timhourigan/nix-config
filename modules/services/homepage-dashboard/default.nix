@@ -16,8 +16,8 @@ in
       };
       allowedHosts = lib.mkOption {
         type = lib.types.str;
-        default = "localhost:8082,127.0.0.1:8082";
-        description = "Allowed hosts (Will be overridden by environment file)";
+        default = "localhost:8082,127.0.0.1:8082,${config.custom.internalDomain}";
+        description = "Allowed hosts (Can be overridden by environment file and `HOMEPAGE_ALLOWED_HOSTS`)";
       };
       bookmarks = lib.mkOption {
         type = lib.types.listOf lib.types.attrs;

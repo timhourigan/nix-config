@@ -6,6 +6,7 @@
     ./caddy
     ./chrony
     ./displaylink
+    ./freshrss
     ./gatus
     ./gc
     ./glances

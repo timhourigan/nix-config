@@ -2,6 +2,7 @@
 
 let
   homepageDashboard = import ../common/homepage-dashboard.nix { };
+  homepageDashboardPort = 8082;
 in
 {
   imports = [
@@ -71,6 +72,14 @@ in
           # Enable server functionality and allow access from local network
           extraConfig = "allow 192.168.0.0/16";
         };
+      freshrss = {
+        enable = true;
+        authType = "none";
+        webserver = "caddy";
+        # TODO - Remove `http://` from virtualHost when certs are setup
+        virtualHost = "http://freshrss.${config.custom.internalDomain}";
+        baseUrl = "http://freshrss.${config.custom.internalDomain}";
+      };
       gatus = {
         enable = true;
         openFirewall = true;
@@ -93,8 +102,9 @@ in
       homepage-dashboard = {
         enable = true;
         environmentFile = config.sops.secrets."homepage_env".path;
-        # Needs env var `HOMEPAGE_ALLOWED_HOSTS=localhost` to be set
-        listenPort = 80;
+        listenPort = homepageDashboardPort;
+        # See Reverse Proxy setup below
+        allowedHosts = "${config.custom.internalDomain}";
         inherit (homepageDashboard) bookmarks;
         inherit (homepageDashboard) settings;
         inherit (homepageDashboard) services;
@@ -130,6 +140,21 @@ in
       homepage_env = { };
       "mqtt/valetudo/larry/password" = { };
       "mqtt/valetudo/harry/password" = { };
+    };
+  };
+
+  # Reverse Proxy
+  # TODO
+  # - Add `443` When certs are setup
+  # - Remove `http://` from virtualHosts when certs are setup
+  networking.firewall.allowedTCPPorts = [ 80 ];
+  services.caddy = {
+    enable = true;
+    # Homepage
+    virtualHosts."http://${config.custom.internalDomain}" = {
+      extraConfig = ''
+        reverse_proxy :${toString homepageDashboardPort}
+      '';
     };
   };
 

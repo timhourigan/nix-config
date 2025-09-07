@@ -1,6 +1,9 @@
 { lib, config, options, ... }:
 
 # Caddy Proxy
+#
+# When wanting to use a Caddyfile instead of services.caddy.virtualHosts."<host>"
+#
 # https://caddyserver.com/docs/
 # https://nixos.wiki/wiki/Caddy
 # https://search.nixos.org/options?query=services.caddy
