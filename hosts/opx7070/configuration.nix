@@ -144,7 +144,7 @@ in
   };
 
   # Reverse Proxy
-  # TOOD
+  # TODO
   # - Add `443` When certs are setup
   # - Remove `http://` from virtualHosts when certs are setup
   networking.firewall.allowedTCPPorts = [ 80 ];
