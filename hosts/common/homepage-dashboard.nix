@@ -160,7 +160,7 @@ _:
               type = "freshrss";
               url = "{{HOMEPAGE_VAR_FRESHRSS_URL}}";
               username = "{{HOMEPAGE_VAR_FRESHRSS_USERNAME}}";
-              password = "{{HOMEPAGE_VAR_FRESHRSS_PASSWORD}}";
+              password = "{{HOMEPAGE_VAR_FRESHRSS_API_KEY}}";
             };
           };
         }
