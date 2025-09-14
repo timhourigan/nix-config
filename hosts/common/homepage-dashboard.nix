@@ -37,6 +37,35 @@ _:
 
   services = [
     {
+      Appliances = [
+        {
+          "Larry Vacuum" = {
+            description = "Downstairs Vacuum";
+            icon = "sh-valetudo";
+            href = "{{HOMEPAGE_VAR_LARRY_VALETUDO_URL}}";
+          };
+        }
+        {
+          "Harry Vacuum" = {
+            description = "Upstairs Vacuum";
+            icon = "sh-valetudo";
+            href = "{{HOMEPAGE_VAR_HARRY_VALETUDO_URL}}";
+          };
+        }
+      ];
+    }
+    {
+      Home = [
+        {
+          "Home Assistant" = {
+            description = "Home Automation";
+            icon = "sh-home-assistant";
+            href = "{{HOMEPAGE_VAR_HOME_ASSISTANT_URL}}";
+          };
+        }
+      ];
+    }
+    {
       Media = [
         {
           "Lyrion" = {
@@ -55,30 +84,30 @@ _:
       ];
     }
     {
-      Home = [
+      Monitoring = [
         {
-          "Home Assistant" = {
-            description = "Home Automation";
-            icon = "sh-home-assistant";
-            href = "{{HOMEPAGE_VAR_HOME_ASSISTANT_URL}}";
-          };
-        }
-      ];
-    }
-    {
-      Appliances = [
-        {
-          "Larry Vacuum" = {
-            description = "Downstairs Vacuum";
-            icon = "sh-valetudo";
-            href = "{{HOMEPAGE_VAR_LARRY_VALETUDO_URL}}";
+          "Glances" = {
+            description = "System Monitoring";
+            icon = "sh-glances";
+            href = "{{HOMEPAGE_VAR_GLANCES_URL}}";
+            widget = {
+              type = "glances";
+              url = "{{HOMEPAGE_VAR_GLANCES_URL}}";
+              version = 4;
+              metric = "cpu";
+              chart = false;
+            };
           };
         }
         {
-          "Harry Vacuum" = {
-            description = "Upstairs Vacuum";
-            icon = "sh-valetudo";
-            href = "{{HOMEPAGE_VAR_HARRY_VALETUDO_URL}}";
+          "Gatus" = {
+            description = "Service Monitoring";
+            icon = "sh-gatus";
+            href = "{{HOMEPAGE_VAR_GATUS_URL}}";
+            widget = {
+              type = "gatus";
+              url = "{{HOMEPAGE_VAR_GATUS_URL}}";
+            };
           };
         }
       ];
@@ -121,29 +150,17 @@ _:
       ];
     }
     {
-      Monitoring = [
+      News = [
         {
-          "Glances" = {
-            description = "System Monitoring";
-            icon = "sh-glances";
-            href = "{{HOMEPAGE_VAR_GLANCES_URL}}";
+          "FreshRSS" = {
+            description = "News";
+            icon = "sh-freshrss";
+            href = "{{HOMEPAGE_VAR_FRESHRSS_URL}}";
             widget = {
-              type = "glances";
-              url = "{{HOMEPAGE_VAR_GLANCES_URL}}";
-              version = 4;
-              metric = "cpu";
-              chart = false;
-            };
-          };
-        }
-        {
-          "Gatus" = {
-            description = "Service Monitoring";
-            icon = "sh-gatus";
-            href = "{{HOMEPAGE_VAR_GATUS_URL}}";
-            widget = {
-              type = "gatus";
-              url = "{{HOMEPAGE_VAR_GATUS_URL}}";
+              type = "freshrss";
+              url = "{{HOMEPAGE_VAR_FRESHRSS_URL}}";
+              username = "{{HOMEPAGE_VAR_FRESHRSS_USERNAME}}";
+              password = "{{HOMEPAGE_VAR_FRESHRSS_PASSWORD}}";
             };
           };
         }
@@ -168,6 +185,11 @@ _:
       }
       {
         Home = {
+          tab = "Applications";
+        };
+      }
+      {
+        News = {
           tab = "Applications";
         };
       }

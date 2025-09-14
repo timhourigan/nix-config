@@ -79,7 +79,14 @@ in
         };
       freshrss = {
         enable = true;
-        authType = "none";
+        authType = "form";
+        inherit (config.custom) defaultUser;
+        extensions = with pkgs.unstable.freshrss-extensions; [
+          reading-time
+          title-wrap
+          youtube
+        ];
+        passwordFile = config.sops.secrets."freshrss/password".path;
         webserver = "caddy";
         # TODO - Remove `http://` from virtualHost when certs are setup
         virtualHost = "http://freshrss.${config.custom.internalDomain}";
@@ -141,6 +148,9 @@ in
   # Secrets
   sops = {
     secrets = {
+      "freshrss/password" = {
+        owner = "freshrss";
+      };
       gatus = { };
       homepage_env = { };
       "mqtt/valetudo/larry/password" = { };
