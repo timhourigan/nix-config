@@ -20,6 +20,21 @@ in
         type = lib.types.str;
         default = "http://freshrss.localhost";
       };
+      defaultUser = lib.mkOption {
+        description = "Default user";
+        type = lib.types.str;
+        default = "admin";
+      };
+      extensions = lib.mkOption {
+        description = "Extensions to include";
+        type = lib.types.listOf lib.types.package;
+        default = [ ];
+      };
+      passwordFile = lib.mkOption {
+        description = "Password file for default user";
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+      };
       webserver = lib.mkOption {
         description = "Webserver to use (e.g. `caddy`, `nginx`)";
         type = lib.types.str;
@@ -38,6 +53,9 @@ in
       enable = true;
       inherit (cfg) authType;
       inherit (cfg) baseUrl;
+      inherit (cfg) defaultUser;
+      inherit (cfg) extensions;
+      inherit (cfg) passwordFile;
       inherit (cfg) webserver;
       inherit (cfg) virtualHost;
     };

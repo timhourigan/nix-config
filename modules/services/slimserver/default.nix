@@ -39,6 +39,13 @@ in
       after = [ "network-online.target" ];
     };
 
+    # WORKAROUND - Try to avoid issues on boot by delaying startup by 30 seconds
+    systemd.timers.slimserver = {
+      partOf = [ "slimserver.service" ];
+      wantedBy = [ "timers.target" ];
+      timerConfig.OnBootSec = "30";
+    };
+
     networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];
     networking.firewall.allowedUDPPorts = [ slimServerPort slimServerCliPort playerPort ];
   };
