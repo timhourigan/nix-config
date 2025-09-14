@@ -165,10 +165,10 @@ in
   networking.firewall.allowedTCPPorts = [ 80 ];
   services.caddy = {
     enable = true;
-    # FreshRSS - Module has builtin configuration
-    # Gatus
     virtualHosts =
       {
+        # FreshRSS - Module has builtin configuration
+        # Gatus
         "http://gatus.${config.custom.internalDomain}" = {
           extraConfig = ''
             reverse_proxy :${toString gatusPort}
