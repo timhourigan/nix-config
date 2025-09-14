@@ -39,7 +39,7 @@ in
       after = [ "network-online.target" ];
     };
 
-    # WORKAROUND - Try to avoid issues on boot by delaying startup
+    # WORKAROUND - Try to avoid issues on boot by delaying startup by 30 seconds
     systemd.timers.slimserver = {
       partOf = [ "slimserver.service" ];
       wantedBy = [ "timers.target" ];
