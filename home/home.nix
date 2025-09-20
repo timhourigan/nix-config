@@ -125,7 +125,6 @@
     ./configs/bash.nix
     ./configs/dconf.nix
     ./configs/direnv.nix
-    ./configs/fzf.nix
     ./configs/gh.nix
     ./configs/git.nix
     ./configs/polybar.nix
@@ -142,6 +141,7 @@
       alacritty.enable = true;
       autojump.enable = true;
       firefox.enable = true;
+      fzf.enable = true;
       starship.enable = true;
       tmux.enable = true;
       neovim.enable = true;
