@@ -1,4 +1,4 @@
-{ config, lib, options, ... }:
+{ config, lib, options, pkgs, ... }:
 
 let
   cfg = config.modules.home.tmux;
