@@ -122,7 +122,6 @@
   # Programs and configurations to be installed
   imports = [
     ../modules/home
-    ./configs/alacritty.nix
     ./configs/autojump.nix
     ./configs/bash.nix
     ./configs/dconf.nix
@@ -143,6 +142,7 @@
 
   # Modules
   modules = {
+    home.alacritty.enable = true;
     home.firefox.enable = true;
   };
 
