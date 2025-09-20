@@ -5,6 +5,7 @@
     ./alacritty
     ./autojump
     ./firefox
+    ./neovim
     ./vscode
   ];
 }

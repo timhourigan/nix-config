@@ -128,7 +128,6 @@
     ./configs/fzf.nix
     ./configs/gh.nix
     ./configs/git.nix
-    ./configs/neovim.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
     ./configs/starship.nix
@@ -145,6 +144,7 @@
       alacritty.enable = true;
       autojump.enable = true;
       firefox.enable = true;
+      neovim.enable = true;
     };
   };
 
