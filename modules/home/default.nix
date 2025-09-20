@@ -6,6 +6,7 @@
     ./autojump
     ./firefox
     ./neovim
+    ./tmux
     ./vscode
   ];
 }
