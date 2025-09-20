@@ -130,7 +130,6 @@
     ./configs/git.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
-    ./configs/starship.nix
     # ./configs/zsh.nix
 
     # NUR modules
@@ -143,6 +142,7 @@
       alacritty.enable = true;
       autojump.enable = true;
       firefox.enable = true;
+      starship.enable = true;
       tmux.enable = true;
       neovim.enable = true;
     };
