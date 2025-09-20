@@ -121,12 +121,12 @@
 
   # Programs and configurations to be installed
   imports = [
+    ../modules/home
     ./configs/alacritty.nix
     ./configs/autojump.nix
     ./configs/bash.nix
     ./configs/dconf.nix
     ./configs/direnv.nix
-    ./configs/firefox.nix
     ./configs/fzf.nix
     ./configs/gh.nix
     ./configs/git.nix
@@ -140,6 +140,11 @@
     # NUR modules
     inputs.nur.modules.homeManager.default
   ];
+
+  # Modules
+  modules = {
+    home.firefox.enable = true;
+  };
 
   systemd.user.services.polybar = {
     Install.WantedBy = [ "graphical-session.target" ];
