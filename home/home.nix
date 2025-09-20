@@ -124,7 +124,6 @@
     ../modules/home
     ./configs/bash.nix
     ./configs/dconf.nix
-    ./configs/direnv.nix
     ./configs/gh.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
@@ -139,6 +138,7 @@
     home = {
       alacritty.enable = true;
       autojump.enable = true;
+      direnv.enable = true;
       firefox.enable = true;
       fzf.enable = true;
       git.enable = true;
