@@ -124,7 +124,6 @@
     ../modules/home
     ./configs/bash.nix
     ./configs/dconf.nix
-    ./configs/gh.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
     # ./configs/zsh.nix
@@ -141,6 +140,7 @@
       direnv.enable = true;
       firefox.enable = true;
       fzf.enable = true;
+      gh.enable = true;
       git.enable = true;
       starship.enable = true;
       tmux.enable = true;

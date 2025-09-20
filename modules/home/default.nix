@@ -7,6 +7,7 @@
     ./direnv
     ./firefox
     ./fzf
+    ./gh
     ./git
     ./neovim
     ./starship
