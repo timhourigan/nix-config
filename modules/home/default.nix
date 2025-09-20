@@ -6,6 +6,7 @@
     ./autojump
     ./firefox
     ./fzf
+    ./git
     ./neovim
     ./starship
     ./tmux

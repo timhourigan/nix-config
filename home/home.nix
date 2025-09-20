@@ -126,7 +126,6 @@
     ./configs/dconf.nix
     ./configs/direnv.nix
     ./configs/gh.nix
-    ./configs/git.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
     # ./configs/zsh.nix
@@ -142,6 +141,7 @@
       autojump.enable = true;
       firefox.enable = true;
       fzf.enable = true;
+      git.enable = true;
       starship.enable = true;
       tmux.enable = true;
       neovim.enable = true;
