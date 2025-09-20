@@ -121,26 +121,32 @@
 
   # Programs and configurations to be installed
   imports = [
-    ./configs/alacritty.nix
-    ./configs/autojump.nix
+    ../modules/home
     ./configs/bash.nix
     ./configs/dconf.nix
-    ./configs/direnv.nix
-    ./configs/firefox.nix
-    ./configs/fzf.nix
-    ./configs/gh.nix
-    ./configs/git.nix
-    ./configs/neovim.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
-    ./configs/starship.nix
-    ./configs/tmux.nix
-    ./configs/vscode.nix
     # ./configs/zsh.nix
 
     # NUR modules
     inputs.nur.modules.homeManager.default
   ];
+
+  # Modules
+  modules = {
+    home = {
+      alacritty.enable = true;
+      autojump.enable = true;
+      direnv.enable = true;
+      firefox.enable = true;
+      fzf.enable = true;
+      gh.enable = true;
+      git.enable = true;
+      starship.enable = true;
+      tmux.enable = true;
+      neovim.enable = true;
+    };
+  };
 
   systemd.user.services.polybar = {
     Install.WantedBy = [ "graphical-session.target" ];

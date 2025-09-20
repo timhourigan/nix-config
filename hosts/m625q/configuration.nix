@@ -57,7 +57,11 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      gc.enable = true;
+      gc = {
+        enable = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
       glances.enable = true;
       pihole = {
         enable = true;

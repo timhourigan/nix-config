@@ -18,6 +18,7 @@ in
       dates = lib.mkOption {
         description = "Set the dates/cron for garbage collection";
         type = lib.types.str;
+        # Use `systemd-analyze calendar weekly` to verify the syntax
         default = "weekly";
       };
       options = lib.mkOption {

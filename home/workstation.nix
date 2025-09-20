@@ -23,7 +23,13 @@
 
   # Programs and configurations to be installed
   imports = [
+    ../modules/home
     ./configs/abcde.nix
     ./configs/obs.nix
   ];
+
+  # Modules
+  modules = {
+    home.vscode.enable = true;
+  };
 }
