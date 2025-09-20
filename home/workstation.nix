@@ -25,5 +25,10 @@
   imports = [
     ./configs/abcde.nix
     ./configs/obs.nix
+    ../modules/home
   ];
+
+  modules = {
+    home.vscode.enable = true;
+  };
 }

@@ -135,7 +135,6 @@
     ./configs/rofi.nix
     ./configs/starship.nix
     ./configs/tmux.nix
-    ./configs/vscode.nix
     # ./configs/zsh.nix
 
     # NUR modules
