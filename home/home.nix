@@ -122,7 +122,6 @@
   # Programs and configurations to be installed
   imports = [
     ../modules/home
-    ./configs/autojump.nix
     ./configs/bash.nix
     ./configs/dconf.nix
     ./configs/direnv.nix
@@ -142,8 +141,11 @@
 
   # Modules
   modules = {
-    home.alacritty.enable = true;
-    home.firefox.enable = true;
+    home = {
+      alacritty.enable = true;
+      autojump.enable = true;
+      firefox.enable = true;
+    };
   };
 
   systemd.user.services.polybar = {
