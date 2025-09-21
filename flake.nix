@@ -80,7 +80,7 @@
       homeConfigurations = {
         "timh@m625q" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home/home.nix ./home/hosts/m625q ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@mm" = home-manager.lib.homeManagerConfiguration {

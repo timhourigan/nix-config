@@ -124,7 +124,6 @@
   # Programs and configurations to be installed
   imports = [
     ../modules/home
-    ./configs/dconf.nix
     ./configs/polybar.nix
     # ./configs/zsh.nix
 
