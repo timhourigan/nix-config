@@ -125,7 +125,6 @@
   imports = [
     ../modules/home
     ./configs/polybar.nix
-    # ./configs/zsh.nix
 
     # NUR modules
     inputs.nur.modules.homeManager.default
