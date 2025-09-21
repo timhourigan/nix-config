@@ -11,6 +11,7 @@
     ./gh
     ./git
     ./neovim
+    ./obs-studio
     ./starship
     ./tmux
     ./vscode

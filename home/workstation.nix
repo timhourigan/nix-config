@@ -25,7 +25,6 @@
   imports = [
     ../modules/home
     ./configs/abcde.nix
-    ./configs/obs.nix
   ];
 
   # Modules
