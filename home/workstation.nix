@@ -29,6 +29,7 @@
 
   # Modules
   modules = {
+    home.rofi.enable = true;
     home.vscode.enable = true;
   };
 }

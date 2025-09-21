@@ -126,7 +126,6 @@
     ../modules/home
     ./configs/dconf.nix
     ./configs/polybar.nix
-    ./configs/rofi.nix
     # ./configs/zsh.nix
 
     # NUR modules
