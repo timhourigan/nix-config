@@ -39,6 +39,7 @@
     bottom # Display process information (`top` alternative)
     ddrescue # dd, with extra functionality
     dig # DNS lookup
+    dmidecode # DMI table decoder (hardware info)
     du-dust # Disk space usage (`du` alternative)
     eza # File listing (`ls` alternative)
     fastfetch # System information
@@ -50,6 +51,7 @@
     hdparm # Disk utility (set/get parameters, read-only speed test)
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
+    lshw # Hardware information
     mediainfo # Media file information
     nmap # Network exploration
     p7zip # Compression tool
