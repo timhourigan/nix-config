@@ -1,7 +1,5 @@
 { pkgs, ... }:
 
-# `workstation` hosts
-
 {
   # Packages to be installed
   home.packages = with pkgs; [
@@ -23,13 +21,14 @@
 
   # Programs and configurations to be installed
   imports = [
-    ../modules/home
-    ./configs/abcde.nix
-    ./configs/obs.nix
+    ../../../modules/home
+    ../../configs/abcde.nix
   ];
 
   # Modules
-  modules = {
-    home.vscode.enable = true;
+  modules.home = {
+    polybar.enable = true;
+    rofi.enable = true;
+    vscode.enable = true;
   };
 }

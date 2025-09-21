@@ -1,6 +1,12 @@
 { config, inputs, outputs, pkgs, ... }:
 
 {
+  imports = [
+    ../modules/home
+    # NUR modules
+    inputs.nur.modules.homeManager.default
+  ];
+
   nixpkgs = {
     overlays = [
       # Allow unstable packages at unstable.<package>
@@ -39,6 +45,7 @@
     bottom # Display process information (`top` alternative)
     ddrescue # dd, with extra functionality
     dig # DNS lookup
+    dmidecode # DMI table decoder (hardware info)
     du-dust # Disk space usage (`du` alternative)
     eza # File listing (`ls` alternative)
     fastfetch # System information
@@ -50,6 +57,7 @@
     hdparm # Disk utility (set/get parameters, read-only speed test)
     htop # Display process information (`top` alternative)
     jq # Command line JSON parser
+    lshw # Hardware information
     mediainfo # Media file information
     nmap # Network exploration
     p7zip # Compression tool
@@ -119,36 +127,18 @@
     system-config-printer
   ];
 
-  # Programs and configurations to be installed
-  imports = [
-    ../modules/home
-    ./configs/bash.nix
-    ./configs/dconf.nix
-    ./configs/polybar.nix
-    ./configs/rofi.nix
-    # ./configs/zsh.nix
-
-    # NUR modules
-    inputs.nur.modules.homeManager.default
-  ];
-
   # Modules
-  modules = {
-    home = {
-      alacritty.enable = true;
-      autojump.enable = true;
-      direnv.enable = true;
-      firefox.enable = true;
-      fzf.enable = true;
-      gh.enable = true;
-      git.enable = true;
-      starship.enable = true;
-      tmux.enable = true;
-      neovim.enable = true;
-    };
-  };
-
-  systemd.user.services.polybar = {
-    Install.WantedBy = [ "graphical-session.target" ];
+  modules.home = {
+    alacritty.enable = true;
+    autojump.enable = true;
+    bash.enable = true;
+    direnv.enable = true;
+    firefox.enable = true;
+    fzf.enable = true;
+    gh.enable = true;
+    git.enable = true;
+    neovim.enable = true;
+    starship.enable = true;
+    tmux.enable = true;
   };
 }

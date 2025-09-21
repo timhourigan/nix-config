@@ -59,7 +59,6 @@
       avahi.enable = true;
       gc = {
         enable = true;
-        dates = "weekly";
         options = "--delete-older-than 7d";
       };
       glances.enable = true;
