@@ -80,32 +80,32 @@
       homeConfigurations = {
         "timh@m625q" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ./home/hosts/m625q ];
+          modules = [ ./home ./home/hosts/m625q ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@mm" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home ./home/hosts/mm ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@opx7070" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home ./home/hosts/opx7070 ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@sid" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home ./home/hosts/sid ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@x1c" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home ./home/hosts/x1c ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@x13" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/home.nix ./home/workstation.nix ];
+          modules = [ ./home ./home/hosts/x13 ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };

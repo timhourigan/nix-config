@@ -1,7 +1,5 @@
 { pkgs, ... }:
 
-# `workstation` hosts
-
 {
   # Packages to be installed
   home.packages = with pkgs; [
@@ -23,8 +21,8 @@
 
   # Programs and configurations to be installed
   imports = [
-    ../modules/home
-    ./configs/abcde.nix
+    ../../../modules/home
+    ../../configs/abcde.nix
   ];
 
   # Modules
