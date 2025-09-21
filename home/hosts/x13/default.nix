@@ -26,8 +26,9 @@
   ];
 
   # Modules
-  modules = {
-    home.rofi.enable = true;
-    home.vscode.enable = true;
+  modules.home = {
+    polybar.enable = true;
+    rofi.enable = true;
+    vscode.enable = true;
   };
 }

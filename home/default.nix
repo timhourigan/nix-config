@@ -1,6 +1,12 @@
 { config, inputs, outputs, pkgs, ... }:
 
 {
+  imports = [
+    ../modules/home
+    # NUR modules
+    inputs.nur.modules.homeManager.default
+  ];
+
   nixpkgs = {
     overlays = [
       # Allow unstable packages at unstable.<package>
@@ -121,33 +127,18 @@
     system-config-printer
   ];
 
-  # Programs and configurations to be installed
-  imports = [
-    ../modules/home
-    ./configs/polybar.nix
-
-    # NUR modules
-    inputs.nur.modules.homeManager.default
-  ];
-
   # Modules
-  modules = {
-    home = {
-      alacritty.enable = true;
-      autojump.enable = true;
-      bash.enable = true;
-      direnv.enable = true;
-      firefox.enable = true;
-      fzf.enable = true;
-      gh.enable = true;
-      git.enable = true;
-      starship.enable = true;
-      tmux.enable = true;
-      neovim.enable = true;
-    };
-  };
-
-  systemd.user.services.polybar = {
-    Install.WantedBy = [ "graphical-session.target" ];
+  modules.home = {
+    alacritty.enable = true;
+    autojump.enable = true;
+    bash.enable = true;
+    direnv.enable = true;
+    firefox.enable = true;
+    fzf.enable = true;
+    gh.enable = true;
+    git.enable = true;
+    neovim.enable = true;
+    starship.enable = true;
+    tmux.enable = true;
   };
 }

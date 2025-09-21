@@ -1,8 +1,20 @@
-_:
+{ config, lib, options, ... }:
 
+let
+  cfg = config.modules.home.polybar;
+in
 {
-  services = {
-    polybar = {
+  options = {
+    modules.home.polybar = {
+      enable = lib.mkEnableOption "Polybar" // {
+        description = "Enable Polybar";
+        default = false;
+      };
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    services.polybar = {
       enable = true;
       script = "polybar top &";
       config = {
@@ -78,6 +90,10 @@ _:
           ramp-capacity-4 = "";
         };
       };
+    };
+
+    systemd.user.services.polybar = {
+      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 }

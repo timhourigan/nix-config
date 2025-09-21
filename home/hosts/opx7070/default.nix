@@ -6,5 +6,7 @@
   ];
 
   # Modules
-  modules = { };
+  modules = {
+    home.vscode.enable = true;
+  };
 }

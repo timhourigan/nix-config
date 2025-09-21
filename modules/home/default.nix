@@ -12,6 +12,7 @@
     ./git
     ./neovim
     ./obs-studio
+    ./polybar
     ./rofi
     ./starship
     ./tmux
