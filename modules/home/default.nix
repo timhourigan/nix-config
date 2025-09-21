@@ -4,6 +4,7 @@
   imports = [
     ./alacritty
     ./autojump
+    ./bash
     ./direnv
     ./firefox
     ./fzf

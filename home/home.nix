@@ -124,7 +124,6 @@
   # Programs and configurations to be installed
   imports = [
     ../modules/home
-    ./configs/bash.nix
     ./configs/dconf.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
@@ -139,6 +138,7 @@
     home = {
       alacritty.enable = true;
       autojump.enable = true;
+      bash.enable = true;
       direnv.enable = true;
       firefox.enable = true;
       fzf.enable = true;
