@@ -16,5 +16,6 @@
     ./starship
     ./tmux
     ./vscode
+    ./zsh
   ];
 }
