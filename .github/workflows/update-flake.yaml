@@ -4,13 +4,13 @@ name: update-flake
 run-name: Update Flake
 on:
   schedule:
-    - cron: "0 3 * * *"  # Every day at 03:00
-  workflow_dispatch:     # Allow manual triggering
+    - cron: "0 3 * * *"     # Every day at 03:00
+  workflow_dispatch:        # Allow manual triggering
 jobs:
   update-flake:
     permissions:
-      contents: read
-      pull-requests: write
+      contents: write       # To push changes
+      pull-requests: write  # To create PRs if needed
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
