@@ -8,6 +8,9 @@ on:
   workflow_dispatch:     # Allow manual triggering
 jobs:
   update-flake:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
