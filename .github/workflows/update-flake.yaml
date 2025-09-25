@@ -21,6 +21,7 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-25.05
       - name: Update flake.lock
+        id: update-flake
         uses: DeterminateSystems/update-flake-lock@v27
         with:
           branch: actions/update-flake
@@ -28,7 +29,10 @@ jobs:
           pr-labels: |
             actions
             automated
-  # Copied from check-flake.yaml
+      - name: Save PR number
+        if: steps.update-flake.outputs.pull-request-number
+        run: echo "PR_NUMBER=${{ steps.update-flake.outputs.pull-request-number }}" >> "$GITHUB_ENV"
+  # Based on check-flake.yaml
   run-make-test:
     permissions:
       pull-requests: write  # To comment on PRs
@@ -57,3 +61,4 @@ jobs:
         with:
           message: |
             make test result: ${{ env.TEST_RESULT }}
+          pr-number: ${{ env.PR_NUMBER }}
