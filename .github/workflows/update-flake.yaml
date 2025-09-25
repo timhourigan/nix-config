@@ -6,8 +6,6 @@ on:
   schedule:
     - cron: "0 3 * * *"     # Every day at 03:00
   workflow_dispatch:        # Allow manual triggering
-env:
-  PR_NUMBER: ''
 jobs:
   update-flake:
     permissions:
@@ -31,25 +29,6 @@ jobs:
           pr-labels: |
             actions
             automated
-      - name: Save PR number
-        if: steps.update-flake.outputs.pull-request-number != ''
-        run: echo "PR_NUMBER=${{ steps.update-flake.outputs.pull-request-number }}" >> "$GITHUB_ENV"
-  # Based on check-flake.yaml
-  run-make-test:
-    permissions:
-      pull-requests: write  # To comment on PRs
-    needs: update-flake
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          ref: actions/update-flake
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=channel:nixos-25.05
       - name: Run make test
         run: |
           {
@@ -62,5 +41,8 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
-            make test result: ${{ env.TEST_RESULT }}
-          pr-number: ${{ env.PR_NUMBER }}
+            ### make test result
+            ```
+            ${{ env.TEST_RESULT }}
+            ```
+          pr-number: ${{ steps.update-flake.outputs.pull-request-number }}
