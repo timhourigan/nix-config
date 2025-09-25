@@ -30,6 +30,8 @@ jobs:
             automated
   # Copied from check-flake.yaml
   run-make-test:
+    permissions:
+      pull-requests: write  # To comment on PRs
     needs: update-flake
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -49,7 +51,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
-            ### Make test result
-            ```
-            ${{ env.TEST_RESULT }}
-            ```
+            make test result: ${{ env.TEST_RESULT }}
