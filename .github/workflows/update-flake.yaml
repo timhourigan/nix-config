@@ -30,7 +30,7 @@ jobs:
             actions
             automated
       - name: Save PR number
-        if: steps.update-flake.outputs.pull-request-number
+        if: steps.update-flake.outputs.pull-request-number != ''
         run: echo "PR_NUMBER=${{ steps.update-flake.outputs.pull-request-number }}" >> "$GITHUB_ENV"
   # Based on check-flake.yaml
   run-make-test:
