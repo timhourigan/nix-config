@@ -16,10 +16,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-      # https://github.com/cachix/install-nix-action
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-25.05
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v27
+        with:
+          branch: actions/update-flake
+          pr-title: "chore: Update flake.lock"
+          pr-labels: |
+            actions
+            automated
+  # Copied from check-flake.yaml
+  run-make-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: actions/update-flake
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-25.05
+      - name: Run make test
+        run: make test
+        timeout-minutes: 5
