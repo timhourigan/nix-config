@@ -45,7 +45,12 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-25.05
       - name: Run make test
-        run: echo "TEST_RESULT=$(make test 2>&1)" >> "$GITHUB_ENV"
+        run: |
+          {
+            echo 'TEST_RESULT<<EOF'
+            make test 2>&1
+            echo EOF
+          } >> "$GITHUB_ENV"
         timeout-minutes: 5
       - name: Comment PR with test result
         uses: thollander/actions-comment-pull-request@v3
