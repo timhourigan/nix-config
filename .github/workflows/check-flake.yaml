@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-      # https://github.com/cachix/install-nix-action
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
