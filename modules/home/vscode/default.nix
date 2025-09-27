@@ -31,6 +31,7 @@ in
         yzhang.markdown-all-in-one # Markdown
         bbenoist.nix # Nix
         ms-python.python # Python
+        charliermarsh.ruff # Python
         rust-lang.rust-analyzer # Rust
         hashicorp.terraform # Terraform
         redhat.vscode-yaml # YAML
@@ -75,6 +76,19 @@ in
         "files.trimFinalNewlines" = true;
         # Display trimmed whitespace
         "diffEditor.ignoreTrimWhitespace" = false;
+        # Format on save
+        "editor.formatOnSave" = true;
+        # Organize imports on save
+        "editor.codeActionsOnSave" = {
+          "source.organizeImports" = true;
+        };
+        # Python
+        "[python]" = {
+          "editor.defaultFormatter" = "charliermarsh.ruff";
+        };
+        "python.linting.enabled" = true;
+        "python.linting.ruffEnabled" = true;
+        "python.linting.lintOnSave" = true;
       };
     };
   };

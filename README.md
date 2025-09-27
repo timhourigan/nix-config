@@ -103,22 +103,6 @@ as an example.
 ## Make Options
 
 ```shell
-> make
-all: Lock test format and build
-build-nixos: Build NixOS configuration
-build-nixos-dry-run: Build NixOS configuration (dry-run)
-switch-nixos: Switch NixOS configuration
-bootstrap-hm: Bootstrap Home-Manager configuration
-build-hm: Build Home-Manager configuration
-build-hm-dry-run: Build Home-Manager configuration (dry-run)
-switch-hm: Switch Home-Manager configuration
-build: Build
-build-dry-run: Build (dry-run)
-modify-secrets: Modify secrets
-update-secrets: Update secrets for added/removed keys
-test: Test
-format: Format source
-lock: Update lock file
-clean: Garbage collect
-help: This menu
+> make help
+...
 ```
