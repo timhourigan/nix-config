@@ -1,4 +1,4 @@
-{ ... }:
+_:
 
 # restic
 # https://mynixos.com/nixpkgs/options/services.restic.backups.%3Cname%3E
@@ -12,11 +12,30 @@
 
 {
   services.restic.backups = {
+    freshrss-local = {
+      initialize = true;
+      paths = [ "/var/lib/freshrss" ];
+      repository = "/mnt/backup/freshrss";
+      passwordFile = "/etc/nixos/secrets/restic-freshrss-local";
+      timerConfig = {
+        OnCalendar = "hourly";
+        Persistent = true;
+        RandomizedDelaySec = "1800";
+      };
+      pruneOpts = [
+        "--keep-hourly 24"
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+        "--keep-yearly 20"
+      ];
+    };
+
     gatus-local = {
       initialize = true;
       # /var/lib/gatus is a symbolic link to /var/lib/private/gatus
-      # Restic doesn't follow symbolic links 
-      # - https://restic.readthedocs.io/en/stable/040_backup.html#backing-up-special-items-and-metadata 
+      # Restic doesn't follow symbolic links
+      # - https://restic.readthedocs.io/en/stable/040_backup.html#backing-up-special-items-and-metadata
       paths = [ "/var/lib/private/gatus" ];
       repository = "/mnt/backup/gatus";
       passwordFile = "/etc/nixos/secrets/restic-gatus-local";

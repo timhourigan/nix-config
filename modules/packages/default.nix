@@ -3,5 +3,7 @@
 {
   imports = [
     ./abcde
+    ./handbrake
+    ./makemkv
   ];
 }

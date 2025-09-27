@@ -1,9 +1,10 @@
-{ config, outputs, pkgs, lib, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
     ../../modules
     ../common
+    ./backups.nix
     ./hardware-configuration.nix
   ];
 
@@ -27,26 +28,25 @@
   nix.settings.trusted-users = [ "timh" ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+  };
 
   # Networking
-  networking.hostName = "m625q";
-  networking.networkmanager.enable = true;
-  # Don't want wireless
-  networking.wireless.enable = false;
-  # Backup DNS server / Quad9
-  networking.nameservers = [ "9.9.9.9" ];
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
+  networking = {
+    hostName = "m625q";
+    networkmanager.enable = true;
+    # Don't want wireless
+    wireless.enable = false;
+    # Backup DNS server / Quad9
+    nameservers = [ "9.9.9.9" ];
+  };
 
   # Allow vscode code server to work
   programs.nix-ld.enable = true;
@@ -57,7 +57,10 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      gc.enable = true;
+      gc = {
+        enable = true;
+        options = "--delete-older-than 7d";
+      };
       glances.enable = true;
       pihole = {
         enable = true;
@@ -65,13 +68,17 @@
           "--cap-add=NET_BIND_SERVICE" # Allow binding to ports below 1024
           "--dns=9.9.9.9" # Container DNS
         ];
-        # Use Unbound, accessing via Podman interface
-        environment.FTLCONF_dns_upstreams = "10.88.0.1#5335";
-        # Needed when using container bridged mode
-        environment.FTLCONF_dns_listeningMode = "all";
+        environment = {
+          # Use Unbound, accessing via Podman interface
+          FTLCONF_dns_upstreams = "10.88.0.1#5335";
+          # Needed when using container bridged mode
+          FTLCONF_dns_listeningMode = "all";
+          # Allow sudo access to webserver API - Required on replicas for Nebula Sync
+          FTLCONF_webserver_api_app_sudo = "true";
+          # FTLCONF_webserver_api_password = "use-to-set-initial-password";
+        };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        # environment.FTLCONF_webserver_api_password = "use-to-set-initial-password";
-        image = "docker.io/pihole/pihole:2025.04.0";
+        image = "docker.io/pihole/pihole:2025.08.0";
       };
       unbound = {
         enable = true;
@@ -84,6 +91,11 @@
         autoPrune = true;
       };
       ssh.enable = true;
+    };
+    system.autoUpgrade = {
+      enable = true;
+      dates = "05:00";
+      flake = "github:timhourigan/nix-config";
     };
   };
 

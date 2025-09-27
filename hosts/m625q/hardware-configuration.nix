@@ -1,5 +1,5 @@
 # Generate with `nixos-generate-config --show-hardware-config`
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, modulesPath, ... }:
 
 {
   imports =
@@ -23,6 +23,13 @@
       device = "/dev/disk/by-label/boot";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+  fileSystems."/mnt/backup" =
+    {
+      device = "/dev/disk/by-label/backup";
+      fsType = "ext4";
+      options = [ "nofail" ]; # Allow system to boot without this device
     };
 
   swapDevices =

@@ -1,5 +1,12 @@
-{ config, outputs, pkgs, lib, ... }:
+{ config, outputs, pkgs, ... }:
 
+let
+  gatusPort = 8080; # Module default
+  hassPort = 8123; # Module default
+  homepageDashboard = import ../common/homepage-dashboard.nix { };
+  homepageDashboardPort = 8082;
+  z2mPort = 8124; # Module default
+in
 {
   imports = [
     ../../modules
@@ -12,6 +19,8 @@
     overlays = [
       # Allow unstable packages at unstable.<package>
       outputs.overlays.unstable-packages
+      # Allow pinned packages at pinned.<package>
+      outputs.overlays.pinned-packages
     ];
     config = {
       allowUnfree = true;
@@ -28,31 +37,30 @@
   nix.settings.trusted-users = [ "timh" ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   # Filesystem support
-  boot.supportedFilesystems = [ "ntfs" "zfs" ];
-  boot.zfs.forceImportRoot = false; # Recommended setting
+  boot = {
+    supportedFilesystems = [ "ntfs" "zfs" ];
+    zfs.forceImportRoot = false; # Recommended setting
+  };
   services.zfs.autoScrub = {
     enable = true;
     interval = "*-*-1,15 04:00:00"; # 1st and 15th of every month at 4am
   };
 
   # Networking
-  networking.hostName = "opx7070";
-  networking.networkmanager.enable = true;
-  # Required for ZFS
-  networking.hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
+  networking = {
+    hostName = "opx7070";
+    networkmanager.enable = true;
+    # Required for ZFS
+    hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
+  };
 
   # Allow vscode code server to work
   programs.nix-ld.enable = true;
@@ -69,6 +77,21 @@
           # Enable server functionality and allow access from local network
           extraConfig = "allow 192.168.0.0/16";
         };
+      freshrss = {
+        enable = true;
+        authType = "form";
+        inherit (config.custom) defaultUser;
+        extensions = with pkgs.unstable.freshrss-extensions; [
+          reading-time
+          title-wrap
+          youtube
+        ];
+        passwordFile = config.sops.secrets."freshrss/password".path;
+        webserver = "caddy";
+        # TODO - Remove `http://` from virtualHost when certs are setup
+        virtualHost = "http://freshrss.${config.custom.internalDomain}";
+        baseUrl = "http://freshrss.${config.custom.internalDomain}";
+      };
       gatus = {
         enable = true;
         openFirewall = true;
@@ -84,9 +107,20 @@
           "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2025.4.4";
+        image = "ghcr.io/home-assistant/home-assistant:2025.9.4";
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.unstable.zigbee2mqtt_1;
+        z2mPackage = pkgs.pinned.zigbee2mqtt;
+      };
+      homepage-dashboard = {
+        enable = true;
+        environmentFile = config.sops.secrets."homepage_env".path;
+        listenPort = homepageDashboardPort;
+        # See Reverse Proxy setup below
+        allowedHosts = "${config.custom.internalDomain}";
+        inherit (homepageDashboard) bookmarks;
+        inherit (homepageDashboard) settings;
+        inherit (homepageDashboard) services;
+        inherit (homepageDashboard) widgets;
       };
       podman = {
         enable = true;
@@ -103,15 +137,62 @@
           enableDNS = false;
         };
     };
+    system.autoUpgrade = {
+      enable = true;
+      dates = "04:00";
+      flake = "github:timhourigan/nix-config";
+    };
+
   };
 
   # Secrets
   sops = {
     secrets = {
+      "freshrss/password" = {
+        owner = "freshrss";
+      };
       gatus = { };
+      homepage_env = { };
       "mqtt/valetudo/larry/password" = { };
       "mqtt/valetudo/harry/password" = { };
     };
+  };
+
+  # Reverse Proxy
+  # TODO
+  # - Add `443` When certs are setup
+  # - Remove `http://` from virtualHosts when certs are setup
+  networking.firewall.allowedTCPPorts = [ 80 ];
+  services.caddy = {
+    enable = true;
+    virtualHosts =
+      {
+        # FreshRSS - Module has builtin configuration
+        # Gatus
+        "http://gatus.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString gatusPort}
+          '';
+        };
+        # Home Assistant
+        "http://ha.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString hassPort}
+          '';
+        };
+        # Homepage
+        "http://${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString homepageDashboardPort}
+          '';
+        };
+        # zigbee2mqtt
+        "http://z2m.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString z2mPort}
+          '';
+        };
+      };
   };
 
   # Release version of first install

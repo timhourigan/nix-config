@@ -18,6 +18,7 @@ in
       dates = lib.mkOption {
         description = "Set the dates/cron for garbage collection";
         type = lib.types.str;
+        # Use `systemd-analyze calendar weekly` to verify the syntax
         default = "weekly";
       };
       options = lib.mkOption {
@@ -31,9 +32,9 @@ in
   config = lib.mkIf cfg.enable {
     nix.gc = {
       automatic = true;
-      persistent = cfg.persistent;
-      dates = cfg.dates;
-      options = cfg.options;
+      inherit (cfg) persistent;
+      inherit (cfg) dates;
+      inherit (cfg) options;
     };
   };
 }

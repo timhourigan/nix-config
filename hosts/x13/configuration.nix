@@ -1,10 +1,11 @@
-{ config, outputs, pkgs, lib, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
     ../../modules
     ../common
     ./hardware-configuration.nix
+    ./testing.nix
   ];
 
   nixpkgs = {
@@ -23,34 +24,46 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+  };
 
   # Filesystem support
   boot.supportedFilesystems = [ "ntfs" ];
 
   # Networking
-  networking.hostName = "x13";
-  networking.networkmanager.enable = true;
-  # Add hosts to /etc/hosts
-  networking.extraHosts =
-    ''
-  '';
+  networking = {
+    hostName = "x13";
+    networkmanager.enable = true;
+    # Add hosts to /etc/hosts
+    extraHosts =
+      ''
+    '';
+  };
 
   # Printing
-  services.printing.enable = true;
-  services.avahi.enable = true;
-  services.avahi.nssmdns4 = true;
-  # For WiFi printers
-  services.avahi.openFirewall = true;
+  services = {
+    printing.enable = true;
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      # For WiFi printers
+      openFirewall = true;
+    };
+  };
 
   # Scanners
   # SANE support
   hardware.sane.enable = true;
 
   # Sound via Pipewire
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -69,19 +82,14 @@
   #   enable = true;
   # };
 
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
-
   # Modules
   modules = {
     desktops.cinnamon.enable = true;
-    packages.abcde.enable = true;
+    packages = {
+      abcde.enable = true;
+      handbrake.enable = true;
+      makemkv.enable = true;
+    };
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;

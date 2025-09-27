@@ -1,23 +1,26 @@
+---
 keys:
   - &users:
-    # User public Age keys, generated from private Age keys
-    # nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
-    - &timh age1k3w94slqeqla972g9lkvp7dwuc4vwhjw0470v76ae73qfd68juvs9wq0zu
+      # User public Age keys, generated from private Age keys
+      # nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+      - &timh age1k3w94slqeqla972g9lkvp7dwuc4vwhjw0470v76ae73qfd68juvs9wq0zu
   - &hosts:
-    # Host public Age keys, generated from public SSH keys
-    # nix run nixpkgs#ssh-to-age -- -i /etc/ssh/ssh_host_ed25519_key.pub
-    - &m625q age1c6wlttxq8wvyxznjjwymadwjk376t6vvy2cnzqtmzcdejkr7548sadp97s
-    - &opx7070 age1k890jnlyhnv0lcl64ymqzn9mfaf6v98w3c2n5qs473cu2gyyr99s9uw9va
-    - &sid age1ykrjzhy6y3c03erc6j6sfswpmd0me6ecmq5z9kt0687zglrdna4qkmdy2a
-    - &x13 age1u607fee8zt995gmlkz74hku7q5j2pnd8d6vjfkey27xn495k4chq88zj4m
+      # Host public Age keys, generated from public SSH keys
+      # nix run nixpkgs#ssh-to-age -- -i /etc/ssh/ssh_host_ed25519_key.pub
+      - &m625q age1c6wlttxq8wvyxznjjwymadwjk376t6vvy2cnzqtmzcdejkr7548sadp97s
+      - &mm age1wkmpcgf5v7gdpumgjrl7vlkvt29dg2ex0y5vtku5y99apex9zp6q5ckm53
+      - &opx7070 age1k890jnlyhnv0lcl64ymqzn9mfaf6v98w3c2n5qs473cu2gyyr99s9uw9va
+      - &sid age1ykrjzhy6y3c03erc6j6sfswpmd0me6ecmq5z9kt0687zglrdna4qkmdy2a
+      - &x13 age1u607fee8zt995gmlkz74hku7q5j2pnd8d6vjfkey27xn495k4chq88zj4m
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
-        # Users
-        - *timh
-        # Hosts
-        - *m625q
-        - *opx7070
-        - *sid
-        - *x13
+          # Users
+          - *timh
+          # Hosts
+          - *m625q
+          - *mm
+          - *opx7070
+          - *sid
+          - *x13

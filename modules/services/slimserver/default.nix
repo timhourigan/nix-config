@@ -30,13 +30,20 @@ in
   config = lib.mkIf cfg.enable {
     services.slimserver = {
       enable = true;
-      package = cfg.package;
-      dataDir = cfg.dataDir;
+      inherit (cfg) package;
+      inherit (cfg) dataDir;
     };
     systemd.services.slimserver = {
       # Ensure network is up before starting
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
+    };
+
+    # WORKAROUND - Try to avoid issues on boot by delaying startup by 30 seconds
+    systemd.timers.slimserver = {
+      partOf = [ "slimserver.service" ];
+      wantedBy = [ "timers.target" ];
+      timerConfig.OnBootSec = "30";
     };
 
     networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];

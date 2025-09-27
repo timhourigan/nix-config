@@ -83,7 +83,7 @@ in
 
     services.unbound = {
       enable = true;
-      resolveLocalQueries = cfg.resolveLocalQueries;
+      inherit (cfg) resolveLocalQueries;
       # Merge defaults with user settings
       # TODO - Consider updating, to remove duplicate settings
       settings =

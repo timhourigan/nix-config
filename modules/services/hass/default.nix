@@ -49,7 +49,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     # Mosquitto service
     services.mosquitto = {
       enable = true;
@@ -84,11 +83,16 @@ in
           };
         }];
     };
+
     # Service can return `Error: Cannot assign requested address` on boot
     # so restart "always"
-    systemd.services.mosquitto.serviceConfig = {
-      Restart = lib.mkForce "always";
-      RestartSec = "10";
+    systemd = {
+      services.mosquitto = {
+        serviceConfig = {
+          Restart = lib.mkForce "always";
+          RestartSec = "10";
+        };
+      };
     };
 
     # zigbee2mqtt service
@@ -101,41 +105,33 @@ in
           channel = 25;
           last_seen = "ISO_8601_local";
           transmit_power = 20;
-          # Version 2.0.0 preparation
-          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
-          # - Leaving the top two out to keep sensor.*_action entities
-          #   working, until automations can be mirgrated to event.*_action
-          # homeassistant_legacy_entity_attributes = false;
-          # homeassistant_legacy_triggers = false;
-          legacy_api = false;
-          legacy_availability_payload = false;
-
-        };
-        device_options = {
-          # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
-          # Version 2.0.0 preparation
-          legacy = false;
         };
         availability = {
+          enabled = true;
           active.timeout = 10;
           passive.timeout = 1500;
         };
-        frontend.port = z2mPort;
+        frontend = {
+          port = z2mPort;
+          package = "zigbee2mqtt-windfront";
+        };
         homeassistant = {
           enable = true;
           discovery_topic = "homeassistant";
           status_topic = "homeassistant/status";
-          # Version 2.0.0 preparation
+          # Version 2.0.0 removes action sensors (sensor.*_action entities)
           # https://github.com/Koenkk/zigbee2mqtt/discussions/24198
-          # Version 2.0.0 will remove all action sensors (sensor.*_action entities)
           # Options:
-          # 1. Use MQTT trigers, which use device ids and so not desired
+          # 1. Use MQTT triggers, which use device ids and so not desired
           # https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html#via-mqtt-device-trigger-recommended
-          # 2. Restore action sensors in 2.0.0:
-          # legacy_action_sensor = true;
+          # 2. Restore action sensors in 2.0.0 - Going with this for now:
+          legacy_action_sensor = true;
           # 3. Migrate automations to experimental event type:
-          # -  Adding event.*action entities to enable testing
-          experimental_event_entities = true;
+          # - Adding event.*action entities to enable testing
+          # - One side effect is that automations may need to get more complicated,
+          #   as restarts of z2m result in the event being seen again by HA
+          #   and so automations might need more checks
+          # experimental_event_entities = true;
         };
         mqtt = {
           server = "mqtt://localhost:1883";
@@ -149,29 +145,33 @@ in
         };
       };
     };
-    systemd.services.zigbee2mqtt = {
-      serviceConfig = {
-        # z2m stops (with exit 0) when the adapter disconnects or isn't
-        # available yet, so restart "always"
-        Restart = lib.mkForce "always";
-        RestartSec = "10";
+
+    systemd = {
+      services.zigbee2mqtt = {
+        serviceConfig = {
+          # z2m stops (with exit 0) when the adapter disconnects or isn't
+          # available yet, so restart "always"
+          Restart = lib.mkForce "always";
+          RestartSec = "10";
+        };
+        # Ensure network is up before starting
+        wants = [ "network-online.target" ];
+        after = [ "network-online.target" ];
       };
-      # Ensure network is up before starting
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     };
 
     # Home Assistant container
     virtualisation.oci-containers = {
-      backend = cfg.backend;
+      inherit (cfg) backend;
       containers.hass = {
         autoStart = true;
         volumes = [ "/var/lib/hass:/config" ];
         environment.TZ = cfg.environment.TZ;
-        image = cfg.image;
-        extraOptions = cfg.extraOptions;
+        inherit (cfg) image;
+        inherit (cfg) extraOptions;
       };
     };
+
     systemd.services."${config.virtualisation.oci-containers.backend}-hass" = {
       # Results in the creation of /var/lib/hass
       # User and Group could be specified here but it would break the container,

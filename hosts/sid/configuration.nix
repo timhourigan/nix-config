@@ -1,4 +1,4 @@
-{ config, outputs, pkgs, lib, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
@@ -27,8 +27,12 @@
   nix.settings.trusted-users = [ "timh" ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   # Filesystem support
   boot.supportedFilesystems = [ "ntfs" "zfs" ];
@@ -39,19 +43,12 @@
   };
 
   # Networking
-  networking.hostName = "sid";
-  networking.networkmanager.enable = true;
-  # Required for ZFS
-  networking.hostId = "eef01409"; # `head -c4 /dev/urandom | od -A none -t x4`
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    gnumake
-    vim
-    wget
-  ];
+  networking = {
+    hostName = "sid";
+    networkmanager.enable = true;
+    # Required for ZFS
+    hostId = "eef01409"; # `head -c4 /dev/urandom | od -A none -t x4`
+  };
 
   # Allow vscode code server to work
   programs.nix-ld.enable = true;
@@ -65,6 +62,11 @@
       gc.enable = true;
       glances.enable = true;
       ssh.enable = true;
+    };
+    system.autoUpgrade = {
+      enable = true;
+      dates = "03:00";
+      flake = "github:timhourigan/nix-config";
     };
   };
 

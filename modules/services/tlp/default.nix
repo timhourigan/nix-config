@@ -44,9 +44,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    services.power-profiles-daemon.enable = false; # TLP is used instead
     services.tlp = {
       enable = true;
-      settings = cfg.settings;
+      inherit (cfg) settings;
     };
   };
 }

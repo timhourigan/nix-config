@@ -1,5 +1,12 @@
 HOSTNAME?=$(shell hostname)
 
+# Use nix-output-monitor, if available
+ifeq ($(shell command -v nom),)
+NIX_OUTPUT_MONITOR=
+else
+NIX_OUTPUT_MONITOR?=--log-format internal-json -v |& nom --json
+endif
+
 .PHONY: default
 default: help
 
@@ -9,18 +16,25 @@ all: lock test format build ## Lock test format and build
 # `nixos-rebuild` will use the current host, if none is specified
 .PHONY: build-nixos
 build-nixos: ## Build NixOS configuration
-	nixos-rebuild build --flake .
+	nixos-rebuild build --flake . $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-nixos-all
 build-nixos-all: ## Build NixOS configuration for all hosts
-	nixos-rebuild build --flake . --target-host m625q.local
-	nixos-rebuild build --flake . --target-host opx7070
-	nixos-rebuild build --flake . --target-host sid.local
-	nixos-rebuild build --flake . --target-host x13
+	nixos-rebuild build --flake . --target-host m625q.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host mm.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host opx7070.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host sid.lan $(NIX_OUTPUT_MONITOR)
+	nixos-rebuild build --flake . --target-host x13 $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-nixos-dry-run
 build-nixos-dry-run: ## Build NixOS configuration (dry-run)
 	nixos-rebuild dry-build --flake .
+
+.PHONY: build-nixos-diff
+build-nixos-diff: ## Show NixOS configuration diff
+	nvd diff /run/current-system ./result
+# Built-in alternative to `nvd`
+#	nix store diff-closures /run/current-system ./result
 
 .PHONY: switch-nixos
 switch-nixos: ## Switch NixOS configuration
@@ -33,11 +47,15 @@ bootstrap-hm: ## Bootstrap Home-Manager configuration
 
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
-	home-manager build --flake .#$(USER)@$(HOSTNAME)
+	home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-hm-dry-run
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
 	home-manager build --flake .#$(USER)@$(HOSTNAME) --dry-run
+
+.PHONY: build-hm-diff
+build-hm-diff: ## Show Home-Manager configuration diff
+	nvd diff /home/$(USER)/.local/state/home-manager/gcroots/current-home ./result
 
 .PHONY: switch-hm
 switch-hm: ## Switch Home-Manager configuration
@@ -55,15 +73,19 @@ build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
-	nix shell nixpkgs#sops -c sops secrets/secrets.yaml
+	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
 
 .PHONY: update-secrets
 update-secrets: ## Update secrets for added/removed keys
-	nix shell nixpkgs#sops -c sops updatekeys secrets/secrets.yaml
+	nix shell nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
 
 .PHONY: test
 test: ## Test
 	nix flake check
+
+.PHONY: hooks
+hooks: ## Run hooks
+	nix develop --command pre-commit run --all-files
 
 .PHONY: format
 format: ## Format source
