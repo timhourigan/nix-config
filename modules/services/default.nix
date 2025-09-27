@@ -12,8 +12,8 @@
     ./glances
     ./hass
     ./homepage-dashboard
-    ./nebula-sync
     ./jellyfin
+    ./nebula-sync
     ./pihole
     ./podman
     ./slimserver
