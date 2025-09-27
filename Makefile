@@ -30,6 +30,12 @@ build-nixos-all: ## Build NixOS configuration for all hosts
 build-nixos-dry-run: ## Build NixOS configuration (dry-run)
 	nixos-rebuild dry-build --flake .
 
+.PHONY: build-nixos-diff
+build-nixos-diff: ## Show NixOS configuration diff
+	nvd diff /run/current-system ./result
+# Built-in alternative to `nvd`
+#	nix store diff-closures /run/current-system ./result
+
 .PHONY: switch-nixos
 switch-nixos: ## Switch NixOS configuration
 	nixos-rebuild switch --flake .
@@ -47,6 +53,10 @@ build-hm: ## Build Home-Manager configuration
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
 	home-manager build --flake .#$(USER)@$(HOSTNAME) --dry-run
 
+.PHONY: build-hm-diff
+build-hm-diff: ## Show Home-Manager configuration diff
+	nvd diff /home/$(USER)/.local/state/home-manager/gcroots/current-home ./result
+
 .PHONY: switch-hm
 switch-hm: ## Switch Home-Manager configuration
 	home-manager switch --flake .#$(USER)@$(HOSTNAME)
@@ -60,12 +70,6 @@ build: build-nixos build-hm ## Build
 
 .PHONY: build-dry-run
 build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
-
-.PHONY: build-diff
-build-diff: ## Show configuration diff
-	nvd diff /run/current-system ./result
-# Built-in alternative to `nvd`
-# nix store diff-closures /run/current-system ./result
 
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
