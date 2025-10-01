@@ -50,6 +50,10 @@
     {
       # NixOS Configurations
       nixosConfigurations = {
+        bri7 = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/bri7/configuration.nix ];
+          specialArgs = { inherit inputs outputs; };
+        };
         m625q = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/m625q/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
@@ -78,6 +82,11 @@
 
       # Home-Manager Configurations
       homeConfigurations = {
+        "timh@bri7" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home ./home/hosts/bri7 ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
         "timh@m625q" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home ./home/hosts/m625q ];
