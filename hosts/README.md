@@ -6,13 +6,17 @@
 
 - Create a new branch in the `nix-config` repository
 
-- Create a folder for the new host, `hosts/<hostname>`
+- Create a folder for the new host configuration, `hosts/<hostname>`
+  - Copy a `configuration.nix` from an existing host and tweak as necessary,
+  changing `hostName` at a minimum
+- Create a folder for the new host home manager, `home/hosts/<hostname>`
+  - Copy a directory from an existing host
 
 - Add the NixOS configuration for the host to `flake.nix`
 
   ```shell
   <hostname> = nixpkgs.lib.nixosSystem {
-  modules = [ ./hosts/hostname/configuration.nix ];
+  modules = [ ./hosts/<hostname>/configuration.nix ];
   specialArgs = { inherit inputs outputs; };
   };
   ```
@@ -22,7 +26,7 @@
   ```shell
   "<username>@<hostname>" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = [ ./home/home.nix ];
+      modules = [ ./home ./home/hosts/<hostname> ];
       extraSpecialArgs = { inherit inputs outputs; };
   };
   ```
@@ -52,6 +56,9 @@
   - To change the hostname to the new name
   - To enable SSH
   - Install git gnumake vim
+
+- Clone this repository to `~/git/nix-config`
+- Run `nixos-generate-config --show-hardware-config > ~/git/nix-config/hosts/<hostname>/hardware-configuration.nix`
 
 - Build the changes and switch to them
 

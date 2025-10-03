@@ -18,6 +18,7 @@ all: lock test format build ## Lock test format and build
 build-nixos: ## Build NixOS configuration
 	nixos-rebuild build --flake . $(NIX_OUTPUT_MONITOR)
 
+# FIXME
 .PHONY: build-nixos-all
 build-nixos-all: ## Build NixOS configuration for all hosts
 	nixos-rebuild build --flake . --target-host m625q.lan $(NIX_OUTPUT_MONITOR)
