@@ -5,7 +5,7 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Pinning to zigbee2mqtt 2.6.1 - https://github.com/NixOS/nixpkgs/pull/439341
+    # Was pinning to zigbee2mqtt 2.6.1 previously, leaving as an example - https://github.com/NixOS/nixpkgs/pull/439341
     nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=55c49510f6a774e48b22249b063bb25537737321";
 
     # Community packages
@@ -126,7 +126,8 @@
       devShells.x86_64-linux = {
         default = with nixpkgs.legacyPackages.x86_64-linux; mkShell {
           inherit (self.checks.x86_64-linux.pre-commit) shellHook;
-          buildInputs = self.checks.x86_64-linux.pre-commit.enabledPackages;
+          # Adding pkgs.pre-commit here - Wasn't needed previously
+          buildInputs = self.checks.x86_64-linux.pre-commit.enabledPackages ++ [ pkgs.pre-commit ];
         };
       };
 
