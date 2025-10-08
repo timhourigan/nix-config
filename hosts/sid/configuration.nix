@@ -17,15 +17,6 @@
     };
   };
 
-  # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
-
-  # Feature configuration
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Allow packages to be pushed from other systems e.g.
-  # nixos-rebuild build --target-host <hostname> --flake .
-  nix.settings.trusted-users = [ "timh" ];
-
   # Bootloader
   boot = {
     loader = {

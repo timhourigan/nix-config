@@ -7,9 +7,12 @@
 - Create a new branch in the `nix-config` repository
 
 - Create a folder for the new host configuration, `hosts/<hostname>`
+
   - Copy a `configuration.nix` from an existing host and tweak as necessary,
-  changing `hostName` at a minimum
+    changing `hostName` at a minimum
+
 - Create a folder for the new host home manager, `home/hosts/<hostname>`
+
   - Copy a directory from an existing host
 
 - Add the NixOS configuration for the host to `flake.nix`
@@ -58,6 +61,7 @@
   - Install git gnumake vim
 
 - Clone this repository to `~/git/nix-config`
+
 - Run `nixos-generate-config --show-hardware-config > ~/git/nix-config/hosts/<hostname>/hardware-configuration.nix`
 
 - Build the changes and switch to them

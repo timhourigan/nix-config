@@ -39,11 +39,11 @@ in
       after = [ "network-online.target" ];
     };
 
-    # WORKAROUND - Try to avoid issues on boot by delaying startup by 30 seconds
+    # WORKAROUND - Try to avoid issues on boot by delaying startup by 90 seconds
     systemd.timers.slimserver = {
       partOf = [ "slimserver.service" ];
       wantedBy = [ "timers.target" ];
-      timerConfig.OnBootSec = "30";
+      timerConfig.OnBootSec = "90";
     };
 
     networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];
