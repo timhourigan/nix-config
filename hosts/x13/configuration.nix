@@ -18,11 +18,6 @@
     };
   };
 
-  # Use `nixos-option` to see configuration options e.g. `nixos-option service.<service-name>`
-
-  # Feature configuration
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   # Bootloader
   boot = {
     loader = {
