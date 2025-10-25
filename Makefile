@@ -72,13 +72,21 @@ build: build-nixos build-hm ## Build
 .PHONY: build-dry-run
 build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 
-.PHONY: modify-secrets
-modify-secrets: ## Modify secrets
+.PHONY: modify-sn-secrets
+modify-sn-secrets: ## Modify sops-nix secrets
 	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
 
-.PHONY: update-secrets
-update-secrets: ## Update secrets for added/removed keys
+.PHONY: update-sn-secrets
+update-sops-secrets: ## Update sops-nix secrets for added/removed keys
 	nix shell nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
+
+.PHONY: modify-gc-secrets
+modify-gc-secrets: ## Modify/Unlock git-crypt secrets
+	nix shell nixpkgs#git-crypt -c git-crypt unlock
+
+.PHONY: update-gc-secrets
+update-gc-secrets: ## Update/lock git-crypt secrets
+	nix shell nixpkgs#git-crypt -c git-crypt lock
 
 .PHONY: test
 test: ## Test

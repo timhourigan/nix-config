@@ -7,7 +7,7 @@ Nix Store (`/nix/store/`).
 
 - Uses [sops-nix](https://github.com/Mic92/sops-nix) and [age encryption](https://github.com/FiloSottile/age).
 
-### Setup
+### Sops-Nix Setup
 
 #### Create Age Keys
 
@@ -72,4 +72,28 @@ See `flake.nix`, `modules/secrets/sops-nix.nix` and
 - Used for obfuscation within this git repository. The cleartext will appear
 in the Nix Store and so this should not be used for sensitive data.
 
-- FIXME
+### Git-Crypt Setup
+
+- Initialise the repository:
+
+```shell
+# Initialise within the repository
+# This will create a symmetric key at `.git/git-crypt/keys/default`
+> git-crypt init
+```
+
+- Specify the files to be encrypted in `.gitattributes`.
+- `.gitattributes` uses the same file pattern matching as `.gitignore`.
+
+```shell
+# In `.gitattributes` specify the file(s) to be encrypted
+<file-pattern> filter=git-crypt diff=git-crypt
+<file-pattern> filter=git-crypt diff=git-crypt
+...
+```
+
+#### Transferring the key
+
+```shell
+> git-crypt export-key ../git-crypt-repo-key
+```
