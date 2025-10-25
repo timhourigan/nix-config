@@ -5,6 +5,7 @@
   environment.systemPackages = with pkgs; [
     bash-completion
     git
+    git-crypt
     gnumake
     nvd # Nix package version diff
     nix-output-monitor # Nix build output monitor
