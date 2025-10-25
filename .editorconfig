@@ -24,5 +24,8 @@ trim_trailing_whitespace = false
 [*.nix]
 indent_size = 2
 
+[*.enc.nix]
+indent_size =  unset
+
 [*.yaml]
 indent_size = 2

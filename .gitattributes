@@ -1,2 +1,3 @@
 # git-crypt
 hosts/common/gc-test-2.nix filter=git-crypt diff=git-crypt
+hosts/common/gc-test-2.enc.nix filter=git-crypt diff=git-crypt

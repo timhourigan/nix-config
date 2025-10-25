@@ -82,6 +82,18 @@ in the Nix Store and so this should not be used for sensitive data.
 > git-crypt init
 ```
 
+- Create a directory to export the key to:
+
+```shell
+> mkdir -p ~/.config/git-crypt
+```
+
+- Export the key:
+
+```shell
+> git-crypt export-key ~/.config/git-crypt/nix-config
+```
+
 - Specify the files to be encrypted in `.gitattributes`.
 - `.gitattributes` uses the same file pattern matching as `.gitignore`.
 
