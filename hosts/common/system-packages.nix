@@ -4,6 +4,7 @@
   # System packages
   environment.systemPackages = with pkgs; [
     bash-completion
+    file
     git
     git-crypt
     gnumake
