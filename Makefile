@@ -82,7 +82,7 @@ update-sops-secrets: ## Update sops-nix secrets for added/removed keys
 
 .PHONY: modify-gc-secrets
 modify-gc-secrets: ## Modify/Unlock git-crypt secrets
-	nix shell nixpkgs#git-crypt -c git-crypt unlock
+	nix shell nixpkgs#git-crypt -c git-crypt unlock ~/.config/git-crypt/nix-config.key
 
 .PHONY: update-gc-secrets
 update-gc-secrets: ## Update/lock git-crypt secrets
