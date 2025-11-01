@@ -55,21 +55,21 @@ _:
         {
           "Kitchen LHS WLED" = {
             description = "Kitchen Left Hand Side LED Strip";
-            icon = "sh-wled";
+            icon = "mdi-led-on";
             href = "{{HOMEPAGE_VAR_KITCHEN_LHS_WLED_URL}}";
           };
         }
         {
           "Kitchen RHS WLED" = {
             description = "Kitchen Right Hand Side LED Strip";
-            icon = "sh-wled";
+            icon = "mdi-led-on";
             href = "{{HOMEPAGE_VAR_KITCHEN_RHS_WLED_URL}}";
           };
         }
         {
           "Weather Station" = {
             description = "Weather Base Station";
-            icon = "sh-wled";
+            icon = "mdi-weather-cloudy";
             href = "{{HOMEPAGE_VAR_WEATHER_STATION_URL}}";
           };
         }
