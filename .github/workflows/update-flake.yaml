@@ -3,8 +3,9 @@
 name: update-flake
 run-name: Update Flake
 on:
-  schedule:
-    - cron: "0 3 * * *"     # Every day at 03:00
+  # FIXME - Disable for now
+  # schedule:
+  #   - cron: "0 3 * * *"     # Every day at 03:00
   workflow_dispatch:        # Allow manual triggering
 jobs:
   update-flake:
