@@ -9,10 +9,23 @@ jobs:
     strategy:
       matrix:
         user: [timh]
-        host: [bri7, m625q, mm, opx7070, sid, x13, x1c]
+        host: [bri7, m625q, mm, opx7070, sid, x13]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Free up disk space
+        # https://github.com/jlumbroso/free-disk-space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          # Just Android is sufficient for now
+          # Adding more, increases the job time
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
       - name: Checkout
         uses: actions/checkout@v5
       - name: Install Nix
