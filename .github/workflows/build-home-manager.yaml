@@ -18,12 +18,14 @@ jobs:
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
+          # Just Android is sufficient for now
+          # Adding more, increases the job time
           android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
       - name: Checkout
         uses: actions/checkout@v5
       - name: Install Nix
