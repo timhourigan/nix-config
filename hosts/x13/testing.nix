@@ -25,6 +25,10 @@ in
         virtualHost = "freshrss.${config.custom.internalDomain}";
         baseUrl = "http://freshrss.${config.custom.internalDomain}";
       };
+
+      vikunja = {
+        enable = false;
+      };
     };
   };
 

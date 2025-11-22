@@ -100,6 +100,10 @@ lock: ## Update lock file
 clean: ## Garbage collect
 	nix-collect-garbage --delete-older-than 30d
 
+.PHONY: optimise
+optimise: ## Optimise Nix store
+	nix-store --optimise
+
 .PHONY: help
 help: ## This menu
 	@grep -P "##\s(.*)$$" $(MAKEFILE_LIST) | sed 's/:.*##/:/'

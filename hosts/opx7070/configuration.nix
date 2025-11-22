@@ -5,6 +5,7 @@ let
   hassPort = 8123; # Module default
   homepageDashboard = import ../common/homepage-dashboard.nix { };
   homepageDashboardPort = 8082;
+  vikunjaPort = 3456; # Module default
   z2mPort = 8124; # Module default
 in
 {
@@ -127,6 +128,9 @@ in
           enable = true;
           enableDNS = false;
         };
+      vikunja = {
+        enable = true;
+      };
     };
     system.autoUpgrade = {
       enable = true;
@@ -175,6 +179,17 @@ in
         "http://${config.custom.internalDomain}" = {
           extraConfig = ''
             reverse_proxy :${toString homepageDashboardPort}
+          '';
+        };
+        # Vikunja
+        "http://vikunja.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString vikunjaPort}
+          '';
+        };
+        "http://kanban.${config.custom.internalDomain}" = {
+          extraConfig = ''
+            reverse_proxy :${toString vikunjaPort}
           '';
         };
         # zigbee2mqtt

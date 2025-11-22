@@ -92,6 +92,25 @@ _:
       ];
     };
 
+    vikunja-local = {
+      initialize = true;
+      paths = [ "/var/lib/vikunja" ];
+      repository = "/mnt/backup/vikunja";
+      passwordFile = "/etc/nixos/secrets/restic-vikunja-local";
+      timerConfig = {
+        OnCalendar = "hourly";
+        Persistent = true;
+        RandomizedDelaySec = "1800";
+      };
+      pruneOpts = [
+        "--keep-hourly 24"
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+        "--keep-yearly 20"
+      ];
+    };
+
     zigbee2mqtt-local = {
       initialize = true;
       paths = [ "/var/lib/zigbee2mqtt" ];
