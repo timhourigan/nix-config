@@ -174,7 +174,7 @@ _:
       News = [
         {
           "FreshRSS" = {
-            description = "News";
+            description = "News Feed Reader";
             icon = "sh-freshrss";
             href = "{{HOMEPAGE_VAR_FRESHRSS_URL}}";
             widget = {
@@ -183,6 +183,17 @@ _:
               username = "{{HOMEPAGE_VAR_FRESHRSS_USERNAME}}";
               password = "{{HOMEPAGE_VAR_FRESHRSS_API_KEY}}";
             };
+          };
+        }
+      ];
+    }
+    {
+      Tasks = [
+        {
+          "Vikunja/Kanban" = {
+            description = "Task Management";
+            icon = "sh-vikunja";
+            href = "{{HOMEPAGE_VAR_VIKUNJA_URL}}";
           };
         }
       ];
@@ -211,6 +222,11 @@ _:
       }
       {
         News = {
+          tab = "Applications";
+        };
+      }
+      {
+        Tasks = {
           tab = "Applications";
         };
       }
