@@ -20,5 +20,6 @@
     ./tailscale
     ./tlp
     ./unbound
+    ./vikunja
   ];
 }
