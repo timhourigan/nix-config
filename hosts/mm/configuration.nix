@@ -57,7 +57,7 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2025.10.3";
+        image = "docker.io/pihole/pihole:2025.11.0";
       };
       nebulaSync = {
         enable = true;
