@@ -48,10 +48,6 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      gc = {
-        enable = true;
-        options = "--delete-older-than 7d";
-      };
       glances.enable = true;
       pihole = {
         enable = true;
@@ -83,11 +79,18 @@
       };
       ssh.enable = true;
     };
-    system.autoUpgrade = {
-      enable = true;
-      dates = "05:00";
-      flake = "github:timhourigan/nix-config";
+    system = {
+      autoUpgrade = {
+        enable = true;
+        dates = "05:00";
+        flake = "github:timhourigan/nix-config";
+      };
+      gc = {
+        enable = true;
+        options = "--delete-older-than 7d";
+      };
     };
+
   };
 
   # Secrets

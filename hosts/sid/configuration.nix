@@ -54,11 +54,18 @@
       glances.enable = true;
       ssh.enable = true;
     };
-    system.autoUpgrade = {
-      enable = true;
-      dates = "03:00";
-      flake = "github:timhourigan/nix-config";
+    system = {
+      autoUpgrade = {
+        enable = true;
+        dates = "03:00";
+        flake = "github:timhourigan/nix-config";
+      };
+      gc = {
+        enable = true;
+        options = "--delete-older-than 30d";
+      };
     };
+
   };
 
   # Secrets

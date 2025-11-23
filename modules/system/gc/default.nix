@@ -1,11 +1,11 @@
 { lib, config, options, ... }:
 
 let
-  cfg = config.modules.services.gc;
+  cfg = config.modules.system.gc;
 in
 {
   options = {
-    modules.services.gc = {
+    modules.system.gc = {
       enable = lib.mkEnableOption "Garbage collection" // {
         description = "Enable garbage collection";
         default = false;
