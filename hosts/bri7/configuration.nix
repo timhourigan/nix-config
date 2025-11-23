@@ -34,17 +34,19 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
+      glances.enable = true;
+      ssh.enable = true;
+    };
+    system = {
+      autoUpgrade = {
+        enable = true;
+        dates = "05:00";
+        flake = "github:timhourigan/nix-config";
+      };
       gc = {
         enable = true;
         options = "--delete-older-than 30d";
       };
-      glances.enable = true;
-      ssh.enable = true;
-    };
-    system.autoUpgrade = {
-      enable = true;
-      dates = "05:00";
-      flake = "github:timhourigan/nix-config";
     };
   };
 

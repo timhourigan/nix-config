@@ -3,5 +3,7 @@
 {
   imports = [
     ./autoupgrade
+    ./gc
+    ./optimise
   ];
 }

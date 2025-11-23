@@ -90,7 +90,6 @@ in
         package = pkgs.unstable.gatus;
         configFile = config.sops.secrets."gatus".path;
       };
-      gc.enable = true;
       glances.enable = true;
       hass = {
         enable = true;
@@ -132,12 +131,14 @@ in
         enable = true;
       };
     };
-    system.autoUpgrade = {
-      enable = true;
-      dates = "04:00";
-      flake = "github:timhourigan/nix-config";
+    system = {
+      autoUpgrade = {
+        enable = true;
+        flake = "github:timhourigan/nix-config";
+      };
+      gc.enable = true;
+      optimise.enable = true;
     };
-
   };
 
   # Secrets

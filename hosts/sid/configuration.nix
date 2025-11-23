@@ -50,15 +50,18 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      gc.enable = true;
       glances.enable = true;
       ssh.enable = true;
     };
-    system.autoUpgrade = {
-      enable = true;
-      dates = "03:00";
-      flake = "github:timhourigan/nix-config";
+    system = {
+      autoUpgrade = {
+        enable = true;
+        flake = "github:timhourigan/nix-config";
+      };
+      gc.enable = true;
+      optimise.enable = true;
     };
+
   };
 
   # Secrets

@@ -89,7 +89,6 @@
     services = {
       avahi.enable = true;
       displaylink.enable = true;
-      gc.enable = true;
       glances.enable = true;
       ssh.enable = true;
       tailscale =
@@ -98,6 +97,13 @@
           enableDNS = false;
         };
       tlp.enable = true;
+    };
+    system = {
+      gc.enable = true;
+      optimise = {
+        enable = true;
+        dates = [ "weekly" ];
+      };
     };
   };
 

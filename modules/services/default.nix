@@ -8,7 +8,6 @@
     ./displaylink
     ./freshrss
     ./gatus
-    ./gc
     ./glances
     ./hass
     ./homepage-dashboard

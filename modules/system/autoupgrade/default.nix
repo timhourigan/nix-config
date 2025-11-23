@@ -23,7 +23,18 @@ in
       dates = lib.mkOption {
         description = "Time/date for automatic upgrades (systemd timer format)";
         type = lib.types.str;
-        default = "04:40";
+        default = "04:00";
+      };
+      randomizedDelaySec = lib.mkOption {
+        description = "Set randomized delay in seconds";
+        type = lib.types.str;
+        # See also: https://www.freedesktop.org/software/systemd/man/systemd.time.html
+        default = "600";
+      };
+      fixedRandomDelay = lib.mkOption {
+        description = "Fixed random delay in seconds before upgrade";
+        type = lib.types.bool;
+        default = true;
       };
       allowReboot = lib.mkOption {
         description = "Allow automatic reboot after upgrade";
@@ -43,11 +54,6 @@ in
           "--verbose"
         ];
       };
-      fixedRandomDelay = lib.mkOption {
-        description = "Fixed random delay in seconds before upgrade";
-        type = lib.types.bool;
-        default = true;
-      };
     };
   };
 
@@ -56,6 +62,7 @@ in
       enable = true;
       inherit (cfg) allowReboot;
       inherit (cfg) dates;
+      inherit (cfg) randomizedDelaySec;
       inherit (cfg) fixedRandomDelay;
       inherit (cfg) flags;
       inherit (cfg) flake;

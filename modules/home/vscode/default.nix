@@ -86,9 +86,6 @@ in
         "[python]" = {
           "editor.defaultFormatter" = "charliermarsh.ruff";
         };
-        "python.linting.enabled" = true;
-        "python.linting.ruffEnabled" = true;
-        "python.linting.lintOnSave" = true;
       };
     };
   };
