@@ -41,7 +41,6 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      gc.enable = true;
       glances.enable = true;
       pihole = {
         enable = true;
@@ -82,10 +81,7 @@
         dates = "06:00";
         flake = "github:timhourigan/nix-config";
       };
-      gc = {
-        enable = true;
-        options = "--delete-older-than 30d";
-      };
+      gc.enable = true;
     };
   };
 

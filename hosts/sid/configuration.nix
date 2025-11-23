@@ -50,7 +50,6 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      gc.enable = true;
       glances.enable = true;
       ssh.enable = true;
     };
@@ -60,10 +59,7 @@
         dates = "03:00";
         flake = "github:timhourigan/nix-config";
       };
-      gc = {
-        enable = true;
-        options = "--delete-older-than 30d";
-      };
+      gc.enable = true;
     };
 
   };

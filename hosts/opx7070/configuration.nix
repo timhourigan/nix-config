@@ -90,7 +90,6 @@ in
         package = pkgs.unstable.gatus;
         configFile = config.sops.secrets."gatus".path;
       };
-      gc.enable = true;
       glances.enable = true;
       hass = {
         enable = true;
@@ -138,10 +137,7 @@ in
         dates = "04:00";
         flake = "github:timhourigan/nix-config";
       };
-      gc = {
-        enable = true;
-        options = "--delete-older-than 30d";
-      };
+      gc.enable = true;
     };
   };
 

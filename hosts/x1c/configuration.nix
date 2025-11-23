@@ -70,9 +70,11 @@
     services = {
       avahi.enable = true;
       displaylink.enable = true;
-      gc.enable = true;
       glances.enable = true;
       tlp.enable = true;
+    };
+    system = {
+      gc.enable = true;
     };
   };
 
