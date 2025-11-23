@@ -56,10 +56,10 @@
     system = {
       autoUpgrade = {
         enable = true;
-        dates = "03:00";
         flake = "github:timhourigan/nix-config";
       };
       gc.enable = true;
+      optimise.enable = true;
     };
 
   };

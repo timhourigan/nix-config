@@ -134,10 +134,10 @@ in
     system = {
       autoUpgrade = {
         enable = true;
-        dates = "04:00";
         flake = "github:timhourigan/nix-config";
       };
       gc.enable = true;
+      optimise.enable = true;
     };
   };
 

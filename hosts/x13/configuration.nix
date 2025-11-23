@@ -100,6 +100,10 @@
     };
     system = {
       gc.enable = true;
+      optimise = {
+        enable = true;
+        dates = [ "weekly" ];
+      };
     };
   };
 

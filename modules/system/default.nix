@@ -4,5 +4,6 @@
   imports = [
     ./autoupgrade
     ./gc
+    ./optimise
   ];
 }

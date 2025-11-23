@@ -82,12 +82,16 @@
     system = {
       autoUpgrade = {
         enable = true;
-        dates = "05:00";
+        dates = "03:00";
         flake = "github:timhourigan/nix-config";
       };
       gc = {
         enable = true;
         options = "--delete-older-than 7d";
+      };
+      optimise = {
+        enable = true;
+        dates = [ "05:00" ];
       };
     };
 

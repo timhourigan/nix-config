@@ -75,6 +75,7 @@
     };
     system = {
       gc.enable = true;
+      optimise.enable = true;
     };
   };
 

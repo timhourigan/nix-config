@@ -78,10 +78,14 @@
     system = {
       autoUpgrade = {
         enable = true;
-        dates = "06:00";
+        dates = "04:00";
         flake = "github:timhourigan/nix-config";
       };
       gc.enable = true;
+      optimise = {
+        enable = true;
+        dates = [ "06:00" ];
+      };
     };
   };
 
