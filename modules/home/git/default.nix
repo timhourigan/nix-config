@@ -26,8 +26,10 @@ in
           pub = "push origin -u";
         };
         extraConfig = { credential = { helper = "libsecret"; }; };
-        userName = "Tim Hourigan";
-        userEmail = "1819176+timhourigan@users.noreply.github.com";
+        user = {
+          name = "Tim Hourigan";
+          email = "1819176+timhourigan@users.noreply.github.com";
+        };
       };
     };
   };
