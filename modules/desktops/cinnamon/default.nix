@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 let
   cfg = config.modules.desktops.cinnamon;

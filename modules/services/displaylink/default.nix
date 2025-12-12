@@ -1,13 +1,13 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # DisplayLink - https://nixos.wiki/wiki/Displaylink
 # External Monitors
 # Requires:
-#  - (May 2025) `nix-prefetch-url --name displaylink-610.zip https://www.synaptics.com/sites/default/files/exe_files/2024-10/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.1-EXE.zip`
+#  - (Sept 2025) `nix-prefetch-url --name displaylink-620.zip https://www.synaptics.com/sites/default/files/exe_files/2025-09/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.2-EXE.zip`
 #  OR
-#  - Download latest to $PWD: https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-6.1
-#  - mv $PWD/"DisplayLink USB Graphics Software for Ubuntu6.1-EXE.zip" $PWD/displaylink-610.zip
-#  - nix-prefetch-url file://$PWD/displaylink-610.zip
+#  - Download latest to $PWD: https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-6.2
+#  - mv $PWD/"DisplayLink USB Graphics Software for Ubuntu6.1-EXE.zip" $PWD/displaylink-620.zip
+#  - nix-prefetch-url file://$PWD/displaylink-620.zip
 #
 
 let

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, options, ... }:
+{ lib, config, pkgs, ... }:
 
 # Home Assistant
 # - Mosquitto service

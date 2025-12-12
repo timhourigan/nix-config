@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # Chrony NTP client and server
 # https://mynixos.com/options/services.chrony

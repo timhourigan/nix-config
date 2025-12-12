@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # Homepage Dashboard
 # https://gethomepage.dev

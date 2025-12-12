@@ -1,4 +1,4 @@
-{ lib, config, options, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 # SlimServer aka Logitech Media Server (LMS) aka Lyrion
 # https://mynixos.com/options/services.slimserver

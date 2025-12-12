@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Pinning to zigbee2mqtt 2.7.1 - https://github.com/NixOS/nixpkgs/pull/468549
     nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=a937d80b7c3b330849fd2159bbe0a5303970c9f0";
@@ -16,7 +16,7 @@
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -169,11 +169,12 @@
             markdownlint.enable = true;
             # Nix
             deadnix.enable = true;
-            flake-checker =
-              {
-                enable = true;
-                args = [ "--no-telemetry" ];
-              };
+            # FIXME - Doesn't support 25.11 yet
+            # flake-checker =
+            #   {
+            #     enable = true;
+            #     args = [ "--no-telemetry" ];
+            #   };
             nixpkgs-fmt.enable = true;
             statix = {
               enable = true;

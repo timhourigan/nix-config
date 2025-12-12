@@ -1,4 +1,4 @@
-{ lib, config, options, inputs, ... }:
+{ lib, config, inputs, ... }:
 
 let
   cfg = config.modules.secrets.sops-nix;

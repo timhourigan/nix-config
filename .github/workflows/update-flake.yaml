@@ -6,12 +6,12 @@ on:
   # FIXME - Disable for now
   # schedule:
   #   - cron: "0 3 * * *"     # Every day at 03:00
-  workflow_dispatch:        # Allow manual triggering
+  workflow_dispatch:          # Allow manual triggering
 jobs:
   update-flake:
     permissions:
-      contents: write       # To push changes
-      pull-requests: write  # To create PRs if needed
+      contents: write         # To push changes
+      pull-requests: write    # To create PRs if needed
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
-          nix_path: nixpkgs=channel:nixos-25.05
+          nix_path: nixpkgs=channel:nixos-25.11
       - name: Update flake.lock
         id: update-flake
         uses: DeterminateSystems/update-flake-lock@v28

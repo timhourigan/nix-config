@@ -1,4 +1,4 @@
-{ config, lib, options, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.modules.home.firefox;

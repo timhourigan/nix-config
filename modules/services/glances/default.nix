@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # Glances monitoring service
 # https://github.com/nicolargo/glances
