@@ -5,6 +5,7 @@
     ./alacritty
     ./autojump
     ./bash
+    ./delta
     ./direnv
     ./firefox
     ./fzf
