@@ -1,4 +1,4 @@
-{ config, lib, options, ... }:
+{ config, lib, ... }:
 
 let
   cfg = config.modules.home.autojump;

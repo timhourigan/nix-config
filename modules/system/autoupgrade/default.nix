@@ -1,4 +1,4 @@
-{ lib, config, options, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 # System Upgrade
 # https://mynixos.com/options/system.autoUpgrade

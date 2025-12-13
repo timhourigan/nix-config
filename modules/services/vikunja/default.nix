@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # https://vikunja.io/
 # https://mynixos.com/nixpkgs/options/services.vikunja

@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # tlp - Laptop battery management
 # https://linrunner.de/tlp

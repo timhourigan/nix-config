@@ -1,4 +1,4 @@
-{ config, inputs, outputs, pkgs, ... }:
+{ inputs, outputs, pkgs, ... }:
 
 {
   imports = [
@@ -17,7 +17,7 @@
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
-        "ventoy-1.1.05" # https://github.com/ventoy/Ventoy/issues/3224
+        "ventoy-1.1.07" # https://github.com/ventoy/Ventoy/issues/3224
       ];
     };
   };
@@ -46,7 +46,7 @@
     ddrescue # dd, with extra functionality
     dig # DNS lookup
     dmidecode # DMI table decoder (hardware info)
-    du-dust # Disk space usage (`du` alternative)
+    dust # Disk space usage (`du` alternative)
     eza # File listing (`ls` alternative)
     fastfetch # System information
     fd # Find files/folders (`find` alternative)
@@ -109,7 +109,7 @@
     pkgs.nerd-fonts.liberation
     pkgs.nerd-fonts.terminess-ttf
 
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     powerline-fonts
     twitter-color-emoji
 
@@ -133,6 +133,7 @@
     alacritty.enable = true;
     autojump.enable = true;
     bash.enable = true;
+    delta.enable = true;
     direnv.enable = true;
     firefox.enable = true;
     fzf.enable = true;

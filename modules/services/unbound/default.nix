@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # https://wiki.nixos.org/wiki/Unbound
 # https://mynixos.com/options/services.unbound

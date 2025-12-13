@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, ... }:
 
 # https://github.com/lovelaze/nebula-sync
 #
