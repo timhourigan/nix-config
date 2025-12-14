@@ -116,7 +116,8 @@ in
           package = "zigbee2mqtt-windfront";
         };
         homeassistant = {
-          enable = true;
+          # https://www.zigbee2mqtt.io/guide/configuration/homeassistant.html
+          enabled = true;
           discovery_topic = "homeassistant";
           status_topic = "homeassistant/status";
           # Version 2.0.0 removes action sensors (sensor.*_action entities)
