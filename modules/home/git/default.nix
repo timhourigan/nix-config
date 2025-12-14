@@ -18,7 +18,7 @@ in
       package = pkgs.gitFull;
       enable = true;
       settings = {
-        aliases = {
+        alias = {
           ci = "commit";
           co = "checkout";
           br = "branch";
