@@ -181,7 +181,11 @@
               settings.ignore = [ "**/hardware-configuration.nix" ];
             };
             # Secrets
-            trufflehog.enable = true;
+            trufflehog =
+              {
+                enable = true;
+                args = [ "--no-update" ];
+              };
             ripsecrets.enable = true;
             # Shell
             shellcheck.enable = true;
