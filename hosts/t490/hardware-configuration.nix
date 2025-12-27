@@ -38,7 +38,7 @@
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
-      # Taken from https://wiki.nixos.org/wiki/Jellyfin and tailored for 11th gen,
+      # Taken from https://wiki.nixos.org/wiki/Jellyfin and tailored for 8th gen,
       # with some guesswork.
       intel-media-driver # For Broadwell (2014) or newer processors. LIBVA_DRIVER_NAME=iHD
       # intel-vaapi-driver # For older processors. LIBVA_DRIVER_NAME=i965
