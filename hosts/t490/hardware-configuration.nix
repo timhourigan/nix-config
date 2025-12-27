@@ -7,7 +7,7 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
@@ -53,23 +53,21 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # FIXME
-
-  #   hardware.graphics = {
-  #     enable = true;
-  #     extraPackages = with pkgs; [
-  #       # Taken from https://wiki.nixos.org/wiki/Jellyfin and tailored for 11th gen,
-  #       # with some guesswork.
-  #       intel-media-driver # For Broadwell (2014) or newer processors. LIBVA_DRIVER_NAME=iHD
-  #       # intel-vaapi-driver # For older processors. LIBVA_DRIVER_NAME=i965
-  #       libva-vdpau-driver # Previously vaapiVdpau
-  #       # intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-  #       # # OpenCL support for intel CPUs before 12th gen
-  #       # # see: https://github.com/NixOS/nixpkgs/issues/356535
-  #       intel-compute-runtime-legacy1
-  #       vpl-gpu-rt # QSV on 11th gen or newer
-  #       # intel-media-sdk # QSV up to 11th gen
-  #       intel-ocl # OpenCL support
-  #     ];
-  #   };
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      # Taken from https://wiki.nixos.org/wiki/Jellyfin and tailored for 11th gen,
+      # with some guesswork.
+      intel-media-driver # For Broadwell (2014) or newer processors. LIBVA_DRIVER_NAME=iHD
+      # intel-vaapi-driver # For older processors. LIBVA_DRIVER_NAME=i965
+      libva-vdpau-driver # Previously vaapiVdpau
+      # intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+      # # OpenCL support for intel CPUs before 12th gen
+      # # see: https://github.com/NixOS/nixpkgs/issues/356535
+      intel-compute-runtime-legacy1
+      # vpl-gpu-rt # QSV on 11th gen or newer
+      # intel-media-sdk # QSV up to 11th gen - Deprecated
+      intel-ocl # OpenCL support
+    ];
+  };
 }

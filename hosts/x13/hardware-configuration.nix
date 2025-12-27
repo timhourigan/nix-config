@@ -48,7 +48,7 @@
       # # see: https://github.com/NixOS/nixpkgs/issues/356535
       intel-compute-runtime-legacy1
       vpl-gpu-rt # QSV on 11th gen or newer
-      # intel-media-sdk # QSV up to 11th gen
+      # intel-media-sdk # QSV up to 11th gen - Deprecated
       intel-ocl # OpenCL support
     ];
   };
