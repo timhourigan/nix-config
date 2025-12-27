@@ -34,6 +34,12 @@
   };
   ```
 
+- Update the lock file
+
+  ```shell
+  make lock
+  ```
+
 - Update the matrix in `.github/workflows/build-home-manager.yaml` to
   include the new host
 
