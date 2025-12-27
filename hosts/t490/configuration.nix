@@ -5,7 +5,6 @@
     ../../modules
     ../common
     ./hardware-configuration.nix
-    ./testing.nix
   ];
 
   nixpkgs = {
@@ -88,7 +87,6 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      displaylink.enable = true;
       glances.enable = true;
       ssh.enable = true;
       tailscale =
