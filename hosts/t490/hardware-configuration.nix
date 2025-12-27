@@ -14,35 +14,18 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/d318376a-381a-4e34-881c-b92037322da2";
+      device = "/dev/disk/by-label/os";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
+  fileSystems."/boot/efi" =
     {
-      device = "/dev/disk/by-uuid/7FAB-6B82";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/d08ca87e-ef8d-4dee-9809-566aa3654024"; }];
-
-
-  # fileSystems."/" =
-  #   {
-  #     device = "/dev/disk/by-label/os";
-  #     fsType = "ext4";
-  #   };
-
-  # fileSystems."/boot/efi" =
-  #   {
-  #     device = "/dev/disk/by-label/boot";
-  #     fsType = "vfat";
-  #   };
-
-  # swapDevices =
-  #   [{ device = "/dev/disk/by-label/swap"; }];
+    [{ device = "/dev/disk/by-label/swap"; }];
 
   networking.useDHCP = lib.mkDefault true;
   # FIXME

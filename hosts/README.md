@@ -79,6 +79,48 @@
 
 - Commit the changes to the branch
 
+### Labels
+
+- Optionally label the filesystem partitions by booting into a live linux distro
+
+  ```shell
+  # See existing labels
+  lsblk -f
+
+  # Label fat device (pkg dosfstools)
+  sudo fatlabel /dev/<partition> "boot"
+
+  # Label ext2/3/4 device (pkg e2fsprogs)
+  sudo e2label /dev/<partition> "os"
+  ```
+
+- Update partition names in `~/git/nix-config/hosts/<hostname>/hardware-configuration.nix`
+to use the labels e.g.
+
+  ```nix
+    fileSystems."/" =
+      {
+        device = "/dev/disk/by-label/os";
+        fsType = "ext4";
+      };
+
+    fileSystems."/boot/efi" =
+      {
+        device = "/dev/disk/by-label/boot";
+        fsType = "vfat";
+      };
+
+  ```
+
+- Build the changes and switch to them
+
+  ```shell
+  cd ~/git/nix-config
+  sudo nixos-rebuild switch
+  ```
+
+- Commit the changes to the branch
+
 ### Secrets
 
 - If secrets are needed, run the following command and add it under a new host
