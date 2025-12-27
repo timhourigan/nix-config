@@ -23,7 +23,6 @@
       systemd-boot.enable = true;
       efi = {
         canTouchEfiVariables = true;
-        # FIXME Needed? - efiSysMountPoint = "/boot/efi";
       };
     };
   };
