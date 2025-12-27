@@ -95,7 +95,7 @@
   ```
 
 - Update partition names in `~/git/nix-config/hosts/<hostname>/hardware-configuration.nix`
-to use the labels e.g.
+  to use the labels e.g.
 
   ```nix
     fileSystems."/" =
