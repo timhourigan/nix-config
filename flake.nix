@@ -70,6 +70,10 @@
           modules = [ ./hosts/sid/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
         };
+        t490 = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/t490/configuration.nix ];
+          specialArgs = { inherit inputs outputs; };
+        };
         x1c = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/x1c/configuration.nix ];
           specialArgs = { inherit inputs outputs; };
@@ -105,6 +109,11 @@
         "timh@sid" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home ./home/hosts/sid ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "timh@t490" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home ./home/hosts/t490 ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@x1c" = home-manager.lib.homeManagerConfiguration {
