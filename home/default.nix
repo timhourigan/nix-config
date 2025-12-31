@@ -64,8 +64,7 @@
     pciutils # PCI device utilities (lspci)
     powertop # Power consumption
     ripgrep # Fast grep
-    # FIXME - Broken in nixpkgs 25.05 - https://github.com/NixOS/nixpkgs/issues/461249
-    unstable.rpi-imager # Raspberry Pi OS image writer
+    rpi-imager # Raspberry Pi OS image writer
     screen # Terminal multiplexer
     sops # Secrets management
     ssh-to-age # SSH to Age key converter
