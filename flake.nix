@@ -178,12 +178,11 @@
             markdownlint.enable = true;
             # Nix
             deadnix.enable = true;
-            # FIXME - Doesn't support 25.11 yet
-            # flake-checker =
-            #   {
-            #     enable = true;
-            #     args = [ "--no-telemetry" ];
-            #   };
+            flake-checker =
+              {
+                enable = true;
+                args = [ "--no-telemetry" ];
+              };
             nixpkgs-fmt.enable = true;
             statix = {
               enable = true;
