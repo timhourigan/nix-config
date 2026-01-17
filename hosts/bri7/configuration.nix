@@ -30,7 +30,7 @@
 
   # Modules
   modules = {
-    desktops.xfce.enable = true;
+    desktops.cinnamon.enable = true;
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
