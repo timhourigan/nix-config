@@ -5,5 +5,6 @@
     ./autoupgrade
     ./gc
     ./optimise
+    ./systemd-notify
   ];
 }
