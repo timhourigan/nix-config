@@ -111,6 +111,7 @@
     noto-fonts-color-emoji
     powerline-fonts
     twitter-color-emoji
+    xkcd-font
 
     # Node
     nodejs

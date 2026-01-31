@@ -8,6 +8,7 @@
     avidemux # Video editor
     brasero # CD/DVD burner
     devede # CD/DVD creator
+    font-manager # Font management
     freetube # Youtube client
     gimp # Image editor
     inkscape # SVG editor
