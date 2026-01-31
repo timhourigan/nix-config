@@ -1,7 +1,7 @@
 {
   sops = {
     secrets = {
-      pushover_env = { };
+      pushover_systemd_env = { };
     };
   };
 }

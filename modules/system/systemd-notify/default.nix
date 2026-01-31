@@ -2,6 +2,7 @@
 
 let
   cfg = config.modules.system.systemd-notify;
+  hostname = config.networking.hostName;
   # Using pushover for notifications
   notificationService = "pushover";
   notificationURI = "https://api.pushover.net/1/messages.json";
@@ -31,12 +32,20 @@ in
       description = "Notification service via ${notificationService} for %i";
       # Prevent recursive failures
       onFailure = lib.mkForce [ ];
+      script = ''
+        ${pkgs.curl}/bin/curl -s \
+          --form-string "token=$NOTIFY_TOKEN" \
+          --form-string "user=$NOTIFY_USER" \
+          --form-string "title=${hostname} failure: $1" \
+          --form-string "message=$1 has failed on ${hostname}" \
+          ${notificationURI} \
+          >> /tmp/${notificationService}-systemd-notify-$1.log 2>&1
+      '';
+      # %i translates to $1, the failed service name
+      scriptArgs = "%i";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = lib.mkDefault ''
-          ${pkgs.curl}/bin/curl -s -F "token=$NOTIFY_TOKEN" -F "user=$NOTIFY_USER" -F "title=Service Failure: %i" -F "message=The systemd service %i has failed on $(${pkgs.nettools}/bin/hostname)." ${notificationURI}
-        '';
-        EnvironmentFile = lib.mkDefault "/run/secrets/${notificationService}_env";
+        EnvironmentFile = lib.mkDefault config.sops.secrets."${notificationService}_systemd_env".path;
       };
     };
   };
