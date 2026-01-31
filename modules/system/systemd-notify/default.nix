@@ -2,8 +2,9 @@
 
 let
   cfg = config.modules.system.systemd-notify;
-  # Currently using pushover for notifications
+  # Using pushover for notifications
   notificationService = "pushover";
+  notificationURI = "https://api.pushover.net/1/messages.json";
 in
 {
   options = {
@@ -13,7 +14,7 @@ in
         default = false;
       };
     };
-    # Set a default onFailure for all services to notify pushover
+    # Set a default onFailure for all services to notify
     systemd.services = lib.mkOption {
       type = with lib.types; attrsOf (
         submodule {
@@ -26,11 +27,14 @@ in
 
   config = lib.mkIf cfg.enable {
     systemd.services."${notificationService}@" = {
+      # %i is replaced the failed service name
       description = "Notification service via ${notificationService} for %i";
+      # Prevent recursive failures
+      onFailure = lib.mkForce [ ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = lib.mkDefault ''
-          ${pkgs.curl}/bin/curl -s -F "token=$NOTIFY_TOKEN" -F "user=$NOTIFY_USER" -F "title=Service Failure: %i" -F "message=The systemd service %i has failed on $(${pkgs.nettools}/bin/hostname)." https://api.pushover.net/1/messages.json
+          ${pkgs.curl}/bin/curl -s -F "token=$NOTIFY_TOKEN" -F "user=$NOTIFY_USER" -F "title=Service Failure: %i" -F "message=The systemd service %i has failed on $(${pkgs.nettools}/bin/hostname)." ${notificationURI}
         '';
         EnvironmentFile = lib.mkDefault "/run/secrets/${notificationService}_env";
       };
