@@ -29,7 +29,7 @@ in
   config = lib.mkIf cfg.enable {
     systemd.services."${notificationService}@" = {
       # %i is replaced the failed service name
-      description = "Notification service via ${notificationService} for %i";
+      description = "Notification service for ${notificationService} for %i";
       # Prevent recursive failures
       onFailure = lib.mkForce [ ];
       script = ''
