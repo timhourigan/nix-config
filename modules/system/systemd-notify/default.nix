@@ -15,7 +15,7 @@ in
         default = false;
       };
     };
-    # Set a default onFailure for all services to notify
+    # Set a default onFailure to cause all services to notify on failure
     systemd.services = lib.mkOption {
       type = with lib.types; attrsOf (
         submodule {
@@ -28,7 +28,7 @@ in
 
   config = lib.mkIf cfg.enable {
     systemd.services."${notificationService}@" = {
-      # %i is replaced the failed service name
+      # %i is replaced with the failed service name
       description = "Notification service for ${notificationService} for %i";
       # Prevent recursive failures
       onFailure = lib.mkForce [ ];
@@ -41,7 +41,8 @@ in
           ${notificationURI} \
           >> /var/log/${notificationService}-systemd-notify-$1.log 2>&1
       '';
-      # %i translates to $1, the failed service name
+      # %i allows arguments to be accessed with $1, $2 etc.
+      # The failed service name is available as $1
       scriptArgs = "%i";
       serviceConfig = {
         Type = "oneshot";
