@@ -39,7 +39,7 @@ in
           --form-string "title=${hostname} failure: $1" \
           --form-string "message=$1 has failed on ${hostname}" \
           ${notificationURI} \
-          >> /tmp/${notificationService}-systemd-notify-$1.log 2>&1
+          >> /var/log/${notificationService}-systemd-notify-$1.log 2>&1
       '';
       # %i translates to $1, the failed service name
       scriptArgs = "%i";
