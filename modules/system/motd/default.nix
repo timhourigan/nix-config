@@ -2,10 +2,10 @@
 
 let
   motd = pkgs.writeShellScriptBin "motd" ''
-    #!/usr/bin/env bash
 
     # Colours and formatting
     RED="\e[31m"
+    GREEN="\e[32m"
     GREEN="\e[32m"
     BOLD="\e[1m"
     ENDCOLOUR="\e[0m"
