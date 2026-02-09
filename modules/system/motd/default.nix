@@ -50,7 +50,7 @@ let
     printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Kernel" "$(uname -r)"
     printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Built" "$NIX_BUILD_TIME"
     printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Memory" "$MEMORY"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Disk" "$DISK"
+    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Disk /" "$DISK"
     printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Uptime" "$UPTIME_STRING"
     printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "IP" "$IP_ADDRESS"
     # Failed Services
