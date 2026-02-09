@@ -3,9 +3,8 @@ _:
 {
   modules = {
     system = {
-      systemd-notify = {
-        enable = true;
-      };
+      motd.enable = true;
+      systemd-notify.enable = true;
     };
   };
 }

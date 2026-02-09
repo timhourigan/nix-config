@@ -72,14 +72,13 @@ in
     modules.system.motd = {
       enable = lib.mkEnableOption "MOTD" // {
         description = "Enable message of the day";
-        default = true;
+        default = false;
       };
     };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ motd pkgs.figlet pkgs.lolcat ];
-    # Set the MOTD to be the output of the motd script
     programs.bash.interactiveShellInit = lib.mkIf config.programs.bash.enable ''
       motd
     '';
