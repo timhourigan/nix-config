@@ -5,10 +5,8 @@ let
 
     # Colours and formatting
     RED="\e[31m"
-    GREEN="\e[32m"
-    GREEN="\e[32m"
     BOLD="\e[1m"
-    ENDCOLOUR="\e[0m"
+    NOCOLOUR="\e[0m"
 
     # OS Information
     source /etc/os-release
@@ -33,7 +31,6 @@ let
     UPTIME_DAYS=$((UPTIME/60/60/24))
     UPTIME_HOURS=$((UPTIME/60/60%24))
     UPTIME_MINS=$((UPTIME/60%60))
-    UPTIME_SECSs=$((UPTIME%60))
     UPTIME_STRING="$((UPTIME_DAYS))d $((UPTIME_HOURS))h $((UPTIME_MINS))m"
 
     # IP Address
@@ -44,23 +41,23 @@ let
 
     # Output
     figlet "$(hostname)" | lolcat -f
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "CPU" "$CPU_NAME, $CPU_CORES Cores"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Load" "$CPU_LOAD_STRING"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Release" "$PRETTY_NAME"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Kernel" "$(uname -r)"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Built" "$NIX_BUILD_TIME"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Memory" "$MEMORY"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Disk /" "$DISK"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Uptime" "$UPTIME_STRING"
-    printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "IP" "$IP_ADDRESS"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "CPU" "$CPU_NAME, $CPU_CORES Cores"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Load" "$CPU_LOAD_STRING"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Release" "$PRETTY_NAME"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Kernel" "$(uname -r)"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Built" "$NIX_BUILD_TIME"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Memory" "$MEMORY"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /" "$DISK"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Uptime" "$UPTIME_STRING"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "IP" "$IP_ADDRESS"
     # Failed Services
     if [ "$SYSTEMD_SERVICES_FAILED" -eq 0 ]; then
-      printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Failed Services" "None"
+      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Failed Services" "None"
     else
-      printf "$BOLD  * %-18s$ENDCOLOUR %s\n" "Failed Services" "$SYSTEMD_SERVICES_FAILED"
+      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Failed Services" "$SYSTEMD_SERVICES_FAILED"
       while read -r line; do
         SERVICE_NAME=$(echo "$line" | awk '{print $1}' | sed 's/\.service$//')
-        printf "$RED    x %s$ENDCOLOUR\n" "$SERVICE_NAME"
+        printf "$RED    x %s$NOCOLOUR\n" "$SERVICE_NAME"
       done < <(systemctl list-units --type=service --state=failed --no-legend)
     fi
     printf "\n"
