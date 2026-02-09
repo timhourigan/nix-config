@@ -17,7 +17,7 @@ let
     CPU_LOAD1=$(awk '{print $1}' /proc/loadavg)
     CPU_LOAD5=$(awk '{print $2}' /proc/loadavg)
     CPU_LOAD15=$(awk '{print $3}' /proc/loadavg)
-    CPU_LOAD_STRING="Load: $CPU_LOAD1 (1m), $CPU_LOAD5 (5m), $CPU_LOAD15 (15m)"
+    CPU_LOAD_STRING="$CPU_LOAD1 (1m), $CPU_LOAD5 (5m), $CPU_LOAD15 (15m)"
 
     # Memory usage
     MEMORY=$(free -m | awk 'NR==2{printf "%s/%sMB (%.2f%%)", $3,$2,$3*100/$2}')
