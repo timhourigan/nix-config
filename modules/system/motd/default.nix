@@ -2,7 +2,6 @@
 
 let
   motd = pkgs.writeShellScriptBin "motd" ''
-
     # Colours and formatting
     RED="\e[31m"
     BOLD="\e[1m"
