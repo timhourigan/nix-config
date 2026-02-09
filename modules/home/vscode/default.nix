@@ -80,7 +80,7 @@ in
         "editor.formatOnSave" = true;
         # Organize imports on save
         "editor.codeActionsOnSave" = {
-          "source.organizeImports" = true;
+          "source.organizeImports" = "explicit";
         };
         # Python
         "[python]" = {
