@@ -48,7 +48,7 @@ let
         printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
         return
       fi
-      
+
       local used=$(echo "$usage_info" | cut -d'|' -f1)
       local total=$(echo "$usage_info" | cut -d'|' -f2)
       local percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
