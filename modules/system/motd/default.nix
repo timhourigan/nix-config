@@ -91,17 +91,23 @@ let
         return
       fi
 
-      local pool_info
-      pool_info=$(zpool list -Hp "$pool" 2>/dev/null)
-      local total_bytes
-      total_bytes=$(echo "$pool_info" | awk '{print $2}')
-      local used_bytes
-      used_bytes=$(echo "$pool_info" | awk '{print $3}')
+      # Capture both human-readable and parseable output once
+      local pool_info_parsed
+      pool_info_parsed=$(zpool list -Hp "$pool" 2>/dev/null)
+      local pool_info_human
+      pool_info_human=$(zpool list -H "$pool" 2>/dev/null)
 
+      # Extract values from parseable output for calculations
+      local total_bytes
+      total_bytes=$(echo "$pool_info_parsed" | awk '{print $2}')
+      local used_bytes
+      used_bytes=$(echo "$pool_info_parsed" | awk '{print $3}')
+
+      # Extract values from human-readable output for display
       local total_human
-      total_human=$(zpool list -H "$pool" | awk '{print $2}')
+      total_human=$(echo "$pool_info_human" | awk '{print $2}')
       local used_human
-      used_human=$(zpool list -H "$pool" | awk '{print $3}')
+      used_human=$(echo "$pool_info_human" | awk '{print $3}')
 
       local percent=0
       if [ "$total_bytes" -gt 0 ] 2>/dev/null; then
@@ -109,7 +115,7 @@ let
       fi
 
       local health
-      health=$(zpool list -H "$pool" | awk '{print $10}')
+      health=$(echo "$pool_info_human" | awk '{print $10}')
       local health_colour="$GREEN"
       if [ "$health" != "ONLINE" ]; then
         health_colour="$RED"
