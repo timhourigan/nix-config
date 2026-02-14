@@ -6,6 +6,7 @@ let
     RED=$'\e[31m'
     ORANGE=$'\e[33m'
     GREEN=$'\e[32m'
+    WHITE=$'\e[37m'
     BOLD=$'\e[1m'
     NOCOLOUR=$'\e[0m'
 
@@ -15,7 +16,7 @@ let
       local percent="$1"
       # Validate that percent is a non-empty numeric value
       if [ -z "$percent" ] || ! [[ "$percent" =~ ^[0-9]+$ ]]; then
-        echo "$GREEN"
+        echo "$WHITE"
         return
       fi
       if [ "$percent" -ge 90 ]; then
