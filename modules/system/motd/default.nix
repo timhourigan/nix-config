@@ -47,7 +47,12 @@ let
     get_mem_usage() {
       local used=$(free -m | awk 'NR==2{print $3}')
       local total=$(free -m | awk 'NR==2{print $2}')
-      local percent=$((used * 100 / total))
+      local percent
+      if [ "$total" -gt 0 ] 2>/dev/null; then
+        percent=$((used * 100 / total))
+      else
+        percent=0
+      fi
 
       local colour=$(get_colour_by_percent "$percent")
 
