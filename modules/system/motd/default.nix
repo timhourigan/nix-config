@@ -11,7 +11,7 @@ let
 
     # Colour by percentage
     # Params: $1 - Percentage value
-    get_color_by_percent() {
+    get_colour_by_percent() {
       local percent="$1"
       if [ "$percent" -ge 90 ]; then
         echo "$RED"
@@ -31,9 +31,9 @@ let
       local total=$(echo "$usage_info" | cut -d'|' -f2)
       local percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
 
-      local color=$(get_color_by_percent "$percent")
+      local colour=$(get_colour_by_percent "$percent")
 
-      printf "%s/%s (%s%s%%%s)" "$used" "$total" "$color" "$percent" "$NOCOLOUR"
+      printf "%s/%s (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
     }
 
     # Memory Usage
@@ -42,9 +42,9 @@ let
       local total=$(free -m | awk 'NR==2{print $2}')
       local percent=$((used * 100 / total))
 
-      local color=$(get_color_by_percent "$percent")
+      local colour=$(get_colour_by_percent "$percent")
 
-      printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$color" "$percent" "$NOCOLOUR"
+      printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
     }
 
     # OS Information
