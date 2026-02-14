@@ -14,11 +14,12 @@ let
     # Params: $1 - Percentage value
     get_colour_by_percent() {
       local percent="$1"
-      # Validate that percent is a non-empty numeric value
       if [ -z "$percent" ] || ! [[ "$percent" =~ ^[0-9]+$ ]]; then
+        # Percentage is not valid, return white as default
         echo "$WHITE"
         return
       fi
+
       if [ "$percent" -ge 90 ]; then
         echo "$RED"
       elif [ "$percent" -ge 75 ]; then
@@ -32,11 +33,18 @@ let
     # Params: $1 - Mount point
     get_disk_usage() {
       local mount_point="$1"
-      local usage_info
-      usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
-      
-      # If df fails or returns empty result, output zeros
-      if [ -z "$usage_info" ]; then
+      # Check if mount point exists and is a directory
+      if [ ! -d "$mount_point" ]; then
+        printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
+        return
+      fi
+
+      # Try to get disk usage info
+      local usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
+
+      # Validate output (needs exactly 2 pipe delimiters)
+      local pipe_count="''${usage_info//[^|]/}"
+      if [ -z "$usage_info" ] || [ "''${#pipe_count}" -ne 2 ]; then
         printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
         return
       fi
