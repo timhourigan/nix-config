@@ -3,9 +3,49 @@
 let
   motd = pkgs.writeShellScriptBin "motd" ''
     # Colours and formatting
-    RED="\e[31m"
-    BOLD="\e[1m"
-    NOCOLOUR="\e[0m"
+    RED=$'\e[31m'
+    ORANGE=$'\e[33m'
+    GREEN=$'\e[32m'
+    BOLD=$'\e[1m'
+    NOCOLOUR=$'\e[0m'
+
+    # Colour by percentage
+    # Params: $1 - Percentage value
+    get_color_by_percent() {
+      local percent="$1"
+      if [ "$percent" -ge 90 ]; then
+        echo "$RED"
+      elif [ "$percent" -ge 75 ]; then
+        echo "$ORANGE"
+      else
+        echo "$GREEN"
+      fi
+    }
+
+    # Disk Usage
+    # Params: $1 - Mount point
+    get_disk_usage() {
+      local mount_point="$1"
+      local usage_info=$(df -h "$mount_point" | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
+      local used=$(echo "$usage_info" | cut -d'|' -f1)
+      local total=$(echo "$usage_info" | cut -d'|' -f2)
+      local percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
+
+      local color=$(get_color_by_percent "$percent")
+
+      printf "%s/%s (%s%s%%%s)" "$used" "$total" "$color" "$percent" "$NOCOLOUR"
+    }
+
+    # Memory Usage
+    get_mem_usage() {
+      local used=$(free -m | awk 'NR==2{print $3}')
+      local total=$(free -m | awk 'NR==2{print $2}')
+      local percent=$((used * 100 / total))
+
+      local color=$(get_color_by_percent "$percent")
+
+      printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$color" "$percent" "$NOCOLOUR"
+    }
 
     # OS Information
     source /etc/os-release
@@ -20,13 +60,12 @@ let
     CPU_LOAD_STRING="$CPU_LOAD1 (1m), $CPU_LOAD5 (5m), $CPU_LOAD15 (15m)"
 
     # Memory usage
-    MEMORY=$(free -m | awk 'NR==2{printf "%s/%sMB (%.2f%%)", $3,$2,$3*100/$2}')
+    MEMORY=$(get_mem_usage)
 
     # Disk usage
-    DISK_ROOT=$(df -h / | awk 'NR==2{printf "%s/%s (%s)", $3,$2,$5}')
-    # If /mnt/backup exists, include it in the MOTD
+    DISK_ROOT=$(get_disk_usage /)
     if [ -d /mnt/backup ]; then
-      DISK_BACKUP=$(df -h /mnt/backup | awk 'NR==2{printf "%s/%s (%s)", $3,$2,$5}')
+      DISK_BACKUP=$(get_disk_usage /mnt/backup)
     fi
 
     # Uptime
