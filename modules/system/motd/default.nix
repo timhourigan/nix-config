@@ -14,11 +14,12 @@ let
     # Params: $1 - Percentage value
     get_colour_by_percent() {
       local percent="$1"
-      # Validate that percent is a non-empty numeric value
       if [ -z "$percent" ] || ! [[ "$percent" =~ ^[0-9]+$ ]]; then
+        # Percentage is not valid, return white as default
         echo "$WHITE"
         return
       fi
+
       if [ "$percent" -ge 90 ]; then
         echo "$RED"
       elif [ "$percent" -ge 75 ]; then
