@@ -95,13 +95,13 @@ let
       fi
 
       local pool_info
-      pool_info=$(zpool list -Hpo name,size,alloc,health "$pool" 2>/dev/null)
+      pool_info=$(zpool list -Hpo size,alloc,health "$pool" 2>/dev/null)
       local total_bytes
-      total_bytes=$(echo "$pool_info" | awk '{print $2}')
+      total_bytes=$(echo "$pool_info" | awk '{print $1}')
       local used_bytes
-      used_bytes=$(echo "$pool_info" | awk '{print $3}')
+      used_bytes=$(echo "$pool_info" | awk '{print $2}')
       local health
-      health=$(echo "$pool_info" | awk '{print $4}')
+      health=$(echo "$pool_info" | awk '{print $3}')
 
       local total_human
       total_human=$(numfmt --to=iec-i --suffix=B "$total_bytes")
