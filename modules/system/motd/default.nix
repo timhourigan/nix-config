@@ -23,7 +23,11 @@ let
     MEMORY=$(free -m | awk 'NR==2{printf "%s/%sMB (%.2f%%)", $3,$2,$3*100/$2}')
 
     # Disk usage
-    DISK=$(df -h / | awk 'NR==2{printf "%s/%s (%s)", $3,$2,$5}')
+    DISK_ROOT=$(df -h / | awk 'NR==2{printf "%s/%s (%s)", $3,$2,$5}')
+    # If /mnt/backup exists, include it in the MOTD
+    if [ -d /mnt/backup ]; then
+      DISK_BACKUP=$(df -h /mnt/backup | awk 'NR==2{printf "%s/%s (%s)", $3,$2,$5}')
+    fi
 
     # Uptime
     UPTIME=$(cat /proc/uptime | cut -f1 -d.)
@@ -41,14 +45,20 @@ let
     # Output
     figlet "$(hostname)" | lolcat -f
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "CPU" "$CPU_NAME, $CPU_CORES Cores"
-    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Load" "$CPU_LOAD_STRING"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Release" "$PRETTY_NAME"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Kernel" "$(uname -r)"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Built" "$NIX_BUILD_TIME"
-    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Memory" "$MEMORY"
-    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /" "$DISK"
+    printf "\n"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Uptime" "$UPTIME_STRING"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "IP" "$IP_ADDRESS"
+    printf "\n"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Load" "$CPU_LOAD_STRING"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Memory" "$MEMORY"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /" "$DISK_ROOT"
+    if [ -n "$DISK_BACKUP" ]; then
+      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /mnt/backup" "$DISK_BACKUP"
+    fi
+    printf "\n"
     # Failed Services
     if [ "$SYSTEMD_SERVICES_FAILED" -eq 0 ]; then
       printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Failed Services" "None"
