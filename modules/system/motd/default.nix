@@ -184,11 +184,11 @@ let
     printf "\n"
     # Failed Services
     if [ "$SYSTEMD_SERVICES_FAILED" -eq 0 ]; then
-      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Failed Services" "None"
+      printf "$BOLD  * %-18s$NOCOLOUR $GREEN%s$NOCOLOUR\n" "Failed Services" "None"
     else
-      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Failed Services" "$SYSTEMD_SERVICES_FAILED"
+      printf "$BOLD  * %-18s$NOCOLOUR $RED%s$NOCOLOUR\n" "Failed Services" "$SYSTEMD_SERVICES_FAILED"
       while read -r line; do
-        SERVICE_NAME=$(echo "$line" | awk '{print $1}' | sed 's/\.service$//')
+        SERVICE_NAME=$(echo "$line" | awk '{print $2}' | sed 's/\.service$//')
         printf "$RED    x %s$NOCOLOUR\n" "$SERVICE_NAME"
       done < <(systemctl list-units --type=service --state=failed --no-legend)
     fi
