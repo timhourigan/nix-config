@@ -35,17 +35,17 @@ let
       local mount_point="$1"
       # Check if mount point exists and is a directory
       if [ ! -d "$mount_point" ]; then
-        printf "N/A"
+        printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
         return
       fi
 
-      # Try to get disk usage info, redirecting errors
+      # Try to get disk usage info
       local usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
 
-      # Check if df command succeeded and returned valid data (needs exactly 2 pipe delimiters)
+      # Validate output (needs exactly 2 pipe delimiters)
       local pipe_count="''${usage_info//[^|]/}"
       if [ -z "$usage_info" ] || [ "''${#pipe_count}" -ne 2 ]; then
-        printf "N/A"
+        printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
         return
       fi
 
