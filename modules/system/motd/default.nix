@@ -57,10 +57,10 @@ let
       local percent
       percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
 
-      local colour
-      colour=$(get_colour_by_percent "$percent")
+      local percent_colour
+      percent_colour=$(get_colour_by_percent "$percent")
 
-      printf "%s/%s (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
+      printf "%s/%s (%s%s%%%s)" "$used" "$total" "$percent_colour" "$percent" "$NOCOLOUR"
     }
 
     # Memory Usage
@@ -76,16 +76,19 @@ let
         percent=0
       fi
 
-      local colour
-      colour=$(get_colour_by_percent "$percent")
+      local percent_colour
+      percent_colour=$(get_colour_by_percent "$percent")
 
-      printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
+      printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$percent_colour" "$percent" "$NOCOLOUR"
     }
 
     # ZFS Pool Status
     # Params: $1 - Pool name
     get_zpool_status() {
       local pool="$1"
+      if ! command -v zpool &>/dev/null; then
+        return
+      fi
       if ! zpool list "$pool" &>/dev/null; then
         printf "Not Found: %s" "$pool"
         return
@@ -115,10 +118,10 @@ let
         health_colour="$RED"
       fi
 
-      local colour
-      colour=$(get_colour_by_percent "$percent")
+      local percent_colour
+      percent_colour=$(get_colour_by_percent "$percent")
 
-      printf "%s/%s (%s%s%%%s) [%s%s%s]" "$used_human" "$total_human" "$colour" "$percent" "$NOCOLOUR" "$health_colour" "$health" "$NOCOLOUR"
+      printf "%s/%s (%s%s%%%s) [%s%s%s]" "$used_human" "$total_human" "$percent_colour" "$percent" "$NOCOLOUR" "$health_colour" "$health" "$NOCOLOUR"
     }
 
     # OS Information
