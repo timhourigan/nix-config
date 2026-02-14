@@ -86,30 +86,30 @@ let
     # Params: $1 - Pool name
     get_zpool_status() {
       local pool="$1"
-      if ! command -v zpool &>/dev/null || ! zpool list "$pool" &>/dev/null; then
+      if ! zpool list "$pool" &>/dev/null; then
         printf "Not Found: %s" "$pool"
         return
       fi
 
       local pool_info
-      pool_info=$(zpool list -Hp "$pool" 2>/dev/null)
+      pool_info=$(zpool list -Hpo name,size,alloc,health "$pool" 2>/dev/null)
       local total_bytes
       total_bytes=$(echo "$pool_info" | awk '{print $2}')
       local used_bytes
       used_bytes=$(echo "$pool_info" | awk '{print $3}')
+      local health
+      health=$(echo "$pool_info" | awk '{print $4}')
 
       local total_human
-      total_human=$(zpool list -H "$pool" | awk '{print $2}')
+      total_human=$(numfmt --to=iec-i --suffix=B "$total_bytes")
       local used_human
-      used_human=$(zpool list -H "$pool" | awk '{print $3}')
+      used_human=$(numfmt --to=iec-i --suffix=B "$used_bytes")
 
       local percent=0
       if [ "$total_bytes" -gt 0 ] 2>/dev/null; then
         percent=$((used_bytes * 100 / total_bytes))
       fi
 
-      local health
-      health=$(zpool list -H "$pool" | awk '{print $10}')
       local health_colour="$GREEN"
       if [ "$health" != "ONLINE" ]; then
         health_colour="$RED"
