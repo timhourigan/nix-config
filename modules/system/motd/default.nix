@@ -87,7 +87,8 @@ let
     get_zpool_status() {
       local pool="$1"
       if ! command -v zpool &>/dev/null || ! zpool list "$pool" &>/dev/null; then
-        return 1
+        printf "Not Found: %s" "$pool"
+        return
       fi
 
       local pool_info
