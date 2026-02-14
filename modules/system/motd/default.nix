@@ -3,11 +3,87 @@
 let
   motd = pkgs.writeShellScriptBin "motd" ''
     # Colours and formatting
-    RED="\e[31m"
-    BOLD="\e[1m"
-    NOCOLOUR="\e[0m"
+    RED=$'\e[31m'
+    ORANGE=$'\e[33m'
+    GREEN=$'\e[32m'
+    WHITE=$'\e[37m'
+    BOLD=$'\e[1m'
+    NOCOLOUR=$'\e[0m'
+
+    # Colour by percentage
+    # Params: $1 - Percentage value
+    get_colour_by_percent() {
+      local percent="$1"
+      if [ -z "$percent" ] || ! [[ "$percent" =~ ^[0-9]+$ ]]; then
+        # Percentage is not valid, return white as default
+        echo "$WHITE"
+        return
+      fi
+
+      if [ "$percent" -ge 90 ]; then
+        echo "$RED"
+      elif [ "$percent" -ge 75 ]; then
+        echo "$ORANGE"
+      else
+        echo "$GREEN"
+      fi
+    }
+
+    # Disk Usage
+    # Params: $1 - Mount point
+    get_disk_usage() {
+      local mount_point="$1"
+      # Check if mount point exists and is a directory
+      if [ ! -d "$mount_point" ]; then
+        printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
+        return
+      fi
+
+      # Try to get disk usage info
+      local usage_info
+      usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
+
+      # Validate output (needs exactly 2 pipe delimiters)
+      local pipe_count="''${usage_info//[^|]/}"
+      if [ -z "$usage_info" ] || [ "''${#pipe_count}" -ne 2 ]; then
+        printf "0/0 (%s0%%%s)" "$WHITE" "$NOCOLOUR"
+        return
+      fi
+
+      local used
+      used=$(echo "$usage_info" | cut -d'|' -f1)
+      local total
+      total=$(echo "$usage_info" | cut -d'|' -f2)
+      local percent
+      percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
+
+      local colour
+      colour=$(get_colour_by_percent "$percent")
+
+      printf "%s/%s (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
+    }
+
+    # Memory Usage
+    get_mem_usage() {
+      local used
+      used=$(free -m | awk 'NR==2{print $3}')
+      local total
+      total=$(free -m | awk 'NR==2{print $2}')
+      local percent
+      if [ "$total" -gt 0 ] 2>/dev/null; then
+        percent=$((used * 100 / total))
+      else
+        percent=0
+      fi
+
+      local colour
+      colour=$(get_colour_by_percent "$percent")
+
+      printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
+    }
 
     # OS Information
+    # shellcheck source=/dev/null
     source /etc/os-release
     NIX_BUILD_TIME=$(stat -c %y /run/current-system | cut -d. -f1)
 
@@ -20,10 +96,13 @@ let
     CPU_LOAD_STRING="$CPU_LOAD1 (1m), $CPU_LOAD5 (5m), $CPU_LOAD15 (15m)"
 
     # Memory usage
-    MEMORY=$(free -m | awk 'NR==2{printf "%s/%sMB (%.2f%%)", $3,$2,$3*100/$2}')
+    MEMORY=$(get_mem_usage)
 
     # Disk usage
-    DISK=$(df -h / | awk 'NR==2{printf "%s/%s (%s)", $3,$2,$5}')
+    DISK_ROOT=$(get_disk_usage /)
+    if [ -d /mnt/backup ]; then
+      DISK_BACKUP=$(get_disk_usage /mnt/backup)
+    fi
 
     # Uptime
     UPTIME=$(cat /proc/uptime | cut -f1 -d.)
@@ -41,14 +120,20 @@ let
     # Output
     figlet "$(hostname)" | lolcat -f
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "CPU" "$CPU_NAME, $CPU_CORES Cores"
-    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Load" "$CPU_LOAD_STRING"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Release" "$PRETTY_NAME"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Kernel" "$(uname -r)"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Built" "$NIX_BUILD_TIME"
-    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Memory" "$MEMORY"
-    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /" "$DISK"
+    printf "\n"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Uptime" "$UPTIME_STRING"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "IP" "$IP_ADDRESS"
+    printf "\n"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Load" "$CPU_LOAD_STRING"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Memory" "$MEMORY"
+    printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /" "$DISK_ROOT"
+    if [ -n "$DISK_BACKUP" ]; then
+      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /mnt/backup" "$DISK_BACKUP"
+    fi
+    printf "\n"
     # Failed Services
     if [ "$SYSTEMD_SERVICES_FAILED" -eq 0 ]; then
       printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Failed Services" "None"
