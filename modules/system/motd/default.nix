@@ -33,7 +33,7 @@ let
     # Params: $1 - Mount point
     get_disk_usage() {
       local mount_point="$1"
-      local usage_info=$(df -h "$mount_point" | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
+      local usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
       local used=$(echo "$usage_info" | cut -d'|' -f1)
       local total=$(echo "$usage_info" | cut -d'|' -f2)
       local percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
