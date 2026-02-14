@@ -40,7 +40,8 @@ let
       fi
 
       # Try to get disk usage info
-      local usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
+      local usage_info
+      usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
 
       # Validate output (needs exactly 2 pipe delimiters)
       local pipe_count="''${usage_info//[^|]/}"
@@ -49,19 +50,25 @@ let
         return
       fi
 
-      local used=$(echo "$usage_info" | cut -d'|' -f1)
-      local total=$(echo "$usage_info" | cut -d'|' -f2)
-      local percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
+      local used
+      used=$(echo "$usage_info" | cut -d'|' -f1)
+      local total
+      total=$(echo "$usage_info" | cut -d'|' -f2)
+      local percent
+      percent=$(echo "$usage_info" | cut -d'|' -f3 | tr -d '%')
 
-      local colour=$(get_colour_by_percent "$percent")
+      local colour
+      colour=$(get_colour_by_percent "$percent")
 
       printf "%s/%s (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
     }
 
     # Memory Usage
     get_mem_usage() {
-      local used=$(free -m | awk 'NR==2{print $3}')
-      local total=$(free -m | awk 'NR==2{print $2}')
+      local used
+      used=$(free -m | awk 'NR==2{print $3}')
+      local total
+      total=$(free -m | awk 'NR==2{print $2}')
       local percent
       if [ "$total" -gt 0 ] 2>/dev/null; then
         percent=$((used * 100 / total))
@@ -69,12 +76,14 @@ let
         percent=0
       fi
 
-      local colour=$(get_colour_by_percent "$percent")
+      local colour
+      colour=$(get_colour_by_percent "$percent")
 
       printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
     }
 
     # OS Information
+    # shellcheck source=/dev/null
     source /etc/os-release
     NIX_BUILD_TIME=$(stat -c %y /run/current-system | cut -d. -f1)
 
