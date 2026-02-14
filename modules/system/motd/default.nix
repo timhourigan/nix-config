@@ -6,6 +6,7 @@ let
     RED=$'\e[31m'
     ORANGE=$'\e[33m'
     GREEN=$'\e[32m'
+    WHITE=$'\e[37m'
     BOLD=$'\e[1m'
     NOCOLOUR=$'\e[0m'
 
@@ -13,6 +14,11 @@ let
     # Params: $1 - Percentage value
     get_colour_by_percent() {
       local percent="$1"
+      # Validate that percent is a non-empty numeric value
+      if [ -z "$percent" ] || ! [[ "$percent" =~ ^[0-9]+$ ]]; then
+        echo "$WHITE"
+        return
+      fi
       if [ "$percent" -ge 90 ]; then
         echo "$RED"
       elif [ "$percent" -ge 75 ]; then
