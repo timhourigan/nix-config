@@ -42,8 +42,9 @@ let
       # Try to get disk usage info, redirecting errors
       local usage_info=$(df -h "$mount_point" 2>/dev/null | awk 'NR==2{printf "%s|%s|%s", $3,$2,$5}')
       
-      # Check if df command succeeded and returned valid data
-      if [ -z "$usage_info" ] || [ "$(echo "$usage_info" | grep -c '|')" -lt 2 ]; then
+      # Check if df command succeeded and returned valid data (needs at least 2 pipe delimiters)
+      local pipe_count="${usage_info//[^|]/}"
+      if [ -z "$usage_info" ] || [ "${#pipe_count}" -lt 2 ]; then
         printf "N/A"
         return
       fi
