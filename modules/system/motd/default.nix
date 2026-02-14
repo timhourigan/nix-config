@@ -82,6 +82,44 @@ let
       printf "%s/%sMB (%s%s%%%s)" "$used" "$total" "$colour" "$percent" "$NOCOLOUR"
     }
 
+    # ZFS Pool Status
+    # Params: $1 - Pool name
+    get_zpool_status() {
+      local pool="$1"
+      if ! command -v zpool &>/dev/null || ! zpool list "$pool" &>/dev/null; then
+        return 1
+      fi
+
+      local pool_info
+      pool_info=$(zpool list -Hp "$pool" 2>/dev/null)
+      local total_bytes
+      total_bytes=$(echo "$pool_info" | awk '{print $2}')
+      local used_bytes
+      used_bytes=$(echo "$pool_info" | awk '{print $3}')
+
+      local total_human
+      total_human=$(zpool list -H "$pool" | awk '{print $2}')
+      local used_human
+      used_human=$(zpool list -H "$pool" | awk '{print $3}')
+
+      local percent=0
+      if [ "$total_bytes" -gt 0 ] 2>/dev/null; then
+        percent=$((used_bytes * 100 / total_bytes))
+      fi
+
+      local health
+      health=$(zpool list -H "$pool" | awk '{print $10}')
+      local health_colour="$GREEN"
+      if [ "$health" != "ONLINE" ]; then
+        health_colour="$RED"
+      fi
+
+      local colour
+      colour=$(get_colour_by_percent "$percent")
+
+      printf "%s/%s (%s%s%%%s) [%s%s%s]" "$used_human" "$total_human" "$colour" "$percent" "$NOCOLOUR" "$health_colour" "$health" "$NOCOLOUR"
+    }
+
     # OS Information
     # shellcheck source=/dev/null
     source /etc/os-release
@@ -103,6 +141,9 @@ let
     if [ -d /mnt/backup ]; then
       DISK_BACKUP=$(get_disk_usage /mnt/backup)
     fi
+
+    # ZFS pool
+    ZPOOL_STATUS=$(get_zpool_status zpool)
 
     # Uptime
     UPTIME=$(cat /proc/uptime | cut -f1 -d.)
@@ -132,6 +173,9 @@ let
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /" "$DISK_ROOT"
     if [ -n "$DISK_BACKUP" ]; then
       printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Disk /mnt/backup" "$DISK_BACKUP"
+    fi
+    if [ -n "$ZPOOL_STATUS" ]; then
+      printf "$BOLD  * %-18s$NOCOLOUR %s\n" "ZFS zpool" "$ZPOOL_STATUS"
     fi
     printf "\n"
     # Failed Services
