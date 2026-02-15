@@ -164,6 +164,10 @@ let
 
     # Output
     figlet "$(hostname)" | lolcat -f
+    # Add an extre newline, if hostname contains a letter with a tail
+    if [[ "$(hostname)" =~ [gjpqy] ]]; then
+      printf "\n"
+    fi
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "CPU" "$CPU_NAME, $CPU_CORES Cores"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Release" "$PRETTY_NAME"
     printf "$BOLD  * %-18s$NOCOLOUR %s\n" "Kernel" "$(uname -r)"
