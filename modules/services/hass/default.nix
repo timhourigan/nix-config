@@ -70,15 +70,14 @@ in
           users.larry = {
             # Not necessary to add `topic` here, it ends up in the acl automatically.
             # See `/etc/mosquitto/acl-X.conf`
-            acl = [ "readwrite valetudo/Larry/#" ];
-            # During discovery/setup, it is necessary to give wider permissions,
-            # presumably to allow Valetudo to write to the homeassistant topic
-            # acl = [ "readwrite #" ];
+            # Needs access to Home Assistant topic and it's own topic
+            acl = [ "readwrite homeassistant/#" "readwrite valetudo/Larry/#" ];
             passwordFile = "${config.sops.secrets."mqtt/valetudo/larry/password".path}";
           };
           # Valetudo Harry
           users.harry = {
-            acl = [ "readwrite valetudo/Harry/#" ];
+            # Needs access to Home Assistant topic and it's own topic
+            acl = [ "readwrite homeassistant/#" "readwrite valetudo/Harry/#" ];
             passwordFile = "${config.sops.secrets."mqtt/valetudo/harry/password".path}";
           };
         }];
