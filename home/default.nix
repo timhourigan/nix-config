@@ -17,7 +17,7 @@
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
-        "ventoy-1.1.07" # https://github.com/ventoy/Ventoy/issues/3224
+        "ventoy-1.1.10" # https://github.com/ventoy/Ventoy/issues/3224
       ];
     };
   };

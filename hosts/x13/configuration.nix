@@ -5,6 +5,7 @@
     ../../modules
     ../common
     ./hardware-configuration.nix
+    ./settings.nix
     ./testing.nix
   ];
 
