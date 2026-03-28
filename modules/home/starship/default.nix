@@ -34,7 +34,7 @@ in
           full_symbol = "🔋";
           charging_symbol = "🔌";
           discharging_symbol = "🪫";
-          display = [{ threshold = 20; }];
+          display = [ { threshold = 20; } ];
         };
 
         username = {

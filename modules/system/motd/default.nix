@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   motd = pkgs.writeShellScriptBin "motd" ''
@@ -211,7 +216,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ motd pkgs.figlet pkgs.lolcat ];
+    environment.systemPackages = [
+      motd
+      pkgs.figlet
+      pkgs.lolcat
+    ];
     programs.bash.interactiveShellInit = lib.mkIf config.programs.bash.enable ''
       motd
     '';

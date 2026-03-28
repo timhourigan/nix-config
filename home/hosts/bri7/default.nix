@@ -10,7 +10,6 @@
 
   # Programs and configurations to be installed
   imports = [
-    ../../../modules/home
     ../../configs/abcde.nix
   ];
 

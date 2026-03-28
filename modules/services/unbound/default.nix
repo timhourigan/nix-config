@@ -86,11 +86,10 @@ in
       inherit (cfg) resolveLocalQueries;
       # Merge defaults with user settings
       # TODO - Consider updating, to remove duplicate settings
-      settings =
-        lib.mkMerge [
-          settingsDefaults
-          cfg.settings
-        ];
+      settings = lib.mkMerge [
+        settingsDefaults
+        cfg.settings
+      ];
     };
 
     networking.firewall.allowedUDPPorts = [ dnsPort ];

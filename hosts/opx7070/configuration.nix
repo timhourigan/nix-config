@@ -1,4 +1,9 @@
-{ config, outputs, pkgs, ... }:
+{
+  config,
+  outputs,
+  pkgs,
+  ...
+}:
 
 let
   gatusPort = 8080; # Module default
@@ -38,7 +43,10 @@ in
 
   # Filesystem support
   boot = {
-    supportedFilesystems = [ "ntfs" "zfs" ];
+    supportedFilesystems = [
+      "ntfs"
+      "zfs"
+    ];
     zfs.forceImportRoot = false; # Recommended setting
   };
   services.zfs.autoScrub = {
@@ -63,12 +71,11 @@ in
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
-      chrony =
-        {
-          enable = true;
-          # Enable server functionality and allow access from local network
-          extraConfig = "allow 192.168.0.0/16";
-        };
+      chrony = {
+        enable = true;
+        # Enable server functionality and allow access from local network
+        extraConfig = "allow 192.168.0.0/16";
+      };
       freshrss = {
         enable = true;
         authType = "form";
@@ -123,11 +130,10 @@ in
         package = pkgs.slimserver;
       };
       ssh.enable = true;
-      tailscale =
-        {
-          enable = true;
-          enableDNS = false;
-        };
+      tailscale = {
+        enable = true;
+        enableDNS = false;
+      };
       vikunja = {
         enable = true;
       };
@@ -162,45 +168,44 @@ in
   networking.firewall.allowedTCPPorts = [ 80 ];
   services.caddy = {
     enable = true;
-    virtualHosts =
-      {
-        # FreshRSS - Module has builtin configuration
-        # Gatus
-        "http://gatus.${config.custom.internalDomain}" = {
-          extraConfig = ''
-            reverse_proxy :${toString gatusPort}
-          '';
-        };
-        # Home Assistant
-        "http://ha.${config.custom.internalDomain}" = {
-          extraConfig = ''
-            reverse_proxy :${toString hassPort}
-          '';
-        };
-        # Homepage
-        "http://${config.custom.internalDomain}" = {
-          extraConfig = ''
-            reverse_proxy :${toString homepageDashboardPort}
-          '';
-        };
-        # Vikunja
-        "http://vikunja.${config.custom.internalDomain}" = {
-          extraConfig = ''
-            reverse_proxy :${toString vikunjaPort}
-          '';
-        };
-        "http://kanban.${config.custom.internalDomain}" = {
-          extraConfig = ''
-            reverse_proxy :${toString vikunjaPort}
-          '';
-        };
-        # zigbee2mqtt
-        "http://z2m.${config.custom.internalDomain}" = {
-          extraConfig = ''
-            reverse_proxy :${toString z2mPort}
-          '';
-        };
+    virtualHosts = {
+      # FreshRSS - Module has builtin configuration
+      # Gatus
+      "http://gatus.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString gatusPort}
+        '';
       };
+      # Home Assistant
+      "http://ha.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString hassPort}
+        '';
+      };
+      # Homepage
+      "http://${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString homepageDashboardPort}
+        '';
+      };
+      # Vikunja
+      "http://vikunja.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString vikunjaPort}
+        '';
+      };
+      "http://kanban.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString vikunjaPort}
+        '';
+      };
+      # zigbee2mqtt
+      "http://z2m.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString z2mPort}
+        '';
+      };
+    };
   };
 
   # Release version of first install

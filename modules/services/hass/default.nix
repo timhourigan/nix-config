@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 # Home Assistant
 # - Mosquitto service
@@ -52,13 +57,14 @@ in
     # Mosquitto service
     services.mosquitto = {
       enable = true;
-      listeners = [{
-        # Trust local - Test with:
-        # nix shell nixpkgs#mosquitto --command mosquitto_pub -h 127.0.0.1 -t 'test/topic' -m 'hello world'
-        address = "127.0.0.1";
-        settings.allow_anonymous = true;
-        acl = [ "topic readwrite #" ];
-      }
+      listeners = [
+        {
+          # Trust local - Test with:
+          # nix shell nixpkgs#mosquitto --command mosquitto_pub -h 127.0.0.1 -t 'test/topic' -m 'hello world'
+          address = "127.0.0.1";
+          settings.allow_anonymous = true;
+          acl = [ "topic readwrite #" ];
+        }
         # TODO - Below is no longer generic
         {
           # Require auth for non-local - Test with:
@@ -71,16 +77,23 @@ in
             # Not necessary to add `topic` here, it ends up in the acl automatically.
             # See `/etc/mosquitto/acl-X.conf`
             # Needs access to Home Assistant topic and it's own topic
-            acl = [ "readwrite homeassistant/#" "readwrite valetudo/Larry/#" ];
+            acl = [
+              "readwrite homeassistant/#"
+              "readwrite valetudo/Larry/#"
+            ];
             passwordFile = "${config.sops.secrets."mqtt/valetudo/larry/password".path}";
           };
           # Valetudo Harry
           users.harry = {
             # Needs access to Home Assistant topic and it's own topic
-            acl = [ "readwrite homeassistant/#" "readwrite valetudo/Harry/#" ];
+            acl = [
+              "readwrite homeassistant/#"
+              "readwrite valetudo/Harry/#"
+            ];
             passwordFile = "${config.sops.secrets."mqtt/valetudo/harry/password".path}";
           };
-        }];
+        }
+      ];
     };
 
     # Service can return `Error: Cannot assign requested address` on boot
@@ -184,6 +197,10 @@ in
       wants = [ "nss-lookup.target" ];
       after = [ "nss-lookup.target" ];
     };
-    networking.firewall.allowedTCPPorts = [ hassPort mosquittoPort z2mPort ];
+    networking.firewall.allowedTCPPorts = [
+      hassPort
+      mosquittoPort
+      z2mPort
+    ];
   };
 }

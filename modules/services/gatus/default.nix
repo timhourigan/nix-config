@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 # Gatus health check aggregator
 # https://mynixos.com/nixpkgs/options/services.gatus

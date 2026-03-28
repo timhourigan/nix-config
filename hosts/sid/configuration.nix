@@ -26,7 +26,10 @@
   };
 
   # Filesystem support
-  boot.supportedFilesystems = [ "ntfs" "zfs" ];
+  boot.supportedFilesystems = [
+    "ntfs"
+    "zfs"
+  ];
   boot.zfs.forceImportRoot = false; # Recommended setting
   services.zfs.autoScrub = {
     enable = true;

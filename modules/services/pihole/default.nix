@@ -75,6 +75,9 @@ in
     };
 
     networking.firewall.allowedUDPPorts = [ dnsPort ];
-    networking.firewall.allowedTCPPorts = [ dnsPort httpPort ];
+    networking.firewall.allowedTCPPorts = [
+      dnsPort
+      httpPort
+    ];
   };
 }

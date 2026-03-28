@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.modules.home.bash;
@@ -24,7 +29,11 @@ in
         "histappend" # Append to history
         "globstar" # Extend globbing (**)
       ];
-      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+      historyControl = [
+        "erasedups"
+        "ignoredups"
+        "ignorespace"
+      ];
       # Unlimited history
       historyFileSize = -1;
       historySize = -1;

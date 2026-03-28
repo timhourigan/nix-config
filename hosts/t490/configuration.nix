@@ -35,9 +35,7 @@
     hostName = "t490";
     networkmanager.enable = true;
     # Add hosts to /etc/hosts
-    extraHosts =
-      ''
-    '';
+    extraHosts = "";
   };
 
   # Printing
@@ -88,11 +86,10 @@
       avahi.enable = true;
       glances.enable = true;
       ssh.enable = true;
-      tailscale =
-        {
-          enable = true;
-          enableDNS = false;
-        };
+      tailscale = {
+        enable = true;
+        enableDNS = false;
+      };
       tlp.enable = true;
     };
     system = {
