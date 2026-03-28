@@ -38,6 +38,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # NixVirt - Declarative libvirt VMs
+    # https://github.com/AshleyYakeley/NixVirt
+    NixVirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/0.6.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # FIXME - Others to consider
     # Hardware
     # hardware.url = "github:nixos/nixos-hardware";

@@ -87,7 +87,19 @@
       avahi.enable = true;
       displaylink.enable = true;
       glances.enable = true;
-      libvirt.enable = true;
+      libvirt = {
+        enable = true;
+        vms.debian-trixie = {
+          uuid = "b8e4f2a1-3c7d-4e9f-a5b6-1d2e3f4a5b6c"; # Generated with `uuidgen`
+          memory = {
+            count = 2;
+            unit = "GiB";
+          };
+          vcpu = 2;
+          diskSize = 20;
+          installMedia = "/var/lib/libvirt/isos/debian-trixie-amd64-netinst.iso";
+        };
+      };
       ssh.enable = true;
       tailscale = {
         enable = true;
