@@ -210,7 +210,7 @@
               enable = true;
               # https://github.com/trufflesecurity/trufflehog/blob/6961f2bace57ab32b23b3ba40f8f420f6bc7e004/.pre-commit-hooks.yaml#L4
               entry =
-                lib.getExe pkgs.trufflehog
+                lib.getExe trufflehog
                 + " git file://. --since-commit HEAD --results=verified --fail --trust-local-git-config";
             };
             ripsecrets.enable = true;
