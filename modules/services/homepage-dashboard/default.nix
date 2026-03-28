@@ -70,12 +70,13 @@ in
     };
 
     systemd.services.homepage-dashboard.serviceConfig =
-      if cfg.listenPort < 1024 then {
-        # WORKAROUND: Allow ports below 1024
-        AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
-        CapabilityBoundingSet = lib.mkForce [ "CAP_NET_BIND_SERVICE" ];
-        PrivateUsers = lib.mkForce false;
-      }
+      if cfg.listenPort < 1024 then
+        {
+          # WORKAROUND: Allow ports below 1024
+          AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
+          CapabilityBoundingSet = lib.mkForce [ "CAP_NET_BIND_SERVICE" ];
+          PrivateUsers = lib.mkForce false;
+        }
       else
         { };
   };

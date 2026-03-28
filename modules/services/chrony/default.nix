@@ -24,7 +24,12 @@ in
       servers = lib.mkOption {
         description = "List of NTP servers to use";
         type = lib.types.listOf lib.types.str;
-        default = [ "0.pool.ntp.org" "1.pool.ntp.org" "2.pool.ntp.org" "3.pool.ntp.org" ];
+        default = [
+          "0.pool.ntp.org"
+          "1.pool.ntp.org"
+          "2.pool.ntp.org"
+          "3.pool.ntp.org"
+        ];
       };
       serverOption = lib.mkOption {
         description = "Server directive option";
@@ -43,6 +48,7 @@ in
     };
 
     # If extraConfig contains `allow` assume external access and update the firewall
-    networking.firewall.allowedUDPPorts = if (lib.strings.hasInfix "allow" cfg.extraConfig) then [ 123 ] else [ ];
+    networking.firewall.allowedUDPPorts =
+      if (lib.strings.hasInfix "allow" cfg.extraConfig) then [ 123 ] else [ ];
   };
 }

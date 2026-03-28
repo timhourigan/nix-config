@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.modules.system.systemd-notify;
@@ -17,12 +22,12 @@ in
     };
     # Set a default onFailure to cause all services to notify on failure
     systemd.services = lib.mkOption {
-      type = with lib.types; attrsOf (
-        submodule {
+      type =
+        with lib.types;
+        attrsOf (submodule {
           # %n is replaced with the service name
           config.onFailure = lib.mkIf cfg.enable [ "${notificationService}@%n.service" ];
-        }
-      );
+        });
     };
   };
 

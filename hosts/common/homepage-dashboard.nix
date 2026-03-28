@@ -14,22 +14,28 @@ _:
     {
       Tech = [
         {
-          Github = [{
-            icon = "si-github";
-            href = "https://github.com";
-          }];
+          Github = [
+            {
+              icon = "si-github";
+              href = "https://github.com";
+            }
+          ];
         }
         {
-          "Nixos Search" = [{
-            icon = "si-nixos";
-            href = "https://search.nixos.org/packages";
-          }];
+          "Nixos Search" = [
+            {
+              icon = "si-nixos";
+              href = "https://search.nixos.org/packages";
+            }
+          ];
         }
         {
-          "Nixos Wiki" = [{
-            icon = "si-nixos";
-            href = "https://nixos.wiki";
-          }];
+          "Nixos Wiki" = [
+            {
+              icon = "si-nixos";
+              href = "https://nixos.wiki";
+            }
+          ];
         }
       ];
     }

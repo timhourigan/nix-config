@@ -1,4 +1,9 @@
-{ inputs, outputs, pkgs, ... }:
+{
+  inputs,
+  outputs,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -99,14 +104,14 @@
       ];
     })
 
-    pkgs.nerd-fonts._0xproto
-    pkgs.nerd-fonts.dejavu-sans-mono
-    pkgs.nerd-fonts.droid-sans-mono
-    pkgs.nerd-fonts.fira-code
-    pkgs.nerd-fonts.hack
-    pkgs.nerd-fonts.jetbrains-mono
-    pkgs.nerd-fonts.liberation
-    pkgs.nerd-fonts.terminess-ttf
+    nerd-fonts._0xproto
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.fira-code
+    nerd-fonts.hack
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.liberation
+    nerd-fonts.terminess-ttf
 
     noto-fonts-color-emoji
     powerline-fonts
@@ -118,11 +123,18 @@
 
     # Python
     unstable.ruff # Formatter
-    (python312.withPackages (ps: with ps; [ black flake8 pip pipx ]))
+    (python312.withPackages (
+      ps: with ps; [
+        black
+        flake8
+        pip
+        pipx
+      ]
+    ))
 
     # Compilers
     gcc
-    pkgs.stdenv.cc.cc.lib # LD_LIBRARY_PATH set in bash.nix
+    stdenv.cc.cc.lib # LD_LIBRARY_PATH set in bash.nix
 
     # Printing
     system-config-printer

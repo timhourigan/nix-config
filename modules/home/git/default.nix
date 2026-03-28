@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.modules.home.git;
@@ -25,7 +30,11 @@ in
           st = "status";
           pub = "push origin -u";
         };
-        extraConfig = { credential = { helper = "libsecret"; }; };
+        extraConfig = {
+          credential = {
+            helper = "libsecret";
+          };
+        };
         user = {
           name = "Tim Hourigan";
           email = "1819176+timhourigan@users.noreply.github.com";

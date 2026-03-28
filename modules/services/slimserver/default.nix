@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 # SlimServer aka Logitech Media Server (LMS) aka Lyrion
 # https://mynixos.com/options/services.slimserver
@@ -46,7 +51,15 @@ in
       timerConfig.OnBootSec = "90";
     };
 
-    networking.firewall.allowedTCPPorts = [ slimServerPort slimServerCliPort playerPort ];
-    networking.firewall.allowedUDPPorts = [ slimServerPort slimServerCliPort playerPort ];
+    networking.firewall.allowedTCPPorts = [
+      slimServerPort
+      slimServerCliPort
+      playerPort
+    ];
+    networking.firewall.allowedUDPPorts = [
+      slimServerPort
+      slimServerCliPort
+      playerPort
+    ];
   };
 }

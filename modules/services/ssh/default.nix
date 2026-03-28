@@ -22,8 +22,8 @@ in
     services.openssh = {
       enable = true;
       settings = {
-        PasswordAuthentication = if cfg.passwordAuthentication then true else false;
-        KbdInteractiveAuthentication = if cfg.passwordAuthentication then true else false;
+        PasswordAuthentication = cfg.passwordAuthentication;
+        KbdInteractiveAuthentication = cfg.passwordAuthentication;
       };
     };
   };

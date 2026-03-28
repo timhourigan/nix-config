@@ -37,10 +37,6 @@
   networking = {
     hostName = "x13";
     networkmanager.enable = true;
-    # Add hosts to /etc/hosts
-    extraHosts =
-      ''
-    '';
   };
 
   # Printing
@@ -92,11 +88,10 @@
       displaylink.enable = true;
       glances.enable = true;
       ssh.enable = true;
-      tailscale =
-        {
-          enable = true;
-          enableDNS = false;
-        };
+      tailscale = {
+        enable = true;
+        enableDNS = false;
+      };
       tlp.enable = true;
     };
     system = {

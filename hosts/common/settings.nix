@@ -3,7 +3,10 @@ _:
 {
   # Settings configuration - https://nix.dev/manual/nix/2.28/command-ref/conf-file.html
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     # Download buffer size of 256MiB to prevent stalls during download
     # Default is 64MiB
     download-buffer-size = 268435456;

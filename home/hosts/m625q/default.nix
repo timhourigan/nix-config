@@ -1,10 +1,3 @@
-{ ... }:
+_:
 
-{
-  imports = [
-    ../../../modules/home
-  ];
-
-  # Modules
-  modules = { };
-}
+{ }

@@ -27,7 +27,6 @@
     networkmanager.enable = true;
   };
 
-
   # Modules
   modules = {
     desktops.cinnamon.enable = true;

@@ -30,6 +30,9 @@ in
 
   config = lib.mkIf cfg.enable {
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ cfg.driver ];
-    services.xserver.videoDrivers = [ cfg.driver "modesetting" ];
+    services.xserver.videoDrivers = [
+      cfg.driver
+      "modesetting"
+    ];
   };
 }

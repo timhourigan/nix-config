@@ -9,8 +9,14 @@
     # Printers/Scanners: "lp"
     # Scanners: "scanner"
     # sudo: "wheel"
-    extraGroups = [ "adbusers" "lp" "networkmanager" "scanner" "wheel" ];
-    packages = with pkgs; [ firefox git vim ];
+    extraGroups = [
+      "adbusers"
+      "lp"
+      "networkmanager"
+      "scanner"
+      "wheel"
+    ];
+    packages = with pkgs; [ firefox ];
     shell = pkgs.bash;
     # FIXME Consider - zsh
     # Enable zsh system wide

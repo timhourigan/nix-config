@@ -43,7 +43,14 @@
     # hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, home-manager, pre-commit-hooks, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      pre-commit-hooks,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
     in
@@ -84,37 +91,58 @@
       homeConfigurations = {
         "timh@bri7" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/bri7 ];
+          modules = [
+            ./home
+            ./home/hosts/bri7
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@m625q" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/m625q ];
+          modules = [
+            ./home
+            ./home/hosts/m625q
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@mm" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/mm ];
+          modules = [
+            ./home
+            ./home/hosts/mm
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@opx7070" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/opx7070 ];
+          modules = [
+            ./home
+            ./home/hosts/opx7070
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@sid" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/sid ];
+          modules = [
+            ./home
+            ./home/hosts/sid
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@t490" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/t490 ];
+          modules = [
+            ./home
+            ./home/hosts/t490
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
         "timh@x13" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home ./home/hosts/x13 ];
+          modules = [
+            ./home
+            ./home/hosts/x13
+          ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
       };
@@ -124,24 +152,23 @@
 
       # Dev Shells
       devShells.x86_64-linux = {
-        default = with nixpkgs.legacyPackages.x86_64-linux; mkShell {
-          inherit (self.checks.x86_64-linux.pre-commit) shellHook;
-          # Adding pkgs.pre-commit here - Wasn't needed previously
-          buildInputs = self.checks.x86_64-linux.pre-commit.enabledPackages ++ [ pkgs.pre-commit ];
-        };
+        default =
+          with nixpkgs.legacyPackages.x86_64-linux;
+          mkShell {
+            inherit (self.checks.x86_64-linux.pre-commit) shellHook;
+          };
       };
 
       # Formatter Configuration
       formatter.x86_64-linux =
-        inputs.treefmt-nix.lib.mkWrapper
-          inputs.nixpkgs.legacyPackages.x86_64-linux
+        inputs.treefmt-nix.lib.mkWrapper inputs.nixpkgs.legacyPackages.x86_64-linux
           {
             projectRootFile = "flake.nix";
             programs = {
               # https://github.com/numtide/treefmt-nix?tab=readme-ov-file#supported-programs
               actionlint.enable = true;
               deadnix.enable = true;
-              nixpkgs-fmt.enable = true;
+              nixfmt.enable = true;
               mdformat.enable = true;
               statix.enable = true;
             };
@@ -169,12 +196,11 @@
             markdownlint.enable = true;
             # Nix
             deadnix.enable = true;
-            flake-checker =
-              {
-                enable = true;
-                args = [ "--no-telemetry" ];
-              };
-            nixpkgs-fmt.enable = true;
+            flake-checker = {
+              enable = true;
+              args = [ "--no-telemetry" ];
+            };
+            nixfmt.enable = true;
             statix = {
               enable = true;
               settings.ignore = [ "**/hardware-configuration.nix" ];
@@ -183,7 +209,9 @@
             trufflehog = {
               enable = true;
               # https://github.com/trufflesecurity/trufflehog/blob/6961f2bace57ab32b23b3ba40f8f420f6bc7e004/.pre-commit-hooks.yaml#L4
-              entry = lib.getExe pkgs.trufflehog + " git file://. --since-commit HEAD --results=verified --fail --trust-local-git-config";
+              entry =
+                lib.getExe trufflehog
+                + " git file://. --since-commit HEAD --results=verified --fail --trust-local-git-config";
             };
             ripsecrets.enable = true;
             # Shell
@@ -191,8 +219,7 @@
             # Spelling
             typos = {
               enable = true;
-              settings.exclude =
-                "secrets/*";
+              settings.exclude = "secrets/*";
             };
             # YAML
             yamllint.enable = true;
