@@ -156,8 +156,6 @@
           with nixpkgs.legacyPackages.x86_64-linux;
           mkShell {
             inherit (self.checks.x86_64-linux.pre-commit) shellHook;
-            # Adding pkgs.pre-commit here - Wasn't needed previously
-            buildInputs = self.checks.x86_64-linux.pre-commit.enabledPackages ++ [ pkgs.pre-commit ];
           };
       };
 
