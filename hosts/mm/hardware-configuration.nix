@@ -44,7 +44,7 @@
     options = [ "nofail" ]; # Allow system to boot without this device
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/a992f126-11d6-4ba1-a014-48150b148ebe"; } ];
+  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
