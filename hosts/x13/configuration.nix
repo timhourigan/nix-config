@@ -87,7 +87,6 @@
       avahi.enable = true;
       displaylink.enable = true;
       glances.enable = true;
-      libvirt.enable = true;
       ssh.enable = true;
       tailscale = {
         enable = true;
