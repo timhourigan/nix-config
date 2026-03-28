@@ -14,6 +14,7 @@
     inkscape # SVG editor
     libreoffice # Office suite
     mqtt-explorer # MQTT client/explorer
+    unstable.opencode # AI code editor
     telegram-desktop # Messaging
     scribus # Desktop publishing
     zed-editor # Text editor
@@ -27,6 +28,7 @@
 
   # Modules
   modules.home = {
+    ghostty.enable = true;
     polybar.enable = true;
     rofi.enable = true;
     vscode.enable = true;
