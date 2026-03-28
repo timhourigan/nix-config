@@ -30,7 +30,6 @@ in
       enable = true;
       qemu = {
         package = pkgs.qemu_kvm;
-        ovmf.enable = true; # UEFI support
         swtpm.enable = true; # TPM emulation
       };
     };
@@ -41,7 +40,7 @@ in
     # Add user to libvirtd group
     users.users.${cfg.user}.extraGroups = [ "libvirtd" ];
 
-    # Packages - FIXME
+    # Packages
     environment.systemPackages = with pkgs; [
       spice-gtk # USB redirection & clipboard sharing
     ];
