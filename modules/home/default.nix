@@ -10,6 +10,7 @@
     ./firefox
     ./fzf
     ./gh
+    ./ghostty
     ./git
     ./neovim
     ./obs-studio
