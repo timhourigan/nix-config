@@ -2,5 +2,5 @@
 
 {
   # Match the distrobox container's custom home directory
-  home.homeDirectory = lib.mkForce "/home/timh/distrobox/db-hm-aarch64";
+  home.homeDirectory = lib.mkForce "/home/timh/distrobox/aarch64test";
 }

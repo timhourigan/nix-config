@@ -97,19 +97,19 @@
           ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
-        "timh@db-hm-aarch64" = home-manager.lib.homeManagerConfiguration {
+        "timh@aarch64test" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-linux;
           modules = [
             ./home
-            ./home/hosts/db-hm-aarch64
+            ./home/hosts/aarch64test
           ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
-        "timh@db-hm-amd64" = home-manager.lib.homeManagerConfiguration {
+        "timh@amd64test" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             ./home
-            ./home/hosts/db-hm-amd64
+            ./home/hosts/amd64test
           ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
