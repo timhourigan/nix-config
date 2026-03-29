@@ -11,6 +11,7 @@
     ./glances
     ./hass
     ./homepage-dashboard
+    ./libvirt
     ./nebula-sync
     ./pihole
     ./podman
