@@ -71,6 +71,10 @@ build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 build-distrobox: ## Build distrobox containers
 	distrobox-assemble create --file ~/.config/distrobox/containers.ini
 
+.PHONY: update-distrobox
+update-distrobox: ## Update distrobox containers
+	distrobox upgrade --all
+
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
 	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
