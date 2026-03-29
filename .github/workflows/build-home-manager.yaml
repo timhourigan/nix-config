@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         user: [timh]
-        host: [bri7, m625q, mm, opx7070, sid, t490, x13]
+        host: [bri7, db-hm-amd64, m625q, mm, opx7070, sid, t490, x13]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -43,6 +43,44 @@ jobs:
           nix-shell -p home-manager gnumake --run "make build-hm"
         env:
           # Used by the makefile
+          USER: ${{ matrix.user }}
+          HOSTNAME: ${{ matrix.host }}
+          NIX_OUTPUT_MONITOR: ""
+        timeout-minutes: 15
+
+  build-hm-aarch64:
+    strategy:
+      matrix:
+        user: [timh]
+        host: [db-hm-aarch64]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Free up disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-25.11
+      - name: Cachix cache
+        uses: cachix/cachix-action@v17
+        with:
+          name: timhourigan
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Build
+        run: |
+          nix-shell -p home-manager gnumake --run "make build-hm"
+        env:
           USER: ${{ matrix.user }}
           HOSTNAME: ${{ matrix.host }}
           NIX_OUTPUT_MONITOR: ""
