@@ -7,6 +7,7 @@
     ./bash
     ./delta
     ./direnv
+    ./distrobox
     ./firefox
     ./fzf
     ./gh

@@ -41,18 +41,13 @@ build-nixos-diff: ## Show NixOS configuration diff
 switch-nixos: ## Switch NixOS configuration
 	nixos-rebuild switch --flake .
 
-.PHONY: bootstrap-hm
-bootstrap-hm: ## Bootstrap Home-Manager configuration
-	nix build --no-link .#homeConfigurations.$(USER)@$(HOSTNAME).activationPackage
-	$(shell nix path-info .#homeConfigurations.$(USER)@$(HOSTNAME).activationPackage)/activate
-
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
-	home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
+	nix shell nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-hm-dry-run
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
-	home-manager build --flake .#$(USER)@$(HOSTNAME) --dry-run
+	nix shell nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) --dry-run
 
 .PHONY: build-hm-diff
 build-hm-diff: ## Show Home-Manager configuration diff
@@ -60,17 +55,21 @@ build-hm-diff: ## Show Home-Manager configuration diff
 
 .PHONY: switch-hm
 switch-hm: ## Switch Home-Manager configuration
-	home-manager switch --flake .#$(USER)@$(HOSTNAME)
+	nix shell nixpkgs#home-manager -c home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: news-hm
 news-hm: ## Home-Manager news
-	home-manager news --flake .#$(USER)@$(HOSTNAME)
+	nix shell nixpkgs#home-manager -c home-manager news --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: build
 build: build-nixos build-hm ## Build
 
 .PHONY: build-dry-run
 build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
+
+.PHONY: build-distrobox
+build-distrobox: ## Build distrobox containers
+	distrobox-assemble create --file ~/.config/distrobox/containers.ini
 
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
@@ -99,6 +98,10 @@ lock: ## Update lock file
 .PHONY: clean
 clean: ## Garbage collect
 	nix-collect-garbage --delete-older-than 30d
+
+.PHONY: clean-distrobox
+clean-distrobox: ## Remove distrobox containers
+	distrobox-assemble rm --file ~/.config/distrobox/containers.ini
 
 .PHONY: optimise
 optimise: ## Optimise Nix store

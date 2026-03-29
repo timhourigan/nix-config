@@ -97,6 +97,22 @@
           ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
+        "timh@db-hm-aarch64" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          modules = [
+            ./home
+            ./home/hosts/db-hm-aarch64
+          ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "timh@db-hm-amd64" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./home
+            ./home/hosts/db-hm-amd64
+          ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
         "timh@m625q" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [

@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   outputs,
   pkgs,
   ...
@@ -42,103 +43,109 @@
   fonts.fontconfig.enable = true;
 
   # Packages to be installed
-  home.packages = with pkgs; [
-    # Tools
-    age # Age encryption/decryption
-    appimage-run # Run AppImage files
-    bat # `cat` clone
-    bottom # Display process information (`top` alternative)
-    ddrescue # dd, with extra functionality
-    dig # DNS lookup
-    dmidecode # DMI table decoder (hardware info)
-    dust # Disk space usage (`du` alternative)
-    eza # File listing (`ls` alternative)
-    fastfetch # System information
-    fd # Find files/folders (`find` alternative)
-    feh # Command line image viewer
-    ffmpeg-full # Audio video manipulation
-    gitleaks # Git repository secrets checker
-    gparted # Disk partition tool
-    hdparm # Disk utility (set/get parameters, read-only speed test)
-    htop # Display process information (`top` alternative)
-    jq # Command line JSON parser
-    lshw # Hardware information
-    mediainfo # Media file information
-    nmap # Network exploration
-    p7zip # Compression tool
-    pciutils # PCI device utilities (lspci)
-    powertop # Power consumption
-    ripgrep # Fast grep
-    rpi-imager # Raspberry Pi OS image writer
-    screen # Terminal multiplexer
-    sops # Secrets management
-    ssh-to-age # SSH to Age key converter
-    taskwarrior3 # Task manager
-    tig # git text-mode interface
-    tldr # Help pages
-    tree # Display directory structure
-    unetbootin # Bootable USB creator
-    unzip # Zip decompress
-    usbutils # USB tools (lsusb)
-    v4l-utils # Video for Linux utilities
-    ventoy # Bootable USB creator
-    woeusb # Bootable USB creator for Windows media
-    zip # Zip compress
+  home.packages =
+    with pkgs;
+    [
+      # Tools
+      age # Age encryption/decryption
+      appimage-run # Run AppImage files
+      bat # `cat` clone
+      bottom # Display process information (`top` alternative)
+      ddrescue # dd, with extra functionality
+      dig # DNS lookup
+      dmidecode # DMI table decoder (hardware info)
+      dust # Disk space usage (`du` alternative)
+      eza # File listing (`ls` alternative)
+      fastfetch # System information
+      fd # Find files/folders (`find` alternative)
+      feh # Command line image viewer
+      ffmpeg-full # Audio video manipulation
+      gitleaks # Git repository secrets checker
+      gparted # Disk partition tool
+      hdparm # Disk utility (set/get parameters, read-only speed test)
+      htop # Display process information (`top` alternative)
+      jq # Command line JSON parser
+      lshw # Hardware information
+      mediainfo # Media file information
+      nmap # Network exploration
+      p7zip # Compression tool
+      pciutils # PCI device utilities (lspci)
+      powertop # Power consumption
+      ripgrep # Fast grep
+      rpi-imager # Raspberry Pi OS image writer
+      screen # Terminal multiplexer
+      sops # Secrets management
+      ssh-to-age # SSH to Age key converter
+      taskwarrior3 # Task manager
+      tig # git text-mode interface
+      tldr # Help pages
+      tree # Display directory structure
+      unzip # Zip decompress
+      usbutils # USB tools (lsusb)
+      v4l-utils # Video for Linux utilities
+      ventoy # Bootable USB creator
+      zip # Zip compress
+    ]
+    # Incompatible with aarch64
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [
+      unetbootin # Bootable USB creator
+      woeusb # Bootable USB creator for Windows media
+    ]
+    ++ [
+      # Apps
+      filezilla # FTP client
+      meld # Diff tools
+      obsidian # Notes
+      remmina # Remove desktop client
+      subversion # Software version control
+      vlc # Media player
 
-    # Apps
-    filezilla # FTP client
-    meld # Diff tools
-    obsidian # Notes
-    remmina # Remove desktop client
-    subversion # Software version control
-    vlc # Media player
+      # Browsers
+      chromium
 
-    # Browsers
-    chromium
+      # Fonts
+      (google-fonts.override {
+        fonts = [
+          "Teko"
+          "RedHatDisplay"
+        ];
+      })
 
-    # Fonts
-    (google-fonts.override {
-      fonts = [
-        "Teko"
-        "RedHatDisplay"
-      ];
-    })
+      nerd-fonts._0xproto
+      nerd-fonts.dejavu-sans-mono
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.fira-code
+      nerd-fonts.hack
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.liberation
+      nerd-fonts.terminess-ttf
 
-    nerd-fonts._0xproto
-    nerd-fonts.dejavu-sans-mono
-    nerd-fonts.droid-sans-mono
-    nerd-fonts.fira-code
-    nerd-fonts.hack
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.liberation
-    nerd-fonts.terminess-ttf
+      noto-fonts-color-emoji
+      powerline-fonts
+      twitter-color-emoji
+      xkcd-font
 
-    noto-fonts-color-emoji
-    powerline-fonts
-    twitter-color-emoji
-    xkcd-font
+      # Node
+      nodejs
 
-    # Node
-    nodejs
+      # Python
+      unstable.ruff # Formatter
+      (python312.withPackages (
+        ps: with ps; [
+          black
+          flake8
+          pip
+          pipx
+        ]
+      ))
 
-    # Python
-    unstable.ruff # Formatter
-    (python312.withPackages (
-      ps: with ps; [
-        black
-        flake8
-        pip
-        pipx
-      ]
-    ))
+      # Compilers
+      gcc
+      stdenv.cc.cc.lib # LD_LIBRARY_PATH set in bash.nix
 
-    # Compilers
-    gcc
-    stdenv.cc.cc.lib # LD_LIBRARY_PATH set in bash.nix
-
-    # Printing
-    system-config-printer
-  ];
+      # Printing
+      system-config-printer
+    ];
 
   # Modules
   modules.home = {
