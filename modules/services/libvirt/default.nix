@@ -29,27 +29,32 @@ in
     assertions = [
       {
         assertion = builtins.hasAttr cfg.user config.users.users;
-        message = "modules.services.libvirt: user '${cfg.user}' is not defined in users.users";
-      }
-    ];
-
-    virtualisation.libvirtd = {
-      enable = true;
-      qemu = {
-        package = pkgs.qemu_kvm;
-        swtpm.enable = true; # TPM emulation
-      };
+      enableGuiClient = lib.mkEnableOption "libvirt GUI / client tools (virt-manager, spice-gtk)";
     };
-
-    # virt-manager GUI
-    programs.virt-manager.enable = true;
-
-    # Add user to libvirtd group
-    users.users.${cfg.user}.extraGroups = [ "libvirtd" ];
-
-    # Packages
-    environment.systemPackages = with pkgs; [
-      spice-gtk # USB redirection & clipboard sharing
-    ];
   };
+
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
+      virtualisation.libvirtd = {
+        enable = true;
+        qemu = {
+          package = pkgs.qemu_kvm;
+          swtpm.enable = true; # TPM emulation
+        };
+      };
+
+      # Add user to libvirtd group
+      users.users.${cfg.user}.extraGroups = [ "libvirtd" ];
+    })
+
+    (lib.mkIf (cfg.enable && cfg.enableGuiClient) {
+      # virt-manager GUI
+      programs.virt-manager.enable = true;
+
+      # GUI-related packages
+      environment.systemPackages = with pkgs; [
+        spice-gtk # USB redirection & clipboard sharing
+      ];
+    })
+  ];
 }
