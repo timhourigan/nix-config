@@ -26,6 +26,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = builtins.hasAttr cfg.user config.users.users;
+        message = "modules.services.libvirt: user '${cfg.user}' is not defined in users.users";
+      }
+    ];
+
     virtualisation.libvirtd = {
       enable = true;
       qemu = {
