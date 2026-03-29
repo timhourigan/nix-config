@@ -17,24 +17,8 @@
     unstable.opencode # AI code editor
     telegram-desktop # Messaging
     scribus # Desktop publishing
-    xorg.xhost # X11 access control (for distrobox GUI apps)
     zed-editor # Text editor
   ];
-
-  # Allow local X11 connections for distrobox GUI apps
-  systemd.user.services.xhost-local = {
-    Unit = {
-      Description = "Allow local X11 connections for distrobox";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.xorg.xhost}/bin/xhost +local:";
-      RemainAfterExit = true;
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
 
   # Programs and configurations to be installed
   imports = [
