@@ -7,7 +7,13 @@ on:
   pull_request:
 jobs:
   run-make-test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-latest
+          - runner: ubuntu-24.04-arm
+          - runner: macos-latest
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 10
     steps:
       - name: Checkout

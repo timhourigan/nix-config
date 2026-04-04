@@ -53,6 +53,12 @@
     }@inputs:
     let
       inherit (self) outputs;
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
     {
       # NixOS Configurations
@@ -177,80 +183,91 @@
       overlays = import ./overlays { inherit inputs; };
 
       # Dev Shells
-      devShells.x86_64-linux = {
-        default =
-          with nixpkgs.legacyPackages.x86_64-linux;
-          mkShell {
-            inherit (self.checks.x86_64-linux.pre-commit) shellHook;
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            inherit (self.checks.${system}.pre-commit) shellHook;
           };
-      };
+        }
+      );
 
       # Formatter Configuration
-      formatter.x86_64-linux =
-        inputs.treefmt-nix.lib.mkWrapper inputs.nixpkgs.legacyPackages.x86_64-linux
-          {
-            projectRootFile = "flake.nix";
-            programs = {
-              # https://github.com/numtide/treefmt-nix?tab=readme-ov-file#supported-programs
-              actionlint.enable = true;
-              deadnix.enable = true;
-              nixfmt.enable = true;
-              mdformat.enable = true;
-              statix.enable = true;
-            };
+      formatter = forAllSystems (
+        system:
+        inputs.treefmt-nix.lib.mkWrapper nixpkgs.legacyPackages.${system} {
+          projectRootFile = "flake.nix";
+          programs = {
+            # https://github.com/numtide/treefmt-nix?tab=readme-ov-file#supported-programs
+            actionlint.enable = true;
+            deadnix.enable = true;
+            nixfmt.enable = true;
+            mdformat.enable = true;
+            statix.enable = true;
           };
+        }
+      );
 
       # Checks
-      checks.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux; {
-        pre-commit = pre-commit-hooks.lib.x86_64-linux.run {
-          src = ./.;
-          hooks = {
-            # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
-            # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
-            # Editors
-            editorconfig-checker = {
-              enable = true;
-              excludes = [
-                "flake.lock"
-              ];
+      checks = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          pre-commit = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#hooks
+              # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
+              # Editors
+              editorconfig-checker = {
+                enable = true;
+                excludes = [
+                  "flake.lock"
+                ];
+              };
+              # GitHub Actions
+              actionlint.enable = true;
+              # Makefile
+              checkmake.enable = true;
+              # Markdown
+              markdownlint.enable = true;
+              # Nix
+              deadnix.enable = true;
+              flake-checker = {
+                enable = true;
+                args = [ "--no-telemetry" ];
+              };
+              nixfmt.enable = true;
+              statix = {
+                enable = true;
+                settings.ignore = [ "**/hardware-configuration.nix" ];
+              };
+              # Secrets
+              trufflehog = {
+                enable = true;
+                # https://github.com/trufflesecurity/trufflehog/blob/6961f2bace57ab32b23b3ba40f8f420f6bc7e004/.pre-commit-hooks.yaml#L4
+                entry =
+                  pkgs.lib.getExe pkgs.trufflehog
+                  + " git file://. --since-commit HEAD --results=verified --fail --trust-local-git-config";
+              };
+              ripsecrets.enable = true;
+              # Shell
+              shellcheck.enable = true;
+              # Spelling
+              typos = {
+                enable = true;
+                settings.exclude = "secrets/*";
+              };
+              # YAML
+              yamllint.enable = true;
             };
-            # GitHub Actions
-            actionlint.enable = true;
-            # Makefile
-            checkmake.enable = true;
-            # Markdown
-            markdownlint.enable = true;
-            # Nix
-            deadnix.enable = true;
-            flake-checker = {
-              enable = true;
-              args = [ "--no-telemetry" ];
-            };
-            nixfmt.enable = true;
-            statix = {
-              enable = true;
-              settings.ignore = [ "**/hardware-configuration.nix" ];
-            };
-            # Secrets
-            trufflehog = {
-              enable = true;
-              # https://github.com/trufflesecurity/trufflehog/blob/6961f2bace57ab32b23b3ba40f8f420f6bc7e004/.pre-commit-hooks.yaml#L4
-              entry =
-                lib.getExe trufflehog
-                + " git file://. --since-commit HEAD --results=verified --fail --trust-local-git-config";
-            };
-            ripsecrets.enable = true;
-            # Shell
-            shellcheck.enable = true;
-            # Spelling
-            typos = {
-              enable = true;
-              settings.exclude = "secrets/*";
-            };
-            # YAML
-            yamllint.enable = true;
           };
-        };
-      };
+        }
+      );
     };
 }
