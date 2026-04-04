@@ -41,13 +41,18 @@ build-nixos-diff: ## Show NixOS configuration diff
 switch-nixos: ## Switch NixOS configuration
 	nixos-rebuild switch --flake .
 
+.PHONY: bootstrap-hm
+bootstrap-hm: ## Bootstrap Home-Manager configuration
+	nix shell nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
+	nix shell nixpkgs#home-manager -c home-manager switch --flake .#$(USER)@$(HOSTNAME)
+
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
-	nix shell nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
+	home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
 
 .PHONY: build-hm-dry-run
 build-hm-dry-run: ## Build Home-Manager configuration (dry-run)
-	nix shell nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) --dry-run
+	home-manager build --flake .#$(USER)@$(HOSTNAME) --dry-run
 
 .PHONY: build-hm-diff
 build-hm-diff: ## Show Home-Manager configuration diff
@@ -55,11 +60,11 @@ build-hm-diff: ## Show Home-Manager configuration diff
 
 .PHONY: switch-hm
 switch-hm: ## Switch Home-Manager configuration
-	nix shell nixpkgs#home-manager -c home-manager switch --flake .#$(USER)@$(HOSTNAME)
+	home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: news-hm
 news-hm: ## Home-Manager news
-	nix shell nixpkgs#home-manager -c home-manager news --flake .#$(USER)@$(HOSTNAME)
+	home-manager news --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: build
 build: build-nixos build-hm ## Build
