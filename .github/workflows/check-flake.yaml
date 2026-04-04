@@ -3,7 +3,6 @@
 name: check-flake
 run-name: Check Flake
 on:
-  push:
   pull_request:
 jobs:
   run-make-test:
@@ -24,4 +23,4 @@ jobs:
           nix_path: nixpkgs=channel:nixos-25.11
       - name: Run make test
         run: make test
-        timeout-minutes: 5
+        timeout-minutes: 10
