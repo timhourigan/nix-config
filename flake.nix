@@ -89,14 +89,7 @@
 
       # Home-Manager Configurations
       homeConfigurations = {
-        "timh@bri7" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./home
-            ./home/hosts/bri7
-          ];
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
+        # Test hosts
         "timh@aarch64test" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-linux;
           modules = [
@@ -110,6 +103,23 @@
           modules = [
             ./home
             ./home/hosts/amd64test
+          ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "timh@darwintest" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [
+            ./home
+            ./home/hosts/darwintest
+          ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        # Physical hosts
+        "timh@bri7" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./home
+            ./home/hosts/bri7
           ];
           extraSpecialArgs = { inherit inputs outputs; };
         };

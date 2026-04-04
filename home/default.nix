@@ -96,7 +96,7 @@
       filezilla # FTP client
       meld # Diff tools
       obsidian # Notes
-      remmina # Remove desktop client
+      remmina # Remote desktop client
       subversion # Software version control
       vlc # Media player
 

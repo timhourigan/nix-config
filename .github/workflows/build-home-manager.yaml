@@ -85,3 +85,31 @@ jobs:
           HOSTNAME: ${{ matrix.host }}
           NIX_OUTPUT_MONITOR: ""
         timeout-minutes: 15
+
+  build-darwin:
+    strategy:
+      matrix:
+        user: [timh]
+        host: [darwintest]
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-25.11
+      - name: Cachix cache
+        uses: cachix/cachix-action@v17
+        with:
+          name: timhourigan
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Build
+        run: |
+          nix-shell -p home-manager gnumake --run "make build-hm"
+        env:
+          USER: ${{ matrix.user }}
+          HOSTNAME: ${{ matrix.host }}
+          NIX_OUTPUT_MONITOR: ""
+        timeout-minutes: 15
