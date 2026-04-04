@@ -9,12 +9,33 @@ jobs:
     strategy:
       matrix:
         user: [timh]
-        host: [amd64test, bri7, m625q, mm, opx7070, sid, t490, x13]
-    runs-on: ubuntu-latest
+        include:
+          - host: aarch64test
+            runner: ubuntu-24.04-arm
+          - host: amd64test
+            runner: ubuntu-latest
+          - host: bri7
+            runner: ubuntu-latest
+          - host: darwintest
+            runner: macos-latest
+          - host: m625q
+            runner: ubuntu-latest
+          - host: mm
+            runner: ubuntu-latest
+          - host: opx7070
+            runner: ubuntu-latest
+          - host: sid
+            runner: ubuntu-latest
+          - host: t490
+            runner: ubuntu-latest
+          - host: x13
+            runner: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     steps:
       - name: Free up disk space
         # https://github.com/jlumbroso/free-disk-space
+        if: runner.os == 'Linux'
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
@@ -43,72 +64,6 @@ jobs:
           nix-shell -p home-manager gnumake --run "make build-hm"
         env:
           # Used by the makefile
-          USER: ${{ matrix.user }}
-          HOSTNAME: ${{ matrix.host }}
-          NIX_OUTPUT_MONITOR: ""
-        timeout-minutes: 15
-
-  build-aarch64:
-    strategy:
-      matrix:
-        user: [timh]
-        host: [aarch64test]
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 30
-    steps:
-      - name: Free up disk space
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: false
-          android: true
-          dotnet: false
-          haskell: false
-          large-packages: false
-          docker-images: false
-          swap-storage: false
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=channel:nixos-25.11
-      - name: Cachix cache
-        uses: cachix/cachix-action@v17
-        with:
-          name: timhourigan
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build
-        run: |
-          nix-shell -p home-manager gnumake --run "make build-hm"
-        env:
-          USER: ${{ matrix.user }}
-          HOSTNAME: ${{ matrix.host }}
-          NIX_OUTPUT_MONITOR: ""
-        timeout-minutes: 15
-
-  build-darwin:
-    strategy:
-      matrix:
-        user: [timh]
-        host: [darwintest]
-    runs-on: macos-15
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=channel:nixos-25.11
-      - name: Cachix cache
-        uses: cachix/cachix-action@v17
-        with:
-          name: timhourigan
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build
-        run: |
-          nix-shell -p home-manager gnumake --run "make build-hm"
-        env:
           USER: ${{ matrix.user }}
           HOSTNAME: ${{ matrix.host }}
           NIX_OUTPUT_MONITOR: ""
