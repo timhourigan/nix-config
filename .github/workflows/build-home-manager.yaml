@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         user: [timh]
+        host: [aarch64test, amd64test, bri7, darwintest, m625q, mm, opx7070, sid, t490, x13]
         include:
           - host: aarch64test
             runner: ubuntu-24.04-arm
