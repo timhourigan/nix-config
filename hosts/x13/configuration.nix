@@ -1,4 +1,4 @@
-{ outputs, ... }:
+{ outputs, pkgs, ... }:
 
 {
   imports = [
@@ -32,6 +32,23 @@
 
   # Filesystem support
   boot.supportedFilesystems = [ "ntfs" ];
+
+  # QEMU user-mode emulation for cross-architecture containers
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.preferStaticEmulators = true;
+
+  # Allow X11 connections from the current user (for containers)
+  systemd.user.services.xhost-local = {
+    description = "Allow X11 connections for current user";
+    after = [ "graphical-session-pre.target" ];
+    partOf = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.xorg.xhost}/bin/xhost +si:localuser:%u";
+      RemainAfterExit = true;
+    };
+  };
 
   # Networking
   networking = {
@@ -87,6 +104,7 @@
       avahi.enable = true;
       displaylink.enable = true;
       glances.enable = true;
+      podman.enable = true;
       ssh.enable = true;
       tailscale = {
         enable = true;

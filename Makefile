@@ -43,8 +43,8 @@ switch-nixos: ## Switch NixOS configuration
 
 .PHONY: bootstrap-hm
 bootstrap-hm: ## Bootstrap Home-Manager configuration
-	nix build --no-link .#homeConfigurations.$(USER)@$(HOSTNAME).activationPackage
-	$(shell nix path-info .#homeConfigurations.$(USER)@$(HOSTNAME).activationPackage)/activate
+	nix shell --inputs-from . nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
+	nix shell --inputs-from . nixpkgs#home-manager -c home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
@@ -72,13 +72,21 @@ build: build-nixos build-hm ## Build
 .PHONY: build-dry-run
 build-dry-run: build-nixos-dry-run build-hm-dry-run ## Build (dry-run)
 
+.PHONY: build-distrobox
+build-distrobox: ## Build distrobox containers
+	distrobox-assemble create --file ~/.config/distrobox/containers.ini
+
+.PHONY: update-distrobox
+update-distrobox: ## Update distrobox containers
+	distrobox upgrade --all
+
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
-	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
+	nix shell --inputs-from . nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
 
 .PHONY: update-secrets
 update-secrets: ## Update secrets for added/removed keys
-	nix shell nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
+	nix shell --inputs-from . nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
 
 .PHONY: test
 test: ## Test
@@ -99,6 +107,10 @@ lock: ## Update lock file
 .PHONY: clean
 clean: ## Garbage collect
 	nix-collect-garbage --delete-older-than 30d
+
+.PHONY: clean-distrobox
+clean-distrobox: ## Remove distrobox containers
+	distrobox-assemble rm --file ~/.config/distrobox/containers.ini
 
 .PHONY: optimise
 optimise: ## Optimise Nix store

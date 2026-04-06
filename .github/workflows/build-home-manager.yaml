@@ -9,12 +9,34 @@ jobs:
     strategy:
       matrix:
         user: [timh]
-        host: [bri7, m625q, mm, opx7070, sid, t490, x13]
-    runs-on: ubuntu-latest
+        host: [aarch64darwin-t, aarch64linux-t, amd64linux-t, bri7, m625q, mm, opx7070, sid, t490, x13]
+        include:
+          - host: aarch64darwin-t
+            runner: macos-latest
+          - host: aarch64linux-t
+            runner: ubuntu-24.04-arm
+          - host: amd64linux-t
+            runner: ubuntu-latest
+          - host: bri7
+            runner: ubuntu-latest
+          - host: m625q
+            runner: ubuntu-latest
+          - host: mm
+            runner: ubuntu-latest
+          - host: opx7070
+            runner: ubuntu-latest
+          - host: sid
+            runner: ubuntu-latest
+          - host: t490
+            runner: ubuntu-latest
+          - host: x13
+            runner: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     steps:
       - name: Free up disk space
         # https://github.com/jlumbroso/free-disk-space
+        if: runner.os == 'Linux'
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
