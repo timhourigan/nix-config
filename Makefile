@@ -43,8 +43,8 @@ switch-nixos: ## Switch NixOS configuration
 
 .PHONY: bootstrap-hm
 bootstrap-hm: ## Bootstrap Home-Manager configuration
-	nix shell nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
-	nix shell nixpkgs#home-manager -c home-manager switch --flake .#$(USER)@$(HOSTNAME)
+	nix shell --inputs-from . nixpkgs#home-manager -c home-manager build --flake .#$(USER)@$(HOSTNAME) $(NIX_OUTPUT_MONITOR)
+	nix shell --inputs-from . nixpkgs#home-manager -c home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
 .PHONY: build-hm
 build-hm: ## Build Home-Manager configuration
@@ -82,11 +82,11 @@ update-distrobox: ## Update distrobox containers
 
 .PHONY: modify-secrets
 modify-secrets: ## Modify secrets
-	nix shell nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
+	nix shell --inputs-from . nixpkgs#sops -c sops --indent 2 secrets/secrets.yaml
 
 .PHONY: update-secrets
 update-secrets: ## Update secrets for added/removed keys
-	nix shell nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
+	nix shell --inputs-from . nixpkgs#sops -c sops --indent 2 updatekeys secrets/secrets.yaml
 
 .PHONY: test
 test: ## Test
