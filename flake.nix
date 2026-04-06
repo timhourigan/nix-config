@@ -96,6 +96,14 @@
       # Home-Manager Configurations
       homeConfigurations = {
         # Test hosts
+        "timh@aarch64darwin-t" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [
+            ./home
+            ./home/hosts/aarch64darwin-t
+          ];
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
         "timh@aarch64linux-t" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-linux;
           modules = [
@@ -109,14 +117,6 @@
           modules = [
             ./home
             ./home/hosts/amd64linux-t
-          ];
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
-        "timh@aarch64darwin-t" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [
-            ./home
-            ./home/hosts/aarch64darwin-t
           ];
           extraSpecialArgs = { inherit inputs outputs; };
         };
