@@ -30,8 +30,8 @@
     distrobox =
       let
         image = "debian:13";
-        hm_amd64 = "amd64test";
-        hm_aarch64 = "aarch64test";
+        hm_amd64 = "amd64linux-t";
+        hm_aarch64 = "aarch64linux-t";
         additional_packages = "locales make nix-bin nix-setup-systemd";
         # Init hooks
         # 1. Fix locale issues due to host being IE

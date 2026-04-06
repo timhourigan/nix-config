@@ -9,16 +9,16 @@ jobs:
     strategy:
       matrix:
         user: [timh]
-        host: [aarch64test, amd64test, bri7, darwintest, m625q, mm, opx7070, sid, t490, x13]
+        host: [aarch64darwin-t, aarch64linux-t, amd64linux-t, bri7, m625q, mm, opx7070, sid, t490, x13]
         include:
-          - host: aarch64test
+          - host: aarch64darwin-t
+            runner: macos-latest
+          - host: aarch64linux-t
             runner: ubuntu-24.04-arm
-          - host: amd64test
+          - host: amd64linux-t
             runner: ubuntu-latest
           - host: bri7
             runner: ubuntu-latest
-          - host: darwintest
-            runner: macos-latest
           - host: m625q
             runner: ubuntu-latest
           - host: mm
