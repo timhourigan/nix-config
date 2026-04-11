@@ -15,6 +15,11 @@ in
         description = "Enable Tmux";
         default = false;
       };
+      shell = lib.mkOption {
+        type = lib.types.str;
+        default = "${pkgs.bashInteractive}/bin/bash";
+        description = "Default shell for tmux sessions";
+      };
     };
   };
 
@@ -26,7 +31,7 @@ in
       mouse = true;
       newSession = true;
       prefix = "C-a";
-      shell = "${pkgs.bashInteractive}/bin/bash";
+      inherit (cfg) shell;
       terminal = "screen-256color";
       baseIndex = 1;
 
