@@ -50,6 +50,11 @@
     };
   };
 
+  # Zsh
+  programs.zsh.enable = true;
+  environment.shells = with pkgs; [ zsh ];
+  users.users.timh.shell = pkgs.zsh;
+
   # Networking
   networking = {
     hostName = "x13";
