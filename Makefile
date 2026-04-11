@@ -110,7 +110,8 @@ clean: ## Garbage collect
 
 .PHONY: clean-distrobox
 clean-distrobox: ## Remove distrobox containers
-	distrobox-assemble rm --file ~/.config/distrobox/containers.ini
+	distrobox-assemble rm --file "$(HOME)/.config/distrobox/containers.ini"
+	rm -rf "$(HOME)"/distrobox/*
 
 .PHONY: optimise
 optimise: ## Optimise Nix store

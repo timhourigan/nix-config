@@ -224,5 +224,8 @@ in
     programs.bash.interactiveShellInit = lib.mkIf config.programs.bash.enable ''
       motd
     '';
+    programs.zsh.interactiveShellInit = lib.mkIf config.programs.zsh.enable ''
+      motd
+    '';
   };
 }

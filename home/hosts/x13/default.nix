@@ -44,6 +44,9 @@
         #   in the init_hooks string
         path_hook = "echo ZXhwb3J0IFBBVEg9IiRIT01FLy5uaXgtcHJvZmlsZS9iaW46JFBBVEgiCg== | base64 -d | sudo tee /etc/profile.d/nix-profile.sh";
         init_hooks = "${locales_hook} && ${nix_conf_hook} && ${path_hook}";
+        # (Optional) 4. Register zsh in /etc/shells, set as login shell, and create empty .zshrc
+        #    to suppress the new user wizard
+        zsh_hook = "echo /usr/bin/zsh | sudo tee -a /etc/shells && sudo chsh -s /usr/bin/zsh $(whoami) && touch $HOME/distrobox/${hm_amd64}/.zshrc";
       in
       {
         enable = true;
@@ -52,8 +55,8 @@
           hostname = hm_amd64;
           home = "$HOME/distrobox/${hm_amd64}";
           additional_flags = "--platform linux/amd64";
-          inherit additional_packages;
-          inherit init_hooks;
+          additional_packages = "${additional_packages} zsh";
+          init_hooks = "${init_hooks} && ${zsh_hook}";
         };
         containers.${hm_aarch64} = {
           inherit image;
@@ -67,6 +70,8 @@
     ghostty.enable = true;
     polybar.enable = true;
     rofi.enable = true;
+    tmux.shell = "${pkgs.zsh}/bin/zsh";
     vscode.enable = true;
+    zsh.enable = true;
   };
 }
