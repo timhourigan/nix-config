@@ -32,8 +32,8 @@ in
         }
       ];
       history = {
-        size = 1000000000; # Effectively unlimited
-        save = 1000000000;
+        size = 100000; # Keep a large but bounded history
+        save = 100000;
         ignoreDups = true;
         ignoreAllDups = true;
         ignoreSpace = true;
