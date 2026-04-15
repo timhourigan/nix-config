@@ -31,6 +31,8 @@
       let
         image = "debian:13";
         additional_packages = "locales make nix-bin nix-setup-systemd";
+        amd64_container = "amd64linux-t";
+        aarch64_container = "aarch64linux-t";
         # Init hooks
         # 1. Fix locale issues due to host being IE
         locales_hook = "echo en_IE.UTF-8 UTF-8 | sudo tee /etc/locale.gen && sudo locale-gen";
@@ -52,18 +54,18 @@
       in
       {
         enable = true;
-        containers."amd64linux-t" = {
+        containers."${amd64_container}" = {
           inherit image;
-          hostname = "amd64linux-t";
-          home = "$HOME/distrobox/amd64linux-t";
+          hostname = amd64_container;
+          home = "$HOME/distrobox/${amd64_container}";
           additional_flags = "--platform linux/amd64";
           additional_packages = "${additional_packages} zsh";
-          init_hooks = "${base_hooks} && ${zsh_hook "amd64linux-t"}";
+          init_hooks = "${base_hooks} && ${zsh_hook amd64_container}";
         };
-        containers."aarch64linux-t" = {
+        containers."${aarch64_container}" = {
           inherit image additional_packages;
-          hostname = "aarch64linux-t";
-          home = "$HOME/distrobox/aarch64linux-t";
+          hostname = aarch64_container;
+          home = "$HOME/distrobox/${aarch64_container}";
           additional_flags = "--platform linux/arm64";
           init_hooks = "${base_hooks} && ${bash_hook}";
         };
