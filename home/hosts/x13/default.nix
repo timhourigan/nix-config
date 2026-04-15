@@ -30,9 +30,9 @@
     distrobox =
       let
         image = "debian:13";
-        hm_amd64 = "amd64linux-t";
-        hm_aarch64 = "aarch64linux-t";
         additional_packages = "locales make nix-bin nix-setup-systemd";
+        amd64_container = "amd64linux-t";
+        aarch64_container = "aarch64linux-t";
         # Init hooks
         # 1. Fix locale issues due to host being IE
         locales_hook = "echo en_IE.UTF-8 UTF-8 | sudo tee /etc/locale.gen && sudo locale-gen";
@@ -43,28 +43,31 @@
         #   to avoid issues with quoting and variable expansion of $HOME and $PATH
         #   in the init_hooks string
         path_hook = "echo ZXhwb3J0IFBBVEg9IiRIT01FLy5uaXgtcHJvZmlsZS9iaW46JFBBVEgiCg== | base64 -d | sudo tee /etc/profile.d/nix-profile.sh";
-        init_hooks = "${locales_hook} && ${nix_conf_hook} && ${path_hook}";
-        # (Optional) 4. Register zsh in /etc/shells, set as login shell, and create empty .zshrc
+        base_hooks = "${locales_hook} && ${nix_conf_hook} && ${path_hook}";
+        # 4. Register zsh in /etc/shells, set as login shell, and create empty .zshrc
         #    to suppress the new user wizard
-        zsh_hook = "echo /usr/bin/zsh | sudo tee -a /etc/shells && sudo chsh -s /usr/bin/zsh $(whoami) && touch $HOME/distrobox/${hm_amd64}/.zshrc";
+        zsh_hook =
+          container:
+          "echo /usr/bin/zsh | sudo tee -a /etc/shells && sudo chsh -s /usr/bin/zsh $(whoami) && touch $HOME/distrobox/${container}/.zshrc";
+        # 5. Override distrobox's $SHELL mirroring back to bash
+        bash_hook = "sudo chsh -s /bin/bash $(whoami)";
       in
       {
         enable = true;
-        containers.${hm_amd64} = {
+        containers."${amd64_container}" = {
           inherit image;
-          hostname = hm_amd64;
-          home = "$HOME/distrobox/${hm_amd64}";
+          hostname = amd64_container;
+          home = "$HOME/distrobox/${amd64_container}";
           additional_flags = "--platform linux/amd64";
           additional_packages = "${additional_packages} zsh";
-          init_hooks = "${init_hooks} && ${zsh_hook}";
+          init_hooks = "${base_hooks} && ${zsh_hook amd64_container}";
         };
-        containers.${hm_aarch64} = {
-          inherit image;
-          hostname = hm_aarch64;
-          home = "$HOME/distrobox/${hm_aarch64}";
+        containers."${aarch64_container}" = {
+          inherit image additional_packages;
+          hostname = aarch64_container;
+          home = "$HOME/distrobox/${aarch64_container}";
           additional_flags = "--platform linux/arm64";
-          inherit additional_packages;
-          inherit init_hooks;
+          init_hooks = "${base_hooks} && ${bash_hook}";
         };
       };
     ghostty.enable = true;

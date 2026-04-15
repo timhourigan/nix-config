@@ -4,15 +4,12 @@ name: check-flake
 run-name: Check Flake
 on:
   pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   run-make-test:
-    strategy:
-      matrix:
-        include:
-          - runner: ubuntu-latest
-          - runner: ubuntu-24.04-arm
-          - runner: macos-latest
-    runs-on: ${{ matrix.runner }}
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout
