@@ -22,13 +22,13 @@ in
       };
       userName = lib.mkOption {
         description = "Git user name";
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
+        default = "Tim Hourigan";
       };
       userEmail = lib.mkOption {
         description = "Git user email";
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
+        default = "1819176+timhourigan@users.noreply.github.com";
       };
     };
   };
@@ -37,25 +37,24 @@ in
     programs.git = {
       package = pkgs.gitFull;
       enable = true;
-      settings =
-        {
-          alias = {
-            ci = "commit";
-            co = "checkout";
-            br = "branch";
-            st = "status";
-            pub = "push origin -u";
-          };
+      settings = {
+        alias = {
+          ci = "commit";
+          co = "checkout";
+          br = "branch";
+          st = "status";
+          pub = "push origin -u";
+        };
+        extraConfig = {
           credential = {
             helper = cfg.credentialHelper;
           };
-        }
-        // lib.optionalAttrs (cfg.userName != null && cfg.userEmail != null) {
-          user = {
-            name = cfg.userName;
-            email = cfg.userEmail;
-          };
         };
+        user = {
+          name = cfg.userName;
+          email = cfg.userEmail;
+        };
+      };
     };
   };
 }
