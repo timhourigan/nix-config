@@ -52,8 +52,8 @@ in
             };
           };
         }
-        // lib.optionalAttrs (cfg.userName != null || cfg.userEmail != null) {
-          user = lib.filterAttrs (_: v: v != null) {
+        // lib.optionalAttrs (cfg.userName != null && cfg.userEmail != null) {
+          user = {
             name = cfg.userName;
             email = cfg.userEmail;
           };
