@@ -37,6 +37,15 @@ in
         };
         cursor.style = "Underline";
 
+        # Shift+Enter sends a newline
+        keyboard.bindings = [
+          {
+            key = "Return";
+            mods = "Shift";
+            chars = "\u001b\r";
+          }
+        ];
+
         font =
           let
             fontname = "FiraCode Nerd Font";
