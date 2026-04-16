@@ -49,9 +49,9 @@ in
         PATH = "$PATH:$HOME/.local/bin";
       };
       initContent = lib.mkBefore ''
-        # Re-source Nix environment to restore PATH ordering after macOS path_helper
+        # Re-prepend Nix paths after macOS path_helper reorders PATH in login shells
         if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+          PATH="''${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:''${PATH}"
         fi
 
         # Auto-cd into directories by typing the directory name
