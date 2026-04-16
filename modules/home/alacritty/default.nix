@@ -42,7 +42,7 @@ in
           {
             key = "Return";
             mods = "Shift";
-            chars = "\u001b\r";
+            chars = "\\u001b\\r";
           }
         ];
 
