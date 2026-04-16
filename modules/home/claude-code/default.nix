@@ -20,7 +20,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = config.programs.claude-code.package;
+        default = pkgs.claude-code;
         description = "The claude-code package to use";
       };
 

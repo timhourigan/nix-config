@@ -13,7 +13,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = config.programs.granted.package;
+        default = pkgs.granted;
         description = "The granted package to use";
       };
     };

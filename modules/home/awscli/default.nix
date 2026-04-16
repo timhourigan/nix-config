@@ -13,7 +13,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = config.programs.awscli.package;
+        default = pkgs.awscli;
         description = "The awscli package to use";
       };
 
