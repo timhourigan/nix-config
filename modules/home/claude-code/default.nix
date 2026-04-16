@@ -1,3 +1,10 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
 # TODO: Add the following options when home-manager 26.05 is released:
 # - enableMcpIntegration
 # - lspServers
@@ -5,7 +12,6 @@
 # - plugins
 # - marketplaces
 # - outputStyles
-{ config, lib, ... }:
 
 let
   cfg = config.modules.home.claude-code;
