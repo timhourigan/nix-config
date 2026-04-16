@@ -4,6 +4,7 @@
   imports = [
     ./alacritty
     ./autojump
+    ./awscli
     ./bash
     ./delta
     ./direnv
@@ -12,6 +13,7 @@
     ./fzf
     ./gh
     ./ghostty
+    ./granted
     ./git
     ./neovim
     ./obs-studio

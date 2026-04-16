@@ -36,6 +36,9 @@ in
       baseIndex = 1;
 
       extraConfig = ''
+        # Use a non-login shell to prevent macOS path_helper from reordering PATH
+        set -g default-command "${cfg.shell}"
+
         ##########
         # Mappings
         ##########
