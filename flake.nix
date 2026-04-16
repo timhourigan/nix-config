@@ -179,6 +179,9 @@
         };
       };
 
+      # Home Manager Modules (for consumption by other flakes)
+      homeManagerModules.default = import ./modules/home;
+
       # Overlays
       overlays = import ./overlays { inherit inputs; };
 
