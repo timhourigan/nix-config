@@ -6,6 +6,7 @@
     ./autojump
     ./awscli
     ./bash
+    ./claude-code
     ./delta
     ./direnv
     ./distrobox
