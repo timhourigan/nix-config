@@ -15,6 +15,21 @@ in
         description = "Enable git";
         default = false;
       };
+      credentialHelper = lib.mkOption {
+        description = "Git credential helper";
+        type = lib.types.str;
+        default = "libsecret";
+      };
+      userName = lib.mkOption {
+        description = "Git user name";
+        type = lib.types.str;
+        default = "Tim Hourigan";
+      };
+      userEmail = lib.mkOption {
+        description = "Git user email";
+        type = lib.types.str;
+        default = "1819176+timhourigan@users.noreply.github.com";
+      };
     };
   };
 
@@ -32,12 +47,12 @@ in
         };
         extraConfig = {
           credential = {
-            helper = "libsecret";
+            helper = cfg.credentialHelper;
           };
         };
         user = {
-          name = "Tim Hourigan";
-          email = "1819176+timhourigan@users.noreply.github.com";
+          name = cfg.userName;
+          email = cfg.userEmail;
         };
       };
     };
