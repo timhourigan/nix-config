@@ -1,3 +1,10 @@
+# TODO: Add the following options when home-manager 26.05 is released:
+# - enableMcpIntegration
+# - lspServers
+# - rules / rulesDir
+# - plugins
+# - marketplaces
+# - outputStyles
 { config, lib, ... }:
 
 let
@@ -29,22 +36,18 @@ in
         description = "MCP (Model Context Protocol) servers configuration";
       };
 
-      lspServers = lib.mkOption {
-        type = lib.types.attrs;
-        default = { };
-        description = "LSP (Language Server Protocol) servers configuration";
-      };
+      memory = {
+        text = lib.mkOption {
+          type = lib.types.nullOr lib.types.lines;
+          default = null;
+          description = "Inline memory content for CLAUDE.md";
+        };
 
-      rules = lib.mkOption {
-        type = lib.types.attrs;
-        default = { };
-        description = "Modular rule files for Claude Code";
-      };
-
-      rulesDirs = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = null;
-        description = "Path to a directory containing rule files for Claude Code";
+        source = lib.mkOption {
+          type = lib.types.nullOr lib.types.path;
+          default = null;
+          description = "Path to a file containing memory content for CLAUDE.md";
+        };
       };
 
       agents = lib.mkOption {
@@ -94,36 +97,6 @@ in
         default = null;
         description = "Path to a directory containing skill directories for Claude Code";
       };
-
-      plugins = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-        description = "List of plugins to use when running Claude Code";
-      };
-
-      marketplaces = lib.mkOption {
-        type = lib.types.attrs;
-        default = { };
-        description = "Custom marketplaces for Claude Code plugins";
-      };
-
-      outputStyles = lib.mkOption {
-        type = lib.types.attrs;
-        default = { };
-        description = "Custom output styles for Claude Code";
-      };
-
-      memory = lib.mkOption {
-        type = lib.types.attrs;
-        default = { };
-        description = "Memory configuration for Claude Code";
-      };
-
-      enableMcpIntegration = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Whether to integrate MCP servers config from programs.mcp.servers";
-      };
     };
   };
 
@@ -134,20 +107,13 @@ in
         package
         settings
         mcpServers
-        lspServers
-        rules
+        memory
         agents
         commands
         hooks
         skills
-        plugins
-        marketplaces
-        outputStyles
-        memory
-        enableMcpIntegration
         ;
     }
-    // lib.optionalAttrs (cfg.rulesDirs != null) { rulesDir = cfg.rulesDirs; }
     // lib.optionalAttrs (cfg.agentsDir != null) { inherit (cfg) agentsDir; }
     // lib.optionalAttrs (cfg.commandsDir != null) { inherit (cfg) commandsDir; }
     // lib.optionalAttrs (cfg.hooksDir != null) { inherit (cfg) hooksDir; }
