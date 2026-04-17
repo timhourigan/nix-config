@@ -50,7 +50,7 @@ in
       };
       initContent = lib.mkBefore ''
         # macOS workaround - Re-prepend Nix paths after path_helper reorders PATH in login shells
-        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        if [ "$(uname -s)" = "Darwin" ] && [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
           PATH="''${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:''${PATH}"
         fi
 
