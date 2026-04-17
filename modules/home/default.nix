@@ -22,9 +22,11 @@
     ./polybar
     ./pyenv
     ./rofi
+    ./ruff
     ./ssh
     ./starship
     ./tmux
+    ./uv
     ./vscode
     ./zsh
   ];
