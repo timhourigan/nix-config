@@ -16,10 +16,13 @@
     ./ghostty
     ./granted
     ./git
+    ./mise
     ./neovim
     ./obs-studio
     ./polybar
+    ./pyenv
     ./rofi
+    ./ssh
     ./starship
     ./tmux
     ./vscode
