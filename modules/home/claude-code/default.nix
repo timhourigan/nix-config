@@ -44,15 +44,19 @@ in
 
       memory = {
         text = lib.mkOption {
-          type = lib.types.nullOr lib.types.lines;
+          type = lib.types.nullOr (
+            lib.types.addCheck lib.types.lines (_: cfg.memory.source == null)
+          );
           default = null;
-          description = "Inline memory content for CLAUDE.md";
+          description = "Inline memory content for CLAUDE.md. Mutually exclusive with `memory.source`; evaluation fails if both are set.";
         };
 
         source = lib.mkOption {
-          type = lib.types.nullOr lib.types.path;
+          type = lib.types.nullOr (
+            lib.types.addCheck lib.types.path (_: cfg.memory.text == null)
+          );
           default = null;
-          description = "Path to a file containing memory content for CLAUDE.md";
+          description = "Path to a file containing memory content for CLAUDE.md. Mutually exclusive with `memory.text`; evaluation fails if both are set.";
         };
       };
 
