@@ -37,7 +37,7 @@ in
         };
         cursor.style = "Underline";
 
-        # Shift+Enter sends a newline
+        # Shift+Enter sends ESC + carriage return (\u001b\r)
         keyboard.bindings = [
           {
             key = "Return";
