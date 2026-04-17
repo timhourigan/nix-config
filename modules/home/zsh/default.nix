@@ -48,7 +48,12 @@ in
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
         PATH = "$PATH:$HOME/.local/bin";
       };
-      initContent = ''
+      initContent = lib.mkBefore ''
+        # macOS workaround - Re-prepend Nix paths after path_helper reorders PATH in login shells
+        if [ "$(uname -s)" = "Darwin" ] && [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          PATH="''${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:''${PATH}"
+        fi
+
         # Auto-cd into directories by typing the directory name
         setopt AUTO_CD
         # Extended globbing
