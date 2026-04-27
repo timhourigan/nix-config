@@ -25,6 +25,7 @@
     ./ruff
     ./ssh
     ./starship
+    ./tenv
     ./tmux
     ./uv
     ./vscode
