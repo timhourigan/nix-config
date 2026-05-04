@@ -11,6 +11,7 @@
     ./glances
     ./hass
     ./homepage-dashboard
+    ./mosquitto
     ./nebula-sync
     ./pihole
     ./podman
