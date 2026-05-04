@@ -129,8 +129,7 @@ in
       };
       slimserver = {
         enable = true;
-        # FIXME - Unstable is currently broken - https://github.com/NixOS/nixpkgs/issues/477209
-        package = pkgs.slimserver;
+        package = pkgs.unstable.slimserver;
       };
       ssh.enable = true;
       tailscale = {
