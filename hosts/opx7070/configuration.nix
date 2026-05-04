@@ -6,12 +6,14 @@
 }:
 
 let
-  gatusPort = 8080; # Module default
-  hassPort = 8123; # Module default
+  # Ports are module/service defaults
+  esphomePort = 6052;
+  gatusPort = 8080;
+  hassPort = 8123;
   homepageDashboard = import ../common/homepage-dashboard.nix { };
   homepageDashboardPort = 8082;
-  vikunjaPort = 3456; # Module default
-  z2mPort = 8124; # Module default
+  vikunjaPort = 3456;
+  z2mPort = 8124;
 in
 {
   imports = [
@@ -176,6 +178,12 @@ in
   services.caddy = {
     enable = true;
     virtualHosts = {
+      # ESPHome
+      "http://esphome.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString esphomePort}
+        '';
+      };
       # FreshRSS - Module has builtin configuration
       # Gatus
       "http://gatus.${config.custom.internalDomain}" = {
