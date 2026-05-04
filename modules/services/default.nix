@@ -6,11 +6,13 @@
     ./caddy
     ./chrony
     ./displaylink
+    ./esphome
     ./freshrss
     ./gatus
     ./glances
-    ./hass
+    ./home-assistant
     ./homepage-dashboard
+    ./mosquitto
     ./nebula-sync
     ./pihole
     ./podman
@@ -20,5 +22,6 @@
     ./tlp
     ./unbound
     ./vikunja
+    ./zigbee2mqtt
   ];
 }
