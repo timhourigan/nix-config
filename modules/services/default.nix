@@ -9,7 +9,7 @@
     ./freshrss
     ./gatus
     ./glances
-    ./hass
+    ./home-assistant
     ./homepage-dashboard
     ./mosquitto
     ./nebula-sync

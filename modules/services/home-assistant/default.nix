@@ -7,12 +7,12 @@
 # Home Assistant
 
 let
-  cfg = config.modules.services.hass;
+  cfg = config.modules.services.home-assistant;
   hassPort = 8123;
 in
 {
   options = {
-    modules.services.hass = {
+    modules.services.home-assistant = {
       enable = lib.mkEnableOption "Enable Home Assistant" // {
         description = "Enable Home Assistant service";
         default = false;

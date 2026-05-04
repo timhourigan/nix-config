@@ -98,7 +98,7 @@ in
         configFile = config.sops.secrets."gatus".path;
       };
       glances.enable = true;
-      hass = {
+      home-assistant = {
         enable = true;
         extraOptions = [
           "--network=host"
