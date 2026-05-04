@@ -8,7 +8,7 @@
 
 let
   cfg = config.modules.services.home-assistant;
-  hassPort = 8123;
+  port = 8123;
 in
 {
   options = {
@@ -43,12 +43,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Mosquitto service
-    modules.services.mosquitto.enable = true;
-
-    # zigbee2mqtt service
-    modules.services.zigbee2mqtt.enable = true;
-
     # Home Assistant container
     virtualisation.oci-containers = {
       inherit (cfg) backend;
@@ -74,7 +68,7 @@ in
       after = [ "nss-lookup.target" ];
     };
     networking.firewall.allowedTCPPorts = [
-      hassPort
+      port
     ];
   };
 }

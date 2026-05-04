@@ -6,6 +6,7 @@
     ./caddy
     ./chrony
     ./displaylink
+    ./esphome
     ./freshrss
     ./gatus
     ./glances

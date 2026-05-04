@@ -6,7 +6,7 @@
 
 let
   cfg = config.modules.services.mosquitto;
-  mosquittoPort = 1883;
+  port = 1883;
 in
 {
   options = {
@@ -73,7 +73,7 @@ in
     };
 
     networking.firewall.allowedTCPPorts = [
-      mosquittoPort
+      port
     ];
   };
 }

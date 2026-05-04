@@ -108,8 +108,9 @@ in
         image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
 
       };
-      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
+      mosquitto.enable = true;
       zigbee2mqtt = {
+        enable = true;
         package = pkgs.pinned.zigbee2mqtt;
       };
       homepage-dashboard = {

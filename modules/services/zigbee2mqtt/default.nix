@@ -7,7 +7,7 @@
 
 let
   cfg = config.modules.services.zigbee2mqtt;
-  z2mPort = 8124;
+  port = 8124;
 in
 {
   options = {
@@ -41,7 +41,7 @@ in
           passive.timeout = 1500;
         };
         frontend = {
-          port = z2mPort;
+          inherit port;
           package = "zigbee2mqtt-windfront";
         };
         homeassistant = {
@@ -91,7 +91,7 @@ in
     };
 
     networking.firewall.allowedTCPPorts = [
-      z2mPort
+      port
     ];
   };
 }
