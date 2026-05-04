@@ -20,5 +20,6 @@
     ./tlp
     ./unbound
     ./vikunja
+    ./zigbee2mqtt
   ];
 }

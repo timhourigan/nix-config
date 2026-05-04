@@ -106,8 +106,11 @@ in
         ];
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
-        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.pinned.zigbee2mqtt;
+
+      };
+      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
+      zigbee2mqtt = {
+        package = pkgs.pinned.zigbee2mqtt;
       };
       homepage-dashboard = {
         enable = true;
