@@ -73,6 +73,13 @@ _:
           };
         }
         {
+          "ESPHome" = {
+            description = "ESP Device Management";
+            icon = "sh-esphome";
+            href = "{{HOMEPAGE_VAR_ESPHOME_URL}}";
+          };
+        }
+        {
           "Weather Station" = {
             description = "Weather Base Station";
             icon = "mdi-weather-cloudy";

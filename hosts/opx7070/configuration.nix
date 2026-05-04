@@ -113,6 +113,7 @@ in
         enable = true;
         package = pkgs.pinned.zigbee2mqtt;
       };
+      esphome.enable = true;
       homepage-dashboard = {
         enable = true;
         environmentFile = config.sops.secrets."homepage_env".path;
