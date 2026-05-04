@@ -30,6 +30,8 @@ in
       inherit (cfg) package;
       usePing = true;
       openFirewall = true;
+      # Listen on all interfaces, not just loopback
+      address = "0.0.0.0";
       inherit port;
     };
   };
