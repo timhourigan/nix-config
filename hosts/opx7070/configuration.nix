@@ -6,12 +6,14 @@
 }:
 
 let
-  gatusPort = 8080; # Module default
-  hassPort = 8123; # Module default
+  # Ports are module/service defaults
+  esphomePort = 6052;
+  gatusPort = 8080;
+  hassPort = 8123;
   homepageDashboard = import ../common/homepage-dashboard.nix { };
   homepageDashboardPort = 8082;
-  vikunjaPort = 3456; # Module default
-  z2mPort = 8124; # Module default
+  vikunjaPort = 3456;
+  z2mPort = 8124;
 in
 {
   imports = [
@@ -98,7 +100,7 @@ in
         configFile = config.sops.secrets."gatus".path;
       };
       glances.enable = true;
-      hass = {
+      home-assistant = {
         enable = true;
         extraOptions = [
           "--network=host"
@@ -106,8 +108,16 @@ in
         ];
         # https://github.com/home-assistant/core/releases
         image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
-        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/zi/zigbee2mqtt/package.nix
-        z2mPackage = pkgs.pinned.zigbee2mqtt;
+
+      };
+      mosquitto.enable = true;
+      zigbee2mqtt = {
+        enable = true;
+        package = pkgs.pinned.zigbee2mqtt;
+      };
+      esphome = {
+        enable = true;
+        package = pkgs.unstable.esphome;
       };
       homepage-dashboard = {
         enable = true;
@@ -126,8 +136,7 @@ in
       };
       slimserver = {
         enable = true;
-        # FIXME - Unstable is currently broken - https://github.com/NixOS/nixpkgs/issues/477209
-        package = pkgs.slimserver;
+        package = pkgs.unstable.slimserver;
       };
       ssh.enable = true;
       tailscale = {
@@ -169,6 +178,12 @@ in
   services.caddy = {
     enable = true;
     virtualHosts = {
+      # ESPHome
+      "http://esphome.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString esphomePort}
+        '';
+      };
       # FreshRSS - Module has builtin configuration
       # Gatus
       "http://gatus.${config.custom.internalDomain}" = {
