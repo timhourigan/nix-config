@@ -65,7 +65,7 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2026.04.1";
+        image = "docker.io/pihole/pihole:2026.05.0";
       };
       unbound = {
         enable = true;
@@ -82,7 +82,7 @@
     system = {
       autoUpgrade = {
         enable = true;
-        dates = "03:00";
+        dates = "Mon,Wed,Fri 03:00";
         flake = "github:timhourigan/nix-config";
       };
       gc = {
