@@ -78,7 +78,7 @@
     system = {
       autoUpgrade = {
         enable = true;
-        dates = "04:00";
+        dates = "Tue,Thu,Sat 04:00";
         flake = "github:timhourigan/nix-config";
       };
       gc.enable = true;
