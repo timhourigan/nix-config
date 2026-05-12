@@ -3,6 +3,7 @@
 {
   imports = [
     ./alacritty
+    ./atuin
     ./autojump
     ./awscli
     ./bash
