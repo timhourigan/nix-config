@@ -56,12 +56,12 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2026.04.1";
+        image = "docker.io/pihole/pihole:2026.05.0";
       };
       nebulaSync = {
         enable = true;
         environmentFiles = [ config.sops.secrets."nebula_sync_env".path ];
-        image = "ghcr.io/lovelaze/nebula-sync:v0.11.1";
+        image = "ghcr.io/lovelaze/nebula-sync:v0.11.2";
       };
       unbound = {
         enable = true;
