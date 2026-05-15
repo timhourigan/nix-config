@@ -70,6 +70,13 @@
           init_hooks = "${base_hooks} && ${bash_hook}";
         };
       };
+    atuin = {
+      enable = true;
+      settings = {
+        filter_mode_shell_up_key_binding = "session";
+        theme.name = "ansi-terminal";
+      };
+    };
     ghostty.enable = true;
     polybar.enable = true;
     rofi.enable = true;
