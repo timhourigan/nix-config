@@ -110,6 +110,7 @@ in
         image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
 
       };
+      music-assistant.enable = true;
       mosquitto.enable = true;
       zigbee2mqtt = {
         enable = true;
