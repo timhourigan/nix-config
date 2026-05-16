@@ -52,6 +52,16 @@ in
   options.modules.services.music-assistant = {
     enable = lib.mkEnableOption "Music Assistant";
 
+    providers = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      example = [
+        "squeezelite"
+        "spotify"
+      ];
+      description = "List of Music Assistant provider names to install.";
+    };
+
     openSlimprotoFirewall = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -64,6 +74,7 @@ in
     services.music-assistant = {
       enable = true;
       package = patchedMusicAssistant;
+      inherit (cfg) providers;
     };
 
     # Open Slimproto and web UI ports (not handled by upstream openFirewall)
