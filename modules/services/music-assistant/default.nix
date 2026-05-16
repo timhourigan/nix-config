@@ -50,7 +50,7 @@ let
   webPort = 8095;
   slimprotoCliPort = 9090;
   slimprotoJsonRpcPort = 9000;
-  slimprotoDiscoveryPort = 3483;
+  slimprotoDiscoveryPort = 3483; # TCP (control) + UDP (discovery)
 in
 {
   # Replace the stable module (which doesn't exist in 25.11) with the unstable one
@@ -93,6 +93,7 @@ in
         webPort
         slimprotoCliPort
         slimprotoJsonRpcPort
+        slimprotoDiscoveryPort
       ];
       allowedUDPPorts = [
         slimprotoDiscoveryPort
