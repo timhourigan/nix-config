@@ -60,7 +60,14 @@ in
     };
 
     # The upstream openFirewall only opens the stream port (8097) and
-    # provider-specific ports, but not the web UI port
-    networking.firewall.allowedTCPPorts = [ 8095 ];
+    # provider-specific ports, but not the web UI or Slimproto ports
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
+      8095 # Web UI
+      9000 # Slimproto JSON-RPC
+      9090 # Slimproto CLI
+    ];
+    networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [
+      3483 # Slimproto discovery
+    ];
   };
 }
