@@ -112,11 +112,11 @@ in
       };
       music-assistant = {
         enable = true;
-        providers = [
-          "chromecast"
-          "dlna"
-          "squeezelite"
+        extraOptions = [
+          "--network=host"
         ];
+        # https://github.com/music-assistant/server/releases
+        image = "ghcr.io/music-assistant/server:2.8.7";
       };
       mosquitto.enable = true;
       zigbee2mqtt = {
@@ -143,7 +143,7 @@ in
         autoPrune = true;
       };
       slimserver = {
-        enable = true;
+        enable = false;
         package = pkgs.unstable.slimserver;
       };
       ssh.enable = true;

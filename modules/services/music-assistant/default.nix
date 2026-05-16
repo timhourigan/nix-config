@@ -1,8 +1,6 @@
 {
   lib,
   config,
-  pkgs,
-  inputs,
   ...
 }:
 
@@ -12,62 +10,72 @@
 
 let
   cfg = config.modules.services.music-assistant;
+  webPort = 8095;
+  streamPort = 8097;
+  slimprotoCliPort = 9090;
+  slimprotoJsonRpcPort = 9000;
+  slimprotoDiscoveryPort = 3483;
 in
 {
-  imports = [
-    # Use the music-assistant module from unstable nixpkgs
-    "${inputs.nixpkgs-unstable}/nixos/modules/services/audio/music-assistant.nix"
-  ];
-
-  # Disable the stable version of the module
-  disabledModules = [
-    "services/audio/music-assistant.nix"
-  ];
-
   options = {
     modules.services.music-assistant = {
-      enable = lib.mkEnableOption "Enable Music Assistant";
-      package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.unstable.music-assistant;
-        description = "The package to use";
+      enable = lib.mkEnableOption "Enable Music Assistant" // {
+        description = "Enable Music Assistant service";
+        default = false;
+      };
+      backend = lib.mkOption {
+        description = "Container backend";
+        type = lib.types.str;
+        default = "podman";
+      };
+      environment = lib.mkOption {
+        description = "Environment variables";
+        type = lib.types.attrsOf lib.types.str;
+        default = {
+          TZ = "Europe/Dublin";
+        };
       };
       extraOptions = lib.mkOption {
+        description = "Extra options";
         type = lib.types.listOf lib.types.str;
         default = [ ];
-        description = "Extra options to pass to the music-assistant executable";
       };
-      openFirewall = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Whether to open required ports for the configured providers";
-      };
-      providers = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-        description = "List of provider names for which dependencies will be installed";
+      image = lib.mkOption {
+        description = "Container image";
+        type = lib.types.str;
+        default = "ghcr.io/music-assistant/server:latest";
       };
     };
   };
 
   config = lib.mkIf cfg.enable {
-    services.music-assistant = {
-      enable = true;
-      inherit (cfg) package;
-      inherit (cfg) extraOptions;
-      inherit (cfg) openFirewall;
-      inherit (cfg) providers;
+    virtualisation.oci-containers = {
+      inherit (cfg) backend;
+      containers.music-assistant = {
+        autoStart = true;
+        volumes = [ "/var/lib/music-assistant:/data" ];
+        inherit (cfg) environment;
+        inherit (cfg) image;
+        inherit (cfg) extraOptions;
+      };
     };
 
-    # The upstream openFirewall only opens the stream port (8097) and
-    # provider-specific ports, but not the web UI or Slimproto ports
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
-      8095 # Web UI
-      9000 # Slimproto JSON-RPC
-      9090 # Slimproto CLI
+    systemd.services."${config.virtualisation.oci-containers.backend}-music-assistant" = {
+      serviceConfig = {
+        StateDirectory = "music-assistant";
+      };
+      wants = [ "nss-lookup.target" ];
+      after = [ "nss-lookup.target" ];
+    };
+
+    networking.firewall.allowedTCPPorts = [
+      webPort
+      streamPort
+      slimprotoCliPort
+      slimprotoJsonRpcPort
     ];
-    networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [
-      3483 # Slimproto discovery
+    networking.firewall.allowedUDPPorts = [
+      slimprotoDiscoveryPort
     ];
   };
 }
