@@ -116,7 +116,7 @@ in
           "airplay"
           "chromecast"
           "dlna"
-          "slimproto"
+          "squeezelite"
         ];
       };
       mosquitto.enable = true;
