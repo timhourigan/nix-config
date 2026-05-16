@@ -114,9 +114,12 @@ in
         enable = true;
         extraOptions = [
           "--network=host"
+          # TODO: remove after aioslimproto _handle_serverstatus fix is released
+          "--volume=/var/lib/music-assistant/cli-patch.py:/app/venv/lib/python3.14/site-packages/aioslimproto/cli.py:ro"
         ];
         # https://github.com/music-assistant/server/releases
-        image = "ghcr.io/music-assistant/server:2.8.7";
+        # TODO: switch back to stable once aioslimproto _handle_serverstatus bug is fixed
+        image = "ghcr.io/music-assistant/server:beta";
       };
       mosquitto.enable = true;
       zigbee2mqtt = {
