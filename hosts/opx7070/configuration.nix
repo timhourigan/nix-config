@@ -110,15 +110,7 @@ in
         image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
 
       };
-      music-assistant = {
-        enable = true;
-        extraOptions = [
-          "--network=host"
-        ];
-        # https://github.com/music-assistant/server/releases
-        # TODO: switch back to stable once aioslimproto _handle_serverstatus bug is fixed
-        image = "ghcr.io/music-assistant/server:beta";
-      };
+      music-assistant.enable = true;
       mosquitto.enable = true;
       zigbee2mqtt = {
         enable = true;
