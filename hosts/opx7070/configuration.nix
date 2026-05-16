@@ -110,7 +110,15 @@ in
         image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
 
       };
-      music-assistant.enable = true;
+      music-assistant = {
+        enable = true;
+        providers = [
+          "airplay"
+          "chromecast"
+          "dlna"
+          "slimproto"
+        ];
+      };
       mosquitto.enable = true;
       zigbee2mqtt = {
         enable = true;
