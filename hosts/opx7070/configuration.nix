@@ -113,7 +113,6 @@ in
       music-assistant = {
         enable = true;
         providers = [
-          "airplay"
           "chromecast"
           "dlna"
           "squeezelite"
