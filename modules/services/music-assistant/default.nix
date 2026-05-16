@@ -58,5 +58,9 @@ in
       inherit (cfg) openFirewall;
       inherit (cfg) providers;
     };
+
+    # The upstream openFirewall only opens the stream port (8097) and
+    # provider-specific ports, but not the web UI port
+    networking.firewall.allowedTCPPorts = [ 8095 ];
   };
 }
