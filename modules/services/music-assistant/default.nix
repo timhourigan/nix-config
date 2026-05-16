@@ -17,24 +17,34 @@
 let
   cfg = config.modules.services.music-assistant;
 
-  # Import unstable nixpkgs for the music-assistant package
+  # Import unstable nixpkgs with a patched aioslimproto.
+  # aioslimproto 3.1.8 has a bug where _handle_serverstatus() doesn't accept
+  # extra positional args sent by PiCorePlayer, causing a TypeError.
+  # We patch the python package via overlay so the fix propagates into the
+  # provider dependency chain (aioslimproto is a separate store path from
+  # music-assistant, so patching music-assistant's $out doesn't help).
   unstablePkgs = import inputs.nixpkgs-unstable {
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
+    overlays = [
+      (_final: prev: {
+        # Use pythonPackagesExtensions (not python3.override { packageOverrides })
+        # because music-assistant's package.nix calls python3.override with its
+        # own packageOverrides, which replaces any we set. Extensions survive.
+        pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+          (_pfinal: pprev: {
+            aioslimproto = pprev.aioslimproto.overridePythonAttrs (old: {
+              postPatch = (old.postPatch or "") + ''
+                sed -i '/def _handle_serverstatus/,/\*\*kwargs/ {
+                  /limit: int = 2,/a\        *args,
+                }' aioslimproto/cli.py
+              '';
+            });
+          })
+        ];
+      })
+    ];
   };
-
-  # Patch aioslimproto's _handle_serverstatus to accept extra positional args.
-  # The upstream package.nix creates its own python override chain, making it
-  # impractical to inject a patched aioslimproto via python3 packageOverrides.
-  # Instead, we patch the installed file directly in postFixup.
-  patchedMusicAssistant = unstablePkgs.music-assistant.overrideAttrs (old: {
-    postFixup = (old.postFixup or "") + ''
-      find $out -path '*/aioslimproto/cli.py' -exec \
-        sed -i '/def _handle_serverstatus/,/\*\*kwargs/ {
-          /limit: int = 2,/a\        *args,
-        }' {} \;
-    '';
-  });
 
   # Slimproto ports not covered by the upstream module's openFirewall
   webPort = 8095;
@@ -73,7 +83,7 @@ in
     # Use the patched package from unstable
     services.music-assistant = {
       enable = true;
-      package = patchedMusicAssistant;
+      package = unstablePkgs.music-assistant;
       inherit (cfg) providers;
     };
 
