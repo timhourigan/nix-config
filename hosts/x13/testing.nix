@@ -29,6 +29,9 @@ in
       vikunja = {
         enable = false;
       };
+      music-assistant = {
+        enable = true;
+      };
     };
   };
 

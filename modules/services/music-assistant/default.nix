@@ -9,21 +9,19 @@
 # Music Assistant
 # https://music-assistant.io/
 # https://github.com/music-assistant/server
-#
-# Uses the NixOS module from nixpkgs-unstable with a patched aioslimproto
-# to fix _handle_serverstatus() TypeError with PiCorePlayer.
-# https://github.com/music-assistant/aioslimproto/issues/XXX
 
 let
   cfg = config.modules.services.music-assistant;
 
-  # Import unstable nixpkgs with a patched aioslimproto.
+  # WORKAROUND - https://github.com/music-assistant/aioslimproto/pull/528
+  #
+  # Import nixpkgs-personal with a patched aioslimproto.
   # aioslimproto 3.1.8 has a bug where _handle_serverstatus() doesn't accept
   # extra positional args sent by PiCorePlayer, causing a TypeError.
   # We patch the python package via overlay so the fix propagates into the
   # provider dependency chain (aioslimproto is a separate store path from
   # music-assistant, so patching music-assistant's $out doesn't help).
-  unstablePkgs = import inputs.nixpkgs-unstable {
+  patchedPkgs = import inputs.nixpkgs-personal {
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
     overlays = [
@@ -46,17 +44,15 @@ let
     ];
   };
 
-  # Slimproto ports not covered by the upstream module's openFirewall
+  # Web UI port - not covered by the upstream module's openFirewall
   webPort = 8095;
-  slimprotoCliPort = 9090;
-  slimprotoJsonRpcPort = 9000;
-  slimprotoDiscoveryPort = 3483; # TCP (control) + UDP (discovery)
 in
 {
-  # Replace the stable module (which doesn't exist in 25.11) with the unstable one
+  # Replace the stable module (which doesn't exist in 25.11) with the one from
+  # nixpkgs-personal which includes squeezelite/slimproto firewall port support.
   disabledModules = [ "services/audio/music-assistant.nix" ];
   imports = [
-    "${inputs.nixpkgs-unstable}/nixos/modules/services/audio/music-assistant.nix"
+    "${inputs.nixpkgs-personal}/nixos/modules/services/audio/music-assistant.nix"
   ];
 
   options.modules.services.music-assistant = {
@@ -71,33 +67,18 @@ in
       ];
       description = "List of Music Assistant provider names to install.";
     };
-
-    openSlimprotoFirewall = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Open Slimproto ports (CLI, JSON-RPC, discovery) in the firewall.";
-    };
   };
 
   config = lib.mkIf cfg.enable {
-    # Use the patched package from unstable
+    # Use the patched package
     services.music-assistant = {
       enable = true;
-      package = unstablePkgs.music-assistant;
+      package = patchedPkgs.music-assistant;
+      openFirewall = true;
       inherit (cfg) providers;
     };
 
-    # Open Slimproto and web UI ports (not handled by upstream openFirewall)
-    networking.firewall = lib.mkIf cfg.openSlimprotoFirewall {
-      allowedTCPPorts = [
-        webPort
-        slimprotoCliPort
-        slimprotoJsonRpcPort
-        slimprotoDiscoveryPort
-      ];
-      allowedUDPPorts = [
-        slimprotoDiscoveryPort
-      ];
-    };
+    # Web UI port - not handled by upstream openFirewall
+    networking.firewall.allowedTCPPorts = [ webPort ];
   };
 }
