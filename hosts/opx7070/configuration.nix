@@ -29,6 +29,8 @@ in
       outputs.overlays.unstable-packages
       # Allow pinned packages at pinned.<package>
       outputs.overlays.pinned-packages
+      # Allow personal fork packages at personal.<package>
+      outputs.overlays.personal-packages
     ];
     config = {
       allowUnfree = true;
