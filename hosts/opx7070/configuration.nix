@@ -78,10 +78,6 @@ in
         # Enable server functionality and allow access from local network
         extraConfig = "allow 192.168.0.0/16";
       };
-      forgejo = {
-        enable = true;
-        openFirewall = true;
-      };
       freshrss = {
         enable = true;
         authType = "form";

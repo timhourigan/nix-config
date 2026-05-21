@@ -18,6 +18,11 @@ in
         type = lib.types.str;
         default = "localhost";
       };
+      stateDir = lib.mkOption {
+        description = "Forgejo data directory";
+        type = lib.types.str;
+        default = "/var/lib/forgejo";
+      };
       httpPort = lib.mkOption {
         description = "HTTP port for Forgejo to listen on";
         type = lib.types.port;
@@ -77,6 +82,7 @@ in
   config = lib.mkIf cfg.enable {
     services.forgejo = {
       enable = true;
+      inherit (cfg) stateDir;
       database = {
         inherit (cfg.database) type;
         inherit (cfg.database) passwordFile;
