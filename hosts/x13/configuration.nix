@@ -103,6 +103,7 @@
       abcde.enable = true;
       handbrake.enable = true;
       makemkv.enable = true;
+      solaar.enable = true;
     };
     secrets.sops-nix.enable = true;
     services = {
