@@ -5,5 +5,6 @@
     ./abcde
     ./handbrake
     ./makemkv
+    ./solaar
   ];
 }
