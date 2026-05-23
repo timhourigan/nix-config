@@ -32,7 +32,7 @@
     nameservers = [ "9.9.9.9" ];
   };
 
-  # Allow vscode code server to work
+  # Run unpatched dynamic binaries
   programs.nix-ld.enable = true;
 
   # Modules
