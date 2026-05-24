@@ -70,6 +70,13 @@
           init_hooks = "${base_hooks} && ${bash_hook}";
         };
       };
+    atuin = {
+      enable = true;
+      settings = {
+        theme.name = "ansi-terminal";
+      };
+      flags = [ "--disable-up-arrow" ];
+    };
     ghostty.enable = true;
     polybar.enable = true;
     rofi.enable = true;
