@@ -50,8 +50,14 @@
     };
   };
 
-  # Zsh
-  programs.zsh.enable = true;
+  programs = {
+    # Android
+    adb.enable = true;
+    # Run unpatched dynamic binaries
+    nix-ld.enable = true;
+    zsh.enable = true;
+  };
+
   environment.shells = with pkgs; [ zsh ];
   users.users.timh.shell = pkgs.zsh;
 
@@ -86,9 +92,6 @@
     pulse.enable = true;
   };
 
-  # Android
-  programs.adb.enable = true;
-
   # Thermald (Intel only) - https://wiki.debian.org/thermald
   # To be investigated if any benefit - Doesn't currently work due
   # to lap detection, which can be ignored with `--ignore-cpuid-check`
@@ -103,6 +106,7 @@
       abcde.enable = true;
       handbrake.enable = true;
       makemkv.enable = true;
+      solaar.enable = true;
     };
     secrets.sops-nix.enable = true;
     services = {

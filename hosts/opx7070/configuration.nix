@@ -66,7 +66,7 @@ in
     hostId = "6b3f7344"; # `head -c4 /dev/urandom | od -A none -t x4`
   };
 
-  # Allow vscode code server to work
+  # Run unpatched dynamic binaries
   programs.nix-ld.enable = true;
 
   # Modules
