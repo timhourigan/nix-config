@@ -44,6 +44,8 @@ in
       sessionVariables = {
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
         PATH = "$PATH:$HOME/.local/bin";
+        # CA certs for non-Nix tools (e.g. pre-commit, pip)
+        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       };
     };
   };

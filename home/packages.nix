@@ -6,6 +6,7 @@
     # All platforms
     [
       # Tools
+      actionlint # GitHub Actions linter
       age # Age encryption/decryption
       bat # `cat` clone
       bottom # Display process information (`top` alternative)
@@ -16,8 +17,11 @@
       fd # Find files/folders (`find` alternative)
       ffmpeg-full # Audio video manipulation
       gitleaks # Git repository secrets checker
+      htmltest # HTML link checker
+      unstable.hugo # Static site generator
       htop # Display process information (`top` alternative)
       jq # Command line JSON parser
+      lychee # Link checker
       mediainfo # Media file information
       nmap # Network exploration
       p7zip # Compression tool
@@ -62,7 +66,8 @@
 
       # Python
       unstable.ruff # Formatter
-      (python312.withPackages (
+      unstable.uv # Package manager
+      (python313.withPackages (
         ps: with ps; [
           black
           flake8
