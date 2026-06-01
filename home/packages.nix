@@ -29,6 +29,7 @@
       screen # Terminal multiplexer
       sops # Secrets management
       ssh-to-age # SSH to Age key converter
+      svgo # SVG optimizer
       taskwarrior3 # Task manager
       tig # git text-mode interface
       tldr # Help pages
