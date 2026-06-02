@@ -1,4 +1,9 @@
-{ config, outputs, ... }:
+{
+  config,
+  lib,
+  outputs,
+  ...
+}:
 
 {
   imports = [
@@ -27,7 +32,7 @@
     hostName = "mm";
     networkmanager.enable = true;
     # Don't want wireless
-    wireless.enable = false;
+    wireless.enable = lib.mkForce false;
     # Backup DNS server / Quad9
     nameservers = [ "9.9.9.9" ];
   };
