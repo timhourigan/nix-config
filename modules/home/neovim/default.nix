@@ -41,7 +41,6 @@ in
         vimPlugins.coc-pairs
         vimPlugins.coc-snippets
         vimPlugins.coc-pyright
-        vimPlugins.coc-go
         vimPlugins.coc-yaml
         vimPlugins.coc-json
         vimPlugins.coc-prettier
