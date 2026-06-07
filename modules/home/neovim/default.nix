@@ -22,6 +22,8 @@ in
     programs.neovim = {
       enable = true;
       vimAlias = true;
+      withRuby = false; # Required with HM 26.05 when state version is older
+      withPython3 = true; # Required with HM 26.05 when state version is older
       coc.enable = true;
       coc.settings = {
         "python.linting.enabled" = true;
@@ -41,7 +43,6 @@ in
         vimPlugins.coc-pairs
         vimPlugins.coc-snippets
         vimPlugins.coc-pyright
-        vimPlugins.coc-go
         vimPlugins.coc-yaml
         vimPlugins.coc-json
         vimPlugins.coc-prettier

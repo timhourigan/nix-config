@@ -10,7 +10,7 @@ in
     services = {
       homepage-dashboard = {
         enable = false;
-        environmentFile = config.sops.secrets."homepage_env".path;
+        environmentFiles = [ config.sops.secrets."homepage_env".path ];
         listenPort = hpPort;
         inherit (hpConfig) bookmarks;
         inherit (hpConfig) settings;
