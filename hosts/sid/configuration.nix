@@ -57,6 +57,8 @@
         enable = true;
         openFirewall = true;
         stateDir = "/mnt/zpool/forgejo";
+        domain = "forgejo.${config.custom.internalDomain}";
+        settings.server.ROOT_URL = "http://forgejo.${config.custom.internalDomain}/";
       };
       glances.enable = true;
       ssh.enable = true;
