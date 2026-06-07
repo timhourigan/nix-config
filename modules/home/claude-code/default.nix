@@ -123,13 +123,7 @@ in
       };
 
       skills = lib.mkOption {
-        type = lib.types.either (lib.types.attrsOf (
-          lib.types.oneOf [
-            lib.types.lines
-            lib.types.path
-            lib.types.str
-          ]
-        )) lib.types.path;
+        type = lib.types.either (lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path)) lib.types.path;
         default = { };
         description = "Custom skills for Claude Code (attrset or path to directory)";
       };
