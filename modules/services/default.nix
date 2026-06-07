@@ -7,6 +7,7 @@
     ./chrony
     ./displaylink
     ./esphome
+    ./forgejo
     ./freshrss
     ./gatus
     ./glances

@@ -37,6 +37,11 @@
     ];
   };
 
+  fileSystems."/mnt/zpool/forgejo" = {
+    device = "zpool/forgejo";
+    fsType = "zfs";
+  };
+
   fileSystems."/mnt/zpool/test" = {
     device = "zpool/test";
     fsType = "zfs";

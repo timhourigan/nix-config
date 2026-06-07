@@ -1,4 +1,4 @@
-{ outputs, ... }:
+{ config, outputs, ... }:
 
 {
   imports = [
@@ -53,6 +53,13 @@
     secrets.sops-nix.enable = true;
     services = {
       avahi.enable = true;
+      forgejo = {
+        enable = true;
+        openFirewall = true;
+        stateDir = "/mnt/zpool/forgejo";
+        domain = "forgejo.${config.custom.internalDomain}";
+        settings.server.ROOT_URL = "http://forgejo.${config.custom.internalDomain}/";
+      };
       glances.enable = true;
       ssh.enable = true;
     };
@@ -70,6 +77,19 @@
   # Secrets
   sops = {
     secrets = { };
+  };
+
+  # Reverse Proxy
+  networking.firewall.allowedTCPPorts = [ 80 ];
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "http://forgejo.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :3000
+        '';
+      };
+    };
   };
 
   # Release version of first install
