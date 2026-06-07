@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # Packages to be installed
@@ -80,6 +80,8 @@
       };
       flags = [ "--disable-up-arrow" ];
     };
+    # TODO - NixOS 26.05 new default
+    firefox.configPath = "${config.xdg.configHome}/mozilla/firefox";
     ghostty.enable = true;
     polybar.enable = true;
     rofi.enable = true;
