@@ -57,9 +57,6 @@
         enable = true;
         openFirewall = true;
         stateDir = "/mnt/zpool/forgejo";
-        database.type = "sqlite";
-        database.passwordFile = "${config.sops.secrets."forgejo/password_db".path}";
-        dump.enable = true;
         domain = "forgejo.${config.custom.internalDomain}";
         settings.server.ROOT_URL = "http://forgejo.${config.custom.internalDomain}/";
       };
@@ -79,11 +76,7 @@
 
   # Secrets
   sops = {
-    secrets = {
-      "forgejo/password_db" = {
-        owner = "forgejo";
-      };
-    };
+    secrets = { };
   };
 
   # Reverse Proxy
