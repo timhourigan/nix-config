@@ -45,10 +45,8 @@ in
           st = "status";
           pub = "push origin -u";
         };
-        extraConfig = {
-          credential = {
-            helper = cfg.credentialHelper;
-          };
+        credential = {
+          helper = cfg.credentialHelper;
         };
         user = {
           name = cfg.userName;

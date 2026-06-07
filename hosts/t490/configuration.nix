@@ -63,9 +63,6 @@
     pulse.enable = true;
   };
 
-  # Android
-  programs.adb.enable = true;
-
   # Thermald (Intel only) - https://wiki.debian.org/thermald
   # To be investigated if any benefit - Doesn't currently work due
   # to lap detection, which can be ignored with `--ignore-cpuid-check`

@@ -3,6 +3,9 @@
 {
   # Packages to be installed
   home.packages = with pkgs; [
+    # Tools
+    android-tools # Android - ADB and fastboot
+
     # Apps
     audacity # Audio editor
     avidemux # Video editor

@@ -5,16 +5,9 @@
   ...
 }:
 
-# TODO: Add the following options when home-manager 26.05 is released:
-# - enableMcpIntegration
-# - lspServers
-# - rules / rulesDir
-# - plugins
-# - marketplaces
-# - outputStyles
-
 let
   cfg = config.modules.home.claude-code;
+  jsonFormat = pkgs.formats.json { };
 in
 {
   options = {
@@ -25,83 +18,120 @@ in
       };
 
       package = lib.mkOption {
-        type = lib.types.package;
+        type = lib.types.nullOr lib.types.package;
         default = pkgs.claude-code;
-        description = "The claude-code package to use";
+        description = "The claude-code package to use (null to skip installing)";
+      };
+
+      configDir = lib.mkOption {
+        type = lib.types.str;
+        default = "${config.home.homeDirectory}/.claude";
+        description = "Directory holding Claude Code's configuration files";
+      };
+
+      enableMcpIntegration = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether to integrate MCP servers from programs.mcp.servers";
       };
 
       settings = lib.mkOption {
-        type = lib.types.attrs;
+        inherit (jsonFormat) type;
         default = { };
         description = "JSON configuration for Claude Code settings.json";
       };
 
       mcpServers = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.attrsOf jsonFormat.type;
         default = { };
         description = "MCP (Model Context Protocol) servers configuration";
       };
 
-      memory = {
-        text = lib.mkOption {
-          type = lib.types.nullOr lib.types.lines;
-          default = null;
-          description = "Inline memory content for CLAUDE.md";
-        };
+      lspServers = lib.mkOption {
+        type = lib.types.attrsOf jsonFormat.type;
+        default = { };
+        description = "LSP (Language Server Protocol) servers configuration";
+      };
 
-        source = lib.mkOption {
-          type = lib.types.nullOr lib.types.path;
-          default = null;
-          description = "Path to a file containing memory content for CLAUDE.md";
-        };
+      context = lib.mkOption {
+        type = lib.types.either lib.types.lines lib.types.path;
+        default = "";
+        description = ''
+          Global context for Claude Code (written to CLAUDE.md).
+          Either inline content as a string or a path to a file.
+        '';
+      };
+
+      plugins = lib.mkOption {
+        type = with lib.types; listOf (either package path);
+        default = [ ];
+        description = "List of plugins to use when running Claude Code";
+      };
+
+      marketplaces = lib.mkOption {
+        type = with lib.types; attrsOf (either package path);
+        default = { };
+        description = "Custom marketplaces for Claude Code plugins";
       };
 
       agents = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
         default = { };
-        description = "Custom agents for Claude Code";
+        description = "Custom agents for Claude Code (name -> content or path)";
       };
 
       agentsDir = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
-        description = "Path to a directory containing agent files for Claude Code";
+        description = "Path to a directory containing agent files";
       };
 
       commands = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
         default = { };
-        description = "Custom commands for Claude Code";
+        description = "Custom commands for Claude Code (name -> content or path)";
       };
 
       commandsDir = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
-        description = "Path to a directory containing command files for Claude Code";
+        description = "Path to a directory containing command files";
       };
 
       hooks = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.attrsOf lib.types.lines;
         default = { };
-        description = "Custom hooks for Claude Code";
+        description = "Custom hooks for Claude Code (name -> script content)";
       };
 
       hooksDir = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
-        description = "Path to a directory containing hook files for Claude Code";
+        description = "Path to a directory containing hook files";
+      };
+
+      rules = lib.mkOption {
+        type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
+        default = { };
+        description = "Modular rule files for Claude Code (name -> content or path)";
+      };
+
+      rulesDir = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        description = "Path to a directory containing rule files";
       };
 
       skills = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.either (lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path)) lib.types.path;
         default = { };
-        description = "Custom skills for Claude Code";
+        description = "Custom skills for Claude Code (attrset or path to directory)";
       };
 
-      skillsDir = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = null;
-        description = "Path to a directory containing skill directories for Claude Code";
+      outputStyles = lib.mkOption {
+        type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
+        default = { };
+        description = "Custom output styles for Claude Code (name -> content or path)";
       };
     };
   };
@@ -111,18 +141,25 @@ in
       enable = true;
       inherit (cfg)
         package
+        configDir
+        enableMcpIntegration
         settings
         mcpServers
-        memory
+        lspServers
+        context
+        plugins
+        marketplaces
         agents
         commands
         hooks
+        rules
         skills
+        outputStyles
         ;
     }
     // lib.optionalAttrs (cfg.agentsDir != null) { inherit (cfg) agentsDir; }
     // lib.optionalAttrs (cfg.commandsDir != null) { inherit (cfg) commandsDir; }
     // lib.optionalAttrs (cfg.hooksDir != null) { inherit (cfg) hooksDir; }
-    // lib.optionalAttrs (cfg.skillsDir != null) { inherit (cfg) skillsDir; };
+    // lib.optionalAttrs (cfg.rulesDir != null) { inherit (cfg) rulesDir; };
   };
 }

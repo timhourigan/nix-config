@@ -121,7 +121,7 @@ in
       };
       homepage-dashboard = {
         enable = true;
-        environmentFile = config.sops.secrets."homepage_env".path;
+        environmentFiles = [ config.sops.secrets."homepage_env".path ];
         listenPort = homepageDashboardPort;
         # See Reverse Proxy setup below
         allowedHosts = "${config.custom.internalDomain}";

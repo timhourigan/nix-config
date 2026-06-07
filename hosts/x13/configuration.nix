@@ -51,8 +51,6 @@
   };
 
   programs = {
-    # Android
-    adb.enable = true;
     # Run unpatched dynamic binaries
     nix-ld.enable = true;
     zsh.enable = true;

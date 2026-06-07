@@ -18,11 +18,13 @@
       outputs.overlays.unstable-packages
       # Allow pinned packages at pinned.<package>
       outputs.overlays.pinned-packages
+      # WORKAROUND - pipx test failures (https://github.com/NixOS/nixpkgs/issues/522307)
+      outputs.overlays.pipx-fix
     ];
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
-        "ventoy-1.1.10" # https://github.com/ventoy/Ventoy/issues/3224
+        "ventoy-1.1.12" # https://github.com/ventoy/Ventoy/issues/3224
       ];
     };
   };
