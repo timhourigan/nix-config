@@ -107,7 +107,7 @@ in
           "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
         # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
+        image = "ghcr.io/home-assistant/home-assistant:2026.5.4";
 
       };
       mosquitto.enable = true;
