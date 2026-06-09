@@ -86,7 +86,7 @@
     virtualHosts = {
       "http://forgejo.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :3000
+          reverse_proxy :${toString config.modules.services.forgejo.httpPort}
         '';
       };
     };

@@ -8,7 +8,6 @@
 
 let
   cfg = config.modules.services.home-assistant;
-  port = 8123;
 in
 {
   options = {
@@ -16,6 +15,11 @@ in
       enable = lib.mkEnableOption "Enable Home Assistant" // {
         description = "Enable Home Assistant service";
         default = false;
+      };
+      port = lib.mkOption {
+        description = "Port for web interface";
+        type = lib.types.port;
+        default = 8123;
       };
       backend = lib.mkOption {
         description = "Container backend";
@@ -68,7 +72,7 @@ in
       after = [ "nss-lookup.target" ];
     };
     networking.firewall.allowedTCPPorts = [
-      port
+      cfg.port
     ];
   };
 }

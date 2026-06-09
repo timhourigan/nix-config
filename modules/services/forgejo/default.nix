@@ -94,13 +94,13 @@ in
         inherit (cfg.dump) age;
       };
       settings = lib.mkMerge [
+        cfg.settings
         {
           server = {
             DOMAIN = cfg.domain;
             HTTP_PORT = cfg.httpPort;
           };
         }
-        cfg.settings
       ];
     };
 
