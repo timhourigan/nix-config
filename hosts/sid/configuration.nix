@@ -59,6 +59,11 @@
         stateDir = "/mnt/zpool/forgejo";
         domain = "forgejo.${config.custom.internalDomain}";
         settings.server.ROOT_URL = "http://forgejo.${config.custom.internalDomain}/";
+        dump = {
+          enable = true;
+          interval = "17:00";
+          age = "6w";
+        };
       };
       glances.enable = true;
       ssh.enable = true;
