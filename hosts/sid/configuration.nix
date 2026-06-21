@@ -59,6 +59,11 @@
         stateDir = "/mnt/zpool/forgejo";
         domain = "forgejo.${config.custom.internalDomain}";
         settings.server.ROOT_URL = "http://forgejo.${config.custom.internalDomain}/";
+        dump = {
+          enable = true;
+          interval = "02:00";
+          age = "4w";
+        };
       };
       glances.enable = true;
       ssh.enable = true;
@@ -86,7 +91,7 @@
     virtualHosts = {
       "http://forgejo.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :3000
+          reverse_proxy :${toString config.modules.services.forgejo.httpPort}
         '';
       };
     };

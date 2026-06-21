@@ -19,6 +19,11 @@ in
         default = false;
       };
       package = lib.mkPackageOption pkgs "gatus" { };
+      port = lib.mkOption {
+        description = "Port for web interface (must match the port in configFile)";
+        type = lib.types.port;
+        default = 8080;
+      };
       openFirewall = lib.mkOption {
         type = lib.types.bool;
         default = false;
