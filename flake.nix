@@ -35,7 +35,7 @@
     # Pre-Commit Hooks
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # FIXME - Others to consider
@@ -242,8 +242,7 @@
               # Nix
               deadnix.enable = true;
               flake-checker = {
-                # FIXME - Disable until 26.05 is supported
-                enable = false;
+                enable = true;
                 args = [ "--no-telemetry" ];
               };
               nixfmt.enable = true;
