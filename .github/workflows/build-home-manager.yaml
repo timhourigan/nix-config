@@ -53,7 +53,7 @@ jobs:
           docker-images: false
           swap-storage: false
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
