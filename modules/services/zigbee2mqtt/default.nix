@@ -86,7 +86,7 @@ in
           # z2m stops (with exit 0) when the adapter disconnects or isn't
           # available yet, so restart "always"
           Restart = lib.mkForce "always";
-          RestartSec = "10";
+          RestartSec = 10;
         };
         # Ensure network is up before starting
         wants = [ "network-online.target" ];

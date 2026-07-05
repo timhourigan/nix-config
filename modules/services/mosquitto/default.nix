@@ -67,7 +67,7 @@ in
       services.mosquitto = {
         serviceConfig = {
           Restart = lib.mkForce "always";
-          RestartSec = "10";
+          RestartSec = 10;
         };
       };
     };
