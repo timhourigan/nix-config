@@ -34,6 +34,8 @@
       tldr # Help pages
       tree # Display directory structure
       unzip # Zip decompress
+      xclip # X11 clipboard
+      xsel # X11 clipboard
       zip # Zip compress
 
       # Apps

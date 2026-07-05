@@ -7,7 +7,6 @@
 
 let
   cfg = config.modules.services.esphome;
-  port = 6052;
 in
 {
   options = {
@@ -19,7 +18,12 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         default = pkgs.esphome;
-        description = "ESPHome package to use";
+        description = "Package to use";
+      };
+      port = lib.mkOption {
+        description = "Port for web interface";
+        type = lib.types.port;
+        default = 6052;
       };
     };
   };
@@ -32,7 +36,7 @@ in
       openFirewall = true;
       # Listen on all interfaces, not just loopback
       address = "0.0.0.0";
-      inherit port;
+      inherit (cfg) port;
     };
   };
 }

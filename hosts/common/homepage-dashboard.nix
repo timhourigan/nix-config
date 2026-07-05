@@ -201,6 +201,17 @@ _:
       ];
     }
     {
+      Source = [
+        {
+          "Forgejo" = {
+            description = "Source Code Management";
+            icon = "sh-forgejo";
+            href = "{{HOMEPAGE_VAR_FORGEJO_URL}}";
+          };
+        }
+      ];
+    }
+    {
       Tasks = [
         {
           "Vikunja/Kanban" = {
@@ -235,6 +246,11 @@ _:
       }
       {
         News = {
+          tab = "Applications";
+        };
+      }
+      {
+        Source = {
           tab = "Applications";
         };
       }
