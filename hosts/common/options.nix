@@ -13,6 +13,24 @@
         default = "rc.home";
         description = "Internal domain";
       };
+      images = {
+        pihole = lib.mkOption {
+          type = lib.types.str;
+          default = "docker.io/pihole/pihole:2026.06.0";
+          description = "Pi-hole container image";
+        };
+        # https://github.com/home-assistant/core/releases
+        homeAssistant = lib.mkOption {
+          type = lib.types.str;
+          default = "ghcr.io/home-assistant/home-assistant:2026.7.1";
+          description = "Home Assistant container image";
+        };
+        nebulaSync = lib.mkOption {
+          type = lib.types.str;
+          default = "ghcr.io/lovelaze/nebula-sync:v0.11.2";
+          description = "Nebula-Sync container image";
+        };
+      };
     };
   };
 }
