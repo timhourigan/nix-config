@@ -8,6 +8,7 @@
     ./awscli
     ./bash
     ./claude-code
+    ./copilot-cli
     ./delta
     ./direnv
     ./distrobox
