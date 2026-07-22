@@ -1,0 +1,41 @@
+{
+    $schema: "https://docs.renovatebot.com/renovate-schema.json",
+    extends: ["config:recommended"],
+    semanticCommits: "enabled",
+    assignees: ["timhourigan"],
+
+    // Keep flake.lock inputs up to date via `nix flake update`, weekly.
+    nix: {
+        enabled: true,
+        schedule: ["before 6am on thursday"],
+    },
+
+    customManagers: [
+        {
+            // Container image versions are centralised in hosts/common/options.nix
+            // under custom.images.*, so this is the only file that needs scanning.
+            customType: "regex",
+            fileMatch: ["^hosts/common/options\\.nix$"],
+            matchStrings: [
+                'default = "(?<depName>[^:"]+):(?<currentValue>[^"]+)";\\s*\\n\\s*description = "[^"]*container image"',
+            ],
+            datasourceTemplate: "docker",
+        },
+    ],
+
+    packageRules: [
+        {
+            // Group Pi-hole and Nebula-Sync PRs.
+            groupName: "pihole & nebula-sync",
+            matchPackageNames: [
+                "docker.io/pihole/pihole",
+                "ghcr.io/lovelaze/nebula-sync",
+            ],
+        },
+        {
+            // Ignore Home Assistant .0 releases.
+            matchPackageNames: ["ghcr.io/home-assistant/home-assistant"],
+            allowedVersions: "!/\\.0$/",
+        },
+    ],
+}

@@ -99,9 +99,7 @@ in
           "--network=host"
           "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
-        # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2026.7.1";
-
+        image = config.custom.images.homeAssistant;
       };
       mosquitto.enable = true;
       zigbee2mqtt = {
