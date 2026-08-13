@@ -5,9 +5,13 @@
     assignees: ["timhourigan"],
 
     // Keep flake.lock inputs up to date via `nix flake update`, weekly.
+    // rebaseWhen "never" so the PR is created once and left alone, instead
+    // of Renovate silently force-pushing a new hash into it whenever
+    // upstream moves again before it's merged.
     nix: {
         enabled: true,
         schedule: ["before 6am on thursday"],
+        rebaseWhen: "never",
     },
 
     customManagers: [
@@ -36,6 +40,14 @@
             // Ignore Home Assistant .0 releases.
             matchPackageNames: ["ghcr.io/home-assistant/home-assistant"],
             allowedVersions: "!/\\.0$/",
+        },
+        {
+            // nixpkgs-pinned is deliberately pinned to a specific rev for
+            // zigbee2mqtt compatibility (see comment in flake.nix) and is
+            // bumped manually, not by Renovate.
+            matchManagers: ["nix"],
+            matchDepNames: ["nixpkgs-pinned"],
+            enabled: false,
         },
     ],
 }
