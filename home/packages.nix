@@ -21,6 +21,7 @@
       unstable.hugo # Static site generator
       htop # Display process information (`top` alternative)
       jq # Command line JSON parser
+      lftp # FTP client
       lychee # Link checker
       mediainfo # Media file information
       nmap # Network exploration
