@@ -18,7 +18,8 @@ _:
       repository = "/mnt/backup/freshrss";
       passwordFile = "/etc/nixos/secrets/restic-freshrss-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };
@@ -40,7 +41,8 @@ _:
       repository = "/mnt/backup/gatus";
       passwordFile = "/etc/nixos/secrets/restic-gatus-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };
@@ -60,7 +62,8 @@ _:
       repository = "/mnt/backup/hass";
       passwordFile = "/etc/nixos/secrets/restic-hass-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };
@@ -79,7 +82,8 @@ _:
       repository = "/mnt/backup/slimserver";
       passwordFile = "/etc/nixos/secrets/restic-slimserver-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };
@@ -98,7 +102,8 @@ _:
       repository = "/mnt/backup/vikunja";
       passwordFile = "/etc/nixos/secrets/restic-vikunja-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };
@@ -117,7 +122,8 @@ _:
       repository = "/mnt/backup/zigbee2mqtt";
       passwordFile = "/etc/nixos/secrets/restic-zigbee2mqtt-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };
