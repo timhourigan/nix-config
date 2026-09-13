@@ -1,0 +1,43 @@
+flowchart LR
+    subgraph poc["POC (Phase 0) — Python, ordered by risk"]
+        P1["agent + raw shell"]
+        P2["ask layer (judgment, then approvals)"]
+        P3["two-stage classifier"]
+        P4["SQLite WAL journal + budget"]
+        P5["Textual UI (model · context · cost)"]
+    end
+
+    subgraph slo["SLOs — the gate"]
+        S1["Go/No-Go: 10 north-star SLOs"]
+        S2["watch SLIs + error budgets"]
+        S3["fixed task corpus (benign + red-team + traps)"]
+    end
+
+    subgraph v1["Rust rewrite (only if SLOs pass)"]
+        R1["typed run tool · no free-text shell"]
+        R2["bwrap / systemd-run cage"]
+        R3["event loop (tokio) · one provider impl"]
+    end
+
+    subgraph later["Later — readers & cages"]
+        L1["nushell (structured output)"]
+        L2["wasmtime extension tier"]
+        L3["OTel → Arize"]
+        L4["Matrix phone bridge"]
+        L5["supervisor workers"]
+        L6["pi-extension shim (deno)"]
+    end
+
+    P1 --> P2 --> P3 --> P4 --> P5
+    P5 -.->|"measures"| S1
+    S3 -.->|"feeds"| S1
+    S1 -->|"pass"| R1
+    S1 -.->|"fail = fix what the number says"| P2
+    R1 --> R2
+    R1 -.-> R3
+    R2 -.-> L1
+    R3 -.-> L2
+    R1 -.->|"M2"| L3
+    R1 -.->|"M3"| L4
+    R1 -.->|"M4"| L5
+    R1 -.->|"optional"| L6

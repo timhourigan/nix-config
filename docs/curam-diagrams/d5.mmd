@@ -1,0 +1,15 @@
+flowchart LR
+    J[("SQLite · WAL journal<br/>every event transactional")]
+    V["SLI views (SQL)<br/>N1–N10 + watch bands"]
+    D[("dashboard<br/>Textual panel + curam sli")]
+    S["SLOs / error budgets"]
+
+    J -->|"event stream"| V
+    V -->|"thresholds"| S
+    V -->|"live numbers"| D
+    S -->|"breach → tune ask triggers / fix mechanism"| J
+
+    subgraph gate["Go/No-Go gate"]
+        S -->|"N1–N10 met + 5 real sessions"| R["Rust rewrite"]
+        S -->|"miss → fix what the number says"| F["stay in POC"]
+    end

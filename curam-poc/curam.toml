@@ -1,0 +1,74 @@
+# curam — POC config (TOML, parsed by stdlib tomllib).
+
+# --- Providers ------------------------------------------------------------
+# Any OpenAI-compatible /chat/completions endpoint. Mirrors the pi setup
+# (~/.pi/agent/models.json + settings.json): local ollama (default, free)
+# and cloud openrouter (billed, needs OPENROUTER_API_KEY).
+default_provider = "openrouter"   # or: "ollama"
+
+[providers.ollama]
+base_url = "http://localhost:11434/v1"
+model = "qwen3-coder"
+api_key_env = ""
+context_window = 32768
+reasoning_effort_supported = false   # pi marks ollama as not supporting it
+
+[providers.openrouter]
+base_url = "https://openrouter.ai/api/v1"
+model = "deepseek/deepseek-v4-flash"
+api_key_env = "OPENROUTER_API_KEY"
+context_window = 1000000
+reasoning_effort = "high"            # pi's defaultThinkingLevel
+
+# --- Budget ----------------------------------------------------------------
+# USD per 1M tokens (0 = free/local). Cloud prices are placeholder — set real
+# OpenRouter prices or the "cost within ±10%" SLO is unmeasurable.
+[budget]
+cap_usd = 0.20
+
+[budget.price_per_mtok]
+"qwen3-coder" = 0.0
+"qwen2.5-coder:7b" = 0.0
+"qwen2.5-coder:14b" = 0.0
+"gemma4:e4b" = 0.0
+"deepseek/deepseek-v4-flash" = 0.10      # TODO: real OpenRouter price
+"anthropic/claude-sonnet-5" = 2.50       # TODO: real OpenRouter price
+"nvidia/nemotron-3-ultra-550b-a55b:free" = 0.0
+
+# --- PII / secret sanitizer ------------------------------------------------
+# Scrubs secrets before ANY LLM call (main model + classifier judge). The
+# journal KEEPS the raw result (audit completeness) — only the provider
+# boundary is scrubbed. Tiers: off | deterministic (built) | local_llm (later).
+[pii]
+level = "deterministic"      # set "off" for local-only models / throwaway dirs
+placeholder = "{REDACTED}"
+# internal_domains = ["thinkcentre.tailnet", "internal.example"]   # optional
+
+# --- Classifier (stage-2 judge) --------------------------------------------
+[classifier]
+enabled = false
+model = "gemma4:e4b"
+
+# --- UI --------------------------------------------------------------------
+[ui]
+show_thinking = true     # echo the model's interim text in realtime
+show_commands = true     # echo tool calls + results in realtime
+# both toggleable at runtime with /verbose and /quiet
+
+# --- Workdir / journal ------------------------------------------------------
+workdir = "./work"
+journal = "~/.local/share/curam/curam.db"
+
+# --- Agent behavior ---------------------------------------------------------
+# Skills: every markdown file in <workdir>/skills/ is a skill. ONLY its
+# frontmatter name + description are pulled into the system prompt (progressive
+# disclosure - keep these short); the full body is loaded on demand via the
+# `use_skill` tool. Evals live in <workdir>/evals/ and are NEVER loaded into
+# context - a skill with no matching eval warns at startup.
+[agent]
+# system_prompt = "..."   # (optional override, replaces built-in default)
+skills_dir = "skills"      # relative to workdir
+skills_max_description_chars = 240   # lint warning above this
+skills_max_body_lines = 200          # lint warning above this
+[agent.skills]
+# (see skills.md + docs for the file format and references)

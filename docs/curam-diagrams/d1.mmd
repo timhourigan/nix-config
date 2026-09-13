@@ -1,0 +1,27 @@
+flowchart LR
+    subgraph poc["curam POC (Python) · single process"]
+        LOOP["agent loop<br/>(messages → provider → tools → repeat)"]
+        TOOLS["tools<br/>read / write / edit / shell"]
+        ASK["ask layer<br/>(judgment + approvals)"]
+        POL["policy<br/>stage-1 deterministic"]
+        JUDGE["classifier<br/>stage-2 local LLM judge"]
+        JOURNAL[("SQLite · WAL journal<br/>source of truth (audit + cost)")]
+    end
+
+    USER["you"] -->|REPL + Textual UI| LOOP
+    LOOP -->|tool_call| TOOLS
+    TOOLS -->|args| POL
+    POL -->|uncertain| JUDGE
+    POL -->|allow / ask / deny| ASK
+    JUDGE -->|"injection / credential / destructive"| ASK
+    ASK -->|"waiting"| USER
+    TOOLS -->|tool_result| JOURNAL
+    POL -->|deny| JOURNAL
+    LOOP -->|model request + usage| JOURNAL
+    LOOP -->|"prompt + context"| LITELLM["LiteLLM (local)<br/>→ Ollama / vLLM / cloud"]
+    LITELLM -->|"completion + usage"| LOOP
+
+    subgraph ui["Textual UI (reader)"]
+        UI["model · reasoning effort · context fill<br/>session cost · budget left · live stream"]
+    end
+    JOURNAL --> UI

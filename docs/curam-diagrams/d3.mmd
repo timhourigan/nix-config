@@ -1,0 +1,11 @@
+stateDiagram-v2
+    [*] --> idle: curam start
+    idle --> running: user_message
+    running --> awaiting_judgment: ask_human
+    awaiting_judgment --> running: human_answer
+    running --> awaiting_approval: approval_requested
+    awaiting_approval --> running: approval_granted
+    awaiting_approval --> running: tool_denied
+    running --> running: model_message / tool_result / cost / error
+    running --> idle: user_message (new turn)
+    idle --> [*]: exit

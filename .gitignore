@@ -16,3 +16,10 @@ Thumbs.db
 # Age keys (should never be committed)
 keys.txt
 age.key
+
+# curam POC runtime artifacts
+curam-poc/work/
+
+# Python caches
+__pycache__/
+.ruff_cache/

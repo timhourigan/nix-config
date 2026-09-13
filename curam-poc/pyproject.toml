@@ -1,0 +1,9 @@
+# POC is a flat script directory: Python puts the script's directory on
+# sys.path at runtime, so sibling modules ("journal", "policy", ...) resolve
+# without a package. With a pyproject.toml present, pyright treats this folder
+# as a project root and won't auto-add it to the module path — declare it
+# explicitly so the analyzer sees the same layout the runtime does.
+[tool.pyright]
+include = ["."]
+extraPaths = ["."]
+pythonVersion = "3.12"

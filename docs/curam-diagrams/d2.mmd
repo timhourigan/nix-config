@@ -1,0 +1,19 @@
+flowchart TD
+    A["model emits tool_call<br/>{name, args}"] --> B["journal: tool_call"]
+    B --> C{"stage-1 · deterministic<br/>arg-array policy (fast)"}
+    C -->|deny| D["journal: tool_denied"]
+    D --> F["result returned to model"]
+    C -->|allow| J["exec gate<br/>cwd = project workdir<br/>shell = raw subprocess (POC)"]
+    C -->|uncertain| E{"stage-2 · local LLM judge<br/>injection / credential / destructive?"}
+    E -->|benign| J
+    E -->|flagged| G["journal: ask_human"]
+    C -->|ask| G
+    G --> H{"human decision"}
+    H -->|grant| I["journal: human_answer"]
+    H -->|deny| D
+    I --> J
+    J --> K["subprocess / file ops"]
+    K --> L["capture stdout/stderr/exit"]
+    L --> M["journal: tool_result"]
+    M --> F
+    F --> N["model continues"]
