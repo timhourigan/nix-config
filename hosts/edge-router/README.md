@@ -26,14 +26,39 @@ block at the top of `hosts/edge-router/default.nix`):
 on `192.168.99.0/24`; all LAN services (Kea, Unbound, NAT, firewall) key off
 the bridge.
 
-The interface names are **placeholders** — this board's 6-port NIC won't
-enumerate as `enp1s0/enp2s0/enp4s0` necessarily. At first boot, find the real
-names and update `wan`/`lanPorts` in `default.nix`:
+### Finding the real interface names (first boot)
 
-```sh
-ip link            # shows state UP / carrier on the port with a cable in it
-ethtool -p enp1s0f0 5   # blinks enp1s0f0's LED — confirm which physical port
-```
+The names in the table are **placeholders** — this board's 6-port NIC usually
+enumerates as `enp1s0f0`…`enp1s0f5` (or `enpNsM` groupings), which rarely
+line up 1:1 with the front-panel port labels. Do this **once, before
+`nixos-install`**:
+
+1. **Plug in the modem/office cable to P1 only**, and the mgmt host (or
+   laptop) to P2.
+2. Identify which physical port each interface name is, using carrier state
+   and/or LED blink:
+
+   ```sh
+   ip link          # the port with a cable in it shows `state UP` / carrier
+   # confirm by blinking an interface's port LED:
+   ethtool -p enp1s0f1 5     # blinks enp1s0f1's physical port LED for 5s
+   ```
+
+   Repeat `ethtool -p <iface> 5` across `enp1s0f*` until you find the one
+   wired to each cable → that maps `P1 → <wan iface>`, `P2 → <mgmt iface>`.
+3. **Edit `hosts/edge-router/default.nix`** and set:
+
+   ```nix
+   wan = "<the P1 interface>";            # e.g. "enp1s0f0"
+   lanPorts = [ "<P2 interface>" "<P4 interface>" ];   # e.g. [ "enp1s0f1" "enp1s0f3" ]
+   ```
+
+4. Rebuild on the box (or bake into the image before install):
+   `nixos-rebuild switch --flake /etc/nixos#edge-router`
+
+> **Only these two lines change.** The bridge (`br0`), static IP, NAT,
+> firewall trust, Kea subnet and DNS all key off the `lan`/`gw`/`lanNet`
+> values, which don't move.
 
 ## Build artifacts (run on your dev machine)
 

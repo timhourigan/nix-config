@@ -13,21 +13,20 @@
 #   lan = enp2s0   the RJ45 port your LAN switch / management host plugs into
 # Port mapping (physical → interface) on this board:
 #   P1 = WAN (upstream modem/office network)   → DHCP client
-#   P2 = LAN (mgmt host) + P4 = LAN (first AP) → bridged as the 192.168.99.0/24
-#   LAN (a bridge, so any LAN port behaves like a switch port)
-# Interface NAMES below are placeholders — set them from `ip link` +
-# `ethtool -p <iface> 5` at first boot, then nixos-rebuild.
+#   P2 = mgmt host, P4 = first AP             → both LAN, bridged into br0
+# Interface NAMES below are PLACEHOLDERS. Find the real ones with `ip link`
+# + `ethtool -p <iface> 5` at first boot (§Network state in README.md), then
+# set wan + lanPorts. Only those two values change.
 # ============================================================================
 
 { lib, pkgs, ... }:
 
 let
-  wan = "enp1s0";   # P1 — WAN, ISP/office uplink (DHCP client, Phase 1 staging)
-  lan = "br0";      # LAN bridge — carries P2 (mgmt) + P4 (first AP)
-  # Physical LAN ports on this box. *** PLACEHOLDERS *** — replace with the
-  # real interface names from `ip link` at first boot.
-  lanPorts = [ "enp2s0" "enp4s0" ];   # P2 = mgmt, P4 = AP
-  gw  = "192.168.99.1";    # the router's own LAN address
+  wan = "enp1s0"; # P1 — WAN, ISP/office uplink (DHCP client, Phase 1 staging)
+  lan = "br0"; # LAN bridge — carries P2 (mgmt) + P4 (first AP)
+  # Physical LAN ports on this box. *** PLACEHOLDERS *** — see README §Network state.
+  lanPorts = [ "enp2s0" "enp4s0" ]; # P2 = mgmt, P4 = AP
+  gw = "192.168.99.1"; # the router's own LAN address
   lanNet = "192.168.99.0/24";
 
   # ── OPTIONAL internal DNS (hostnames for everything) ──────────────────
@@ -44,13 +43,13 @@ let
   #   · Kea's `domain-search` option data is best-effort per RFC 3397; if a
   #     client ignores it, use the full `<name>.<domain>` form instead.
   internalDns = {
-    enable = false;          # ✗ OFF by default
-    domain = "lan";         # or "home.arpa" — see quirks above
+    enable = false; # ✗ OFF by default
+    domain = "lan"; # or "home.arpa" — see quirks above
     hosts = {
       # "<name>" = "<ip>"   → answers <name>.<domain>
       router = gw;
       mgmt = "192.168.99.10";
-      media = "192.168.99.20";   # example — set to the media VM's real IP
+      media = "192.168.99.20"; # example — set to the media VM's real IP
       # fitness = "192.168.99.x";
       # <add your own>
     };
@@ -76,8 +75,8 @@ in
   # Scripted networking (NetworkManager deliberately *not* enabled — a router
   # wants deterministic, per-interface config, and NetworkManager would fight
   # Kea/Unbound over interface ownership).
-  networking.useDHCP = false;                                   # take control
-  networking.interfaces.${wan}.useDHCP = true;                  # WAN: DHCP client
+  networking.useDHCP = false; # take control
+  networking.interfaces.${wan}.useDHCP = true; # WAN: DHCP client
   # LAN: bridge the two LAN ports (P2 mgmt, P4 AP) into one segment.
   networking.bridges.${lan}.interfaces = lanPorts;
   networking.interfaces.${lan} = {
@@ -167,7 +166,7 @@ in
     listenAddress = gw;
     port = 9100;
     enabledCollectors = [ "systemd" ];
-    openFirewall = false;   # already reachable via the trusted LAN rule
+    openFirewall = false; # already reachable via the trusted LAN rule
   };
 
   # ── Management access (headless box — you need to get back in) ────────────
@@ -201,7 +200,7 @@ in
     curl
     tcpdump
     mtr
-    bind          # provides `dig`, `host`
+    bind # provides `dig`, `host`
     ripgrep
   ];
 }
