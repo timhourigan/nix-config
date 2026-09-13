@@ -147,6 +147,10 @@
             # Preserve the environment the hand-written ~/.bashrc exports
             programs.bash.bashrcExtra = ''
               . /etc/bashrc
+              # Up/Down: search history by the current command prefix (type
+              # a few chars, then arrow through matches)
+              bind '"\e[A": history-search-backward'
+              bind '"\e[B": history-search-forward'
               export ANDROID_HOME=/usr/local/android-sdk
               export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
               export PATH=$PATH:$ANDROID_HOME/platform-tools
@@ -160,6 +164,28 @@
               export PATH="$BUN_INSTALL/bin:$PATH"
               export PATH="/home/darrenmeehan/.local/bin:$PATH"
             '';
+
+            # Same env for zsh (login shell as of 2026-01); home-switch not
+            # sourced from bashrc anymore
+            programs.zsh = {
+              shellAliases = {
+                home-switch = "home-manager switch --flake \"$HOME/code/nix-config#\$USER@\$HOSTNAME\" -b backup";
+                hm = "home-switch";
+              };
+              envExtra = ''
+                export ANDROID_HOME=/usr/local/android-sdk
+                export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+                export PATH=$PATH:$ANDROID_HOME/platform-tools
+                export CAPACITOR_ANDROID_STUDIO_PATH=$ANDROID_HOME/cmdline-tools/latest/bin
+                export FLYCTL_INSTALL="/home/darrenmeehan/.fly"
+                export PATH="$FLYCTL_INSTALL/bin:$PATH"
+                export PODMAN_COMPOSE_WARNING_LOGS=false
+                [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+                export BUN_INSTALL="$HOME/.bun"
+                export PATH="$BUN_INSTALL/bin:$PATH"
+                export PATH="/home/darrenmeehan/.local/bin:$PATH"
+              '';
+            };
           }
         ];
       };

@@ -21,6 +21,9 @@ ops docs live with the node itself: `hosts/app-node/README.md`,
 
 Assumes use of Nix flakes.
 
+Agents working in this repo: read `AGENTS.md` for commands, layout, and
+commit conventions.
+
 ## Adding a new NixOS host
 
 The steps refer to this new host as "example", rename as you see fit.
@@ -79,7 +82,7 @@ nixos-rebuild switch --flake .#<hostname>
 
 ## Update Home-Manager Configuration
 
-Use this for non-NixOS machines
+Use this for non-NixOS machines (this Fedora laptop is `darrenmeehan@fedora`).
 
 * Build:
 
@@ -92,6 +95,16 @@ home-manager build --flake .#<username>@<hostname>
 ```shell
 home-manager switch --flake .#<username>@<hostname>
 ```
+
+The `darrenmeehan@fedora` config defines a `home-switch` alias (also `hm`) so
+you can switch from anywhere:
+
+```shell
+home-switch
+```
+
+`make switch-hm` / `make build-hm` do the same, deriving `<user>@<hostname>`
+from the current login.
 
 ## Update flake.lock file
 

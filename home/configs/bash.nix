@@ -12,7 +12,8 @@
       docker = "podman";
       docker-compose = "podman-compose";
       # Switch this machine's Home-Manager config (from anywhere)
-      hm = "home-manager switch --flake \"$HOME/code/nix-config#\$USER@\$HOSTNAME\" -b backup";
+      home-switch = "home-manager switch --flake \"$HOME/code/nix-config#\$USER@\$HOSTNAME\" -b backup";
+      hm = "home-switch";
     };
   };
 }

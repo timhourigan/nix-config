@@ -62,6 +62,7 @@
       # For scones.ie
       postgresql_16 # I just want to install libpq - waiting on https://github.com/NixOS/nixpkgs/issues/61580
       libpqxx # C++ library for PostgreSQL. Needed for scones.ie for some reason
+      sqlite # SQLite database CLI
       # shell doesnt seem to work
       diesel-cli
       # Apps
@@ -98,6 +99,11 @@
       rustup
       nixd
       nixpkgs-fmt
+
+      # Coding agent (pi) — replaces the stray global npm install in
+      # ~/.local/lib/node_modules. Extensions still live in ~/.pi/agent/npm/
+      # and are updated via `pi update --extensions`.
+      pi-coding-agent
 
       ansible-lint
       ansible
