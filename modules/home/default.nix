@@ -21,6 +21,7 @@
     ./mise
     ./neovim
     ./obs-studio
+    ./opencode
     ./polybar
     ./pyenv
     ./rofi

@@ -17,7 +17,6 @@
     inkscape # SVG editor
     libreoffice # Office suite
     mqtt-explorer # MQTT client/explorer
-    unstable.opencode # AI code editor
     telegram-desktop # Messaging
     scribus # Desktop publishing
     zed-editor # Text editor
