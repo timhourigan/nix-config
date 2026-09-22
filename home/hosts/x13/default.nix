@@ -17,7 +17,6 @@
     inkscape # SVG editor
     libreoffice # Office suite
     mqtt-explorer # MQTT client/explorer
-    unstable.opencode # AI code editor
     telegram-desktop # Messaging
     scribus # Desktop publishing
     zed-editor # Text editor
@@ -94,6 +93,10 @@
       };
     starship.package = pkgs.unstable.starship;
     ghostty.enable = true;
+    opencode = {
+      enable = true;
+      package = pkgs.unstable.opencode;
+    };
     polybar.enable = true;
     rofi.enable = true;
     tmux.shell = "${pkgs.zsh}/bin/zsh";
