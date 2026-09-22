@@ -70,12 +70,12 @@
       # Python
       unstable.ruff # Formatter
       unstable.uv # Package manager
+      unstable.python313Packages.pipx
       (python313.withPackages (
         ps: with ps; [
           black
           flake8
           pip
-          pipx
         ]
       ))
     ]
