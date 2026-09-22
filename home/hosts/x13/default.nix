@@ -93,6 +93,10 @@
       };
     starship.package = pkgs.unstable.starship;
     ghostty.enable = true;
+    opencode = {
+      enable = true;
+      package = pkgs.unstable.opencode;
+    };
     polybar.enable = true;
     rofi.enable = true;
     tmux.shell = "${pkgs.zsh}/bin/zsh";
