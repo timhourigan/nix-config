@@ -46,6 +46,7 @@
     alacritty.enable = true;
     autojump.enable = true;
     bash.enable = true;
+    chromium.enable = true;
     delta.enable = true;
     direnv.enable = true;
     firefox.enable = true;

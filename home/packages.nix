@@ -97,7 +97,6 @@
       ventoy # Bootable USB creator
 
       # Apps
-      chromium # Web browser
       filezilla # FTP client
       meld # Diff tools
       obsidian # Notes
