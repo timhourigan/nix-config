@@ -17,6 +17,7 @@
     ./nebula-sync
     ./pihole
     ./podman
+    ./printing
     ./slimserver
     ./ssh
     ./tailscale

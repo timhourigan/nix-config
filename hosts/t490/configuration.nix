@@ -38,21 +38,6 @@
     extraHosts = "";
   };
 
-  # Printing
-  services = {
-    printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      # For WiFi printers
-      openFirewall = true;
-    };
-  };
-
-  # Scanners
-  # SANE support
-  hardware.sane.enable = true;
-
   # Sound via Pipewire
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;

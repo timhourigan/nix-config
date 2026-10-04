@@ -7,6 +7,7 @@
     ./autojump
     ./awscli
     ./bash
+    ./chromium
     ./claude-code
     ./copilot-cli
     ./delta
