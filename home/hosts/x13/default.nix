@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # Packages to be installed
   home.packages = with pkgs; [
+    # Tools
+    android-tools # Android - ADB and fastboot
+
     # Apps
     audacity # Audio editor
     avidemux # Video editor
@@ -14,7 +17,6 @@
     inkscape # SVG editor
     libreoffice # Office suite
     mqtt-explorer # MQTT client/explorer
-    unstable.opencode # AI code editor
     telegram-desktop # Messaging
     scribus # Desktop publishing
     zed-editor # Text editor
@@ -27,6 +29,25 @@
 
   # Modules
   modules.home = {
+    atuin = {
+      enable = true;
+      settings = {
+        theme.name = "ansi-terminal";
+      };
+      flags = [ "--disable-up-arrow" ];
+    };
+    claude-code = {
+      enable = true;
+      package = pkgs.unstable.claude-code;
+      settings = {
+        effortLevel = "high";
+        statusLine = {
+          type = "command";
+          command = config.modules.home.starship.claudeCodeStatusLineCommand;
+        };
+        theme = "dark";
+      };
+    };
     distrobox =
       let
         image = "debian:13";
@@ -70,14 +91,12 @@
           init_hooks = "${base_hooks} && ${bash_hook}";
         };
       };
-    atuin = {
-      enable = true;
-      settings = {
-        theme.name = "ansi-terminal";
-      };
-      flags = [ "--disable-up-arrow" ];
-    };
+    starship.package = pkgs.unstable.starship;
     ghostty.enable = true;
+    opencode = {
+      enable = true;
+      package = pkgs.unstable.opencode;
+    };
     polybar.enable = true;
     rofi.enable = true;
     tmux.shell = "${pkgs.zsh}/bin/zsh";

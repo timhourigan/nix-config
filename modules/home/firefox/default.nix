@@ -15,12 +15,29 @@ in
         description = "Enable Firefox";
         default = false;
       };
+      configPath = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        # New default as of 26.05
+        # Linux migration steps:
+        #   mkdir -p ~/.config/mozilla/firefox
+        #   rsync -avh ~/.mozilla/firefox/ ~/.config/mozilla/firefox/
+        #   rm -rf ~/.mozilla/firefox
+        # If MacOS, use Home Manager default
+        # else (if Linux), use new default regardless of HM state version
+        default =
+          if pkgs.stdenv.isDarwin then
+            null
+          else
+            "${lib.removePrefix "${config.home.homeDirectory}/" config.xdg.configHome}/mozilla/firefox";
+        description = "Path to the Firefox configuration directory, relative to the user's home directory. If null, uses the home-manager default.";
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+      configPath = lib.mkIf (cfg.configPath != null) cfg.configPath;
       profiles.default = {
         id = 0;
         name = "Default";

@@ -24,9 +24,10 @@ in
         default = [ ];
         description = "Bookmarks configuration";
       };
-      environmentFile = lib.mkOption {
-        type = lib.types.path;
-        description = "Path to the environment file";
+      environmentFiles = lib.mkOption {
+        type = lib.types.listOf lib.types.path;
+        default = [ ];
+        description = "Paths to environment files";
       };
       listenPort = lib.mkOption {
         type = lib.types.port;
@@ -61,7 +62,7 @@ in
       enable = true;
       inherit (cfg) allowedHosts;
       inherit (cfg) bookmarks;
-      inherit (cfg) environmentFile;
+      inherit (cfg) environmentFiles;
       inherit (cfg) listenPort;
       inherit (cfg) openFirewall;
       inherit (cfg) services;

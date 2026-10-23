@@ -18,7 +18,8 @@ _:
       repository = "/mnt/backup/pihole";
       passwordFile = "/etc/nixos/secrets/restic-pihole-local";
       timerConfig = {
-        OnCalendar = "hourly";
+        # Every six hours, with a random starting time
+        OnCalendar = "*-*-* 00/6:00:00";
         Persistent = true;
         RandomizedDelaySec = "1800";
       };

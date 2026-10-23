@@ -6,14 +6,7 @@
 }:
 
 let
-  # Ports are module/service defaults
-  esphomePort = 6052;
-  gatusPort = 8080;
-  hassPort = 8123;
   homepageDashboard = import ../common/homepage-dashboard.nix { };
-  homepageDashboardPort = 8082;
-  vikunjaPort = 3456;
-  z2mPort = 8124;
 in
 {
   imports = [
@@ -106,23 +99,17 @@ in
           "--network=host"
           "--dns=9.9.9.9" # WORKAROUND - HA can start before DNS is up on boot
         ];
-        # https://github.com/home-assistant/core/releases
-        image = "ghcr.io/home-assistant/home-assistant:2026.4.4";
-
+        image = config.custom.images.homeAssistant;
       };
       mosquitto.enable = true;
       zigbee2mqtt = {
         enable = true;
         package = pkgs.pinned.zigbee2mqtt;
       };
-      esphome = {
-        enable = true;
-        package = pkgs.unstable.esphome;
-      };
+      esphome.enable = true;
       homepage-dashboard = {
         enable = true;
-        environmentFile = config.sops.secrets."homepage_env".path;
-        listenPort = homepageDashboardPort;
+        environmentFiles = [ config.sops.secrets."homepage_env".path ];
         # See Reverse Proxy setup below
         allowedHosts = "${config.custom.internalDomain}";
         inherit (homepageDashboard) bookmarks;
@@ -181,43 +168,43 @@ in
       # ESPHome
       "http://esphome.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString esphomePort}
+          reverse_proxy :${toString config.modules.services.esphome.port}
         '';
       };
       # FreshRSS - Module has builtin configuration
       # Gatus
       "http://gatus.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString gatusPort}
+          reverse_proxy :${toString config.modules.services.gatus.port}
         '';
       };
       # Home Assistant
       "http://ha.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString hassPort}
+          reverse_proxy :${toString config.modules.services.home-assistant.port}
         '';
       };
       # Homepage
       "http://${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString homepageDashboardPort}
+          reverse_proxy :${toString config.modules.services.homepage-dashboard.listenPort}
         '';
       };
       # Vikunja
       "http://vikunja.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString vikunjaPort}
+          reverse_proxy :${toString config.modules.services.vikunja.port}
         '';
       };
       "http://kanban.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString vikunjaPort}
+          reverse_proxy :${toString config.modules.services.vikunja.port}
         '';
       };
       # zigbee2mqtt
       "http://z2m.${config.custom.internalDomain}" = {
         extraConfig = ''
-          reverse_proxy :${toString z2mPort}
+          reverse_proxy :${toString config.modules.services.zigbee2mqtt.port}
         '';
       };
     };

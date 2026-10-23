@@ -1,4 +1,9 @@
-{ config, outputs, ... }:
+{
+  config,
+  lib,
+  outputs,
+  ...
+}:
 
 {
   imports = [
@@ -27,7 +32,7 @@
     hostName = "mm";
     networkmanager.enable = true;
     # Don't want wireless
-    wireless.enable = false;
+    wireless.enable = lib.mkForce false;
     # Backup DNS server / Quad9
     nameservers = [ "9.9.9.9" ];
   };
@@ -56,12 +61,12 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2026.05.0";
+        image = config.custom.images.pihole;
       };
       nebulaSync = {
         enable = true;
         environmentFiles = [ config.sops.secrets."nebula_sync_env".path ];
-        image = "ghcr.io/lovelaze/nebula-sync:v0.11.2";
+        image = config.custom.images.nebulaSync;
       };
       unbound = {
         enable = true;

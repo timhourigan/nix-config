@@ -1,6 +1,8 @@
 {
   inputs,
+  lib,
   outputs,
+  pkgs,
   ...
 }:
 
@@ -22,7 +24,7 @@
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
-        "ventoy-1.1.10" # https://github.com/ventoy/Ventoy/issues/3224
+        "ventoy-1.1.12" # https://github.com/ventoy/Ventoy/issues/3224
       ];
     };
   };
@@ -42,18 +44,25 @@
   fonts.fontconfig.enable = true;
 
   # Modules
-  modules.home = {
-    alacritty.enable = true;
-    autojump.enable = true;
-    bash.enable = true;
-    delta.enable = true;
-    direnv.enable = true;
-    firefox.enable = true;
-    fzf.enable = true;
-    gh.enable = true;
-    git.enable = true;
-    neovim.enable = true;
-    starship.enable = true;
-    tmux.enable = true;
-  };
+  modules.home = lib.mkMerge [
+    # All platforms
+    {
+      alacritty.enable = true;
+      autojump.enable = true;
+      bash.enable = true;
+      delta.enable = true;
+      direnv.enable = true;
+      firefox.enable = true;
+      fzf.enable = true;
+      gh.enable = true;
+      git.enable = true;
+      neovim.enable = true;
+      starship.enable = true;
+      tmux.enable = true;
+    }
+    # Linux-only platforms
+    (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+      chromium.enable = true;
+    })
+  ];
 }
