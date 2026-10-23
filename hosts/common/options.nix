@@ -27,7 +27,7 @@
         };
         nebulaSync = lib.mkOption {
           type = lib.types.str;
-          default = "ghcr.io/lovelaze/nebula-sync:v0.11.2";
+          default = "ghcr.io/lovelaze/nebula-sync:v0.11.3";
           description = "Nebula-Sync container image";
         };
       };
