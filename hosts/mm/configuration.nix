@@ -58,6 +58,8 @@
           FTLCONF_dns_upstreams = "10.88.0.1#5335";
           # Needed when using container bridged mode
           FTLCONF_dns_listeningMode = "all";
+          # Allow sudo access to webserver API - Required on primary for Nebula Sync since PiHole 2026.10.0
+          FTLCONF_webserver_api_app_sudo = "true";
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];

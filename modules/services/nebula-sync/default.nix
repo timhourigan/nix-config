@@ -3,6 +3,7 @@
 # https://github.com/lovelaze/nebula-sync
 #
 # Required on replicas in PiHole env vars for Nebula Sync to work
+# Required on primary since PiHole 2026.10.0
 # FTLCONF_webserver_api_app_sudo = "true";
 
 let
