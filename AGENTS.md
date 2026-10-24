@@ -7,7 +7,7 @@ per-node docs in `README.md`; ops docs live in `docs/` or each host's README.
 ## Commands
 
 - `home-switch` (alias `hm`) — switch Home-Manager for this machine:
-  `home-manager switch --flake .#$USER@$HOSTNAME -b backup` (defined in
+  `home-manager switch --flake .#$USER@$(hostname) -b backup` (defined in
   `home/configs/bash.nix`)
 - `make switch-hm` / `make build-hm` — same via Makefile (defaults to
   `#<user>@<hostname>`)
