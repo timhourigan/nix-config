@@ -94,6 +94,10 @@
       podman
       podman-compose
 
+      # LibreCAD — dnf install conflicts with libredwg's dwg2dxf; use Nix
+      # instead (2.2.1.x always, no rpm file fights).
+      librecad
+
       # Languages
       nodejs
       rustup
