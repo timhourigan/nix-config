@@ -44,9 +44,13 @@ in
       sessionVariables = {
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
         PATH = "$PATH:$HOME/.local/bin";
-        # CA certs for non-Nix tools (e.g. pre-commit, pip)
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       };
+      # CA certs for non-Nix tools (e.g. pre-commit, pip), where the system does not provide them
+      profileExtra = ''
+        if [ ! -e /etc/ssl/certs/ca-certificates.crt ]; then
+          export SSL_CERT_FILE="${pkgs.unstable-small.cacert}/etc/ssl/certs/ca-bundle.crt"
+        fi
+      '';
     };
   };
 }

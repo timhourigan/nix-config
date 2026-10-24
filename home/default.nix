@@ -18,6 +18,8 @@
     overlays = [
       # Allow unstable packages at unstable.<package>
       outputs.overlays.unstable-packages
+      # Allow unstable-small packages at unstable-small.<package>
+      outputs.overlays.unstable-small-packages
       # Allow pinned packages at pinned.<package>
       outputs.overlays.pinned-packages
     ];

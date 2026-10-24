@@ -33,6 +33,14 @@ in
     };
   };
 
+  # Make unstable-small packages available at pkgs.unstable-small
+  unstable-small-packages = final: _prev: {
+    unstable-small = import inputs.nixpkgs-unstable-small {
+      inherit (final.stdenv.hostPlatform) system;
+      config.allowUnfree = true;
+    };
+  };
+
   # Make pinned packages available at pkgs.pinned
   pinned-packages = final: _prev: {
     pinned = import inputs.nixpkgs-pinned {
