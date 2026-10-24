@@ -21,6 +21,7 @@
       unstable.hugo # Static site generator
       htop # Display process information (`top` alternative)
       jq # Command line JSON parser
+      lftp # FTP client
       lychee # Link checker
       mediainfo # Media file information
       nmap # Network exploration
@@ -29,11 +30,14 @@
       screen # Terminal multiplexer
       sops # Secrets management
       ssh-to-age # SSH to Age key converter
+      svgo # SVG optimizer
       taskwarrior3 # Task manager
       tig # git text-mode interface
       tldr # Help pages
       tree # Display directory structure
       unzip # Zip decompress
+      xclip # X11 clipboard
+      xsel # X11 clipboard
       zip # Zip compress
 
       # Apps
@@ -67,12 +71,12 @@
       # Python
       unstable.ruff # Formatter
       unstable.uv # Package manager
+      unstable.python313Packages.pipx
       (python313.withPackages (
         ps: with ps; [
           black
           flake8
           pip
-          pipx
         ]
       ))
     ]
@@ -94,7 +98,6 @@
       ventoy # Bootable USB creator
 
       # Apps
-      chromium # Web browser
       filezilla # FTP client
       meld # Diff tools
       obsidian # Notes

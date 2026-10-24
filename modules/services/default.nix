@@ -7,6 +7,7 @@
     ./chrony
     ./displaylink
     ./esphome
+    ./forgejo
     ./freshrss
     ./gatus
     ./glances
@@ -17,6 +18,7 @@
     ./nebula-sync
     ./pihole
     ./podman
+    ./printing
     ./slimserver
     ./ssh
     ./tailscale

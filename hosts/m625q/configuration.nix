@@ -1,4 +1,9 @@
-{ config, outputs, ... }:
+{
+  config,
+  lib,
+  outputs,
+  ...
+}:
 
 {
   imports = [
@@ -34,7 +39,7 @@
     hostName = "m625q";
     networkmanager.enable = true;
     # Don't want wireless
-    wireless.enable = false;
+    wireless.enable = lib.mkForce false;
     # Backup DNS server / Quad9
     nameservers = [ "9.9.9.9" ];
   };
@@ -65,7 +70,7 @@
           # FTLCONF_webserver_api_password = "use-to-set-initial-password";
         };
         environmentFiles = [ config.sops.secrets."pihole_env".path ];
-        image = "docker.io/pihole/pihole:2026.05.0";
+        image = config.custom.images.pihole;
       };
       unbound = {
         enable = true;

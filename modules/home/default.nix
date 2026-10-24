@@ -7,7 +7,9 @@
     ./autojump
     ./awscli
     ./bash
+    ./chromium
     ./claude-code
+    ./copilot-cli
     ./delta
     ./direnv
     ./distrobox
@@ -20,6 +22,7 @@
     ./mise
     ./neovim
     ./obs-studio
+    ./opencode
     ./polybar
     ./pyenv
     ./rofi

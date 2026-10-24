@@ -51,8 +51,6 @@
   };
 
   programs = {
-    # Android
-    adb.enable = true;
     # Run unpatched dynamic binaries
     nix-ld.enable = true;
     zsh.enable = true;
@@ -66,21 +64,6 @@
     hostName = "x13";
     networkmanager.enable = true;
   };
-
-  # Printing
-  services = {
-    printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      # For WiFi printers
-      openFirewall = true;
-    };
-  };
-
-  # Scanners
-  # SANE support
-  hardware.sane.enable = true;
 
   # Sound via Pipewire
   services.pulseaudio.enable = false;
@@ -114,6 +97,7 @@
       displaylink.enable = true;
       glances.enable = true;
       podman.enable = true;
+      printing.enable = true;
       ssh.enable = true;
       tailscale = {
         enable = true;

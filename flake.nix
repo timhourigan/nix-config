@@ -3,11 +3,12 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-personal.url = "github:timhourigan/nixpkgs/feature/music-assistant/squeezelite-firewall-ports";
-    # Pinning to zigbee2mqtt 2.10.1 - https://github.com/NixOS/nixpkgs/pull/517773
-    nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=3f165ba3e981435e319029fc37d40c618cebe034";
+    # Pinning to zigbee2mqtt 2.14.1 - https://github.com/NixOS/nixpkgs/pull/559625
+    nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=1cde1c190ce2ef134b7f6fd1b729ada5e058ebaf";
 
     # Community packages
     nur = {
@@ -17,7 +18,7 @@
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -36,7 +37,7 @@
     # Pre-Commit Hooks
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # FIXME - Others to consider

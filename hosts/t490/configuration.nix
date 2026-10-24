@@ -38,21 +38,6 @@
     extraHosts = "";
   };
 
-  # Printing
-  services = {
-    printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      # For WiFi printers
-      openFirewall = true;
-    };
-  };
-
-  # Scanners
-  # SANE support
-  hardware.sane.enable = true;
-
   # Sound via Pipewire
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -62,9 +47,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
-  # Android
-  programs.adb.enable = true;
 
   # Thermald (Intel only) - https://wiki.debian.org/thermald
   # To be investigated if any benefit - Doesn't currently work due
