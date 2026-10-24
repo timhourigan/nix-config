@@ -5,6 +5,7 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     # Pinning to zigbee2mqtt 2.14.1 - https://github.com/NixOS/nixpkgs/pull/559625
     nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=1cde1c190ce2ef134b7f6fd1b729ada5e058ebaf";
 
