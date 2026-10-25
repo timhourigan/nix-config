@@ -2,6 +2,7 @@
   inputs,
   lib,
   config,
+  options,
   pkgs,
   ...
 }:
@@ -12,20 +13,49 @@
 
 let
   cfg = config.modules.services.music-assistant;
-
-  # Web UI port - not covered by the upstream module's openFirewall
-  webPort = 8095;
 in
 {
-  # Replace the stable module with the one from nixpkgs-personal
+  # Replace the stable module with the one from nixpkgs-unstable
   # which includes squeezelite/slimproto firewall port support.
+  # TODO: Revert to stable once backported to a release
   disabledModules = [ "services/audio/music-assistant.nix" ];
   imports = [
-    "${inputs.nixpkgs-personal}/nixos/modules/services/audio/music-assistant.nix"
+    "${inputs.nixpkgs-unstable}/nixos/modules/services/audio/music-assistant.nix"
   ];
 
   options.modules.services.music-assistant = {
     enable = lib.mkEnableOption "Music Assistant";
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.unstable.music-assistant;
+      description = "Package to use";
+    };
+
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 8095;
+      description = ''
+        Port for web interface. Music Assistant has no CLI flag for this,
+        so it must match the port set in its own settings.
+      '';
+    };
+
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Open firewall ports for the web interface, streaming and configured providers";
+    };
+
+    extraOptions = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      example = [
+        "--log-level"
+        "DEBUG"
+      ];
+      description = "Extra options to pass to music-assistant, appended to the upstream defaults";
+    };
 
     providers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
@@ -39,14 +69,21 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # The unstable module references these via stable pkgs, where they don't exist
+    # TODO: Remove once available in a release
+    nixpkgs.overlays = [
+      (final: _prev: {
+        inherit (final.unstable) airplay-cli go-librespot;
+      })
+    ];
+
     services.music-assistant = {
       enable = true;
-      package = pkgs.personal.music-assistant;
-      openFirewall = true;
-      inherit (cfg) providers;
+      inherit (cfg) package openFirewall providers;
+      extraOptions = options.services.music-assistant.extraOptions.default ++ cfg.extraOptions;
     };
 
-    # Web UI port - not handled by upstream openFirewall
-    networking.firewall.allowedTCPPorts = [ webPort ];
+    # Upstream openFirewall only covers the stream and provider ports, so add the web interface port here
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };
 }

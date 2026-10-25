@@ -22,8 +22,6 @@ in
       outputs.overlays.unstable-packages
       # Allow pinned packages at pinned.<package>
       outputs.overlays.pinned-packages
-      # Allow personal fork packages at personal.<package>
-      outputs.overlays.personal-packages
     ];
     config = {
       allowUnfree = true;
@@ -105,7 +103,11 @@ in
       };
       music-assistant = {
         enable = true;
-        providers = [ "squeezelite" ];
+        openFirewall = true;
+        providers = [
+          "squeezelite"
+          "spotify_connect"
+        ];
       };
       mosquitto.enable = true;
       zigbee2mqtt = {
