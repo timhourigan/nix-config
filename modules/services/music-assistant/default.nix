@@ -93,7 +93,32 @@ in
       extraOptions = options.services.music-assistant.extraOptions.default ++ cfg.extraOptions;
     };
 
-    systemd.services.music-assistant.serviceConfig.EnvironmentFile = cfg.environmentFiles;
+    systemd.services.music-assistant = lib.mkMerge [
+      {
+        serviceConfig.EnvironmentFile = cfg.environmentFiles;
+      }
+      # Spotify playback via Soloist
+      (lib.mkIf (lib.elem "spotify" cfg.providers) {
+        # Audio capture via a private PulseAudio daemon
+        path = [ pkgs.pulseaudio ];
+        # libpulse for Music Assistant (ctypes) and Soloist
+        environment.LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.libpulseaudio ];
+        serviceConfig = {
+          # Soloist is downloaded to, and run from, the state directory
+          ExecPaths = [ "/var/lib/music-assistant" ];
+          # PulseAudio socket
+          RestrictAddressFamilies = [ "AF_UNIX" ];
+          # PulseAudio drops privileges on startup
+          SystemCallFilter = lib.mkAfter [
+            "setresuid"
+            "capset"
+          ];
+        };
+      })
+    ];
+
+    # Soloist is a generic Linux binary
+    programs.nix-ld.enable = lib.mkIf (lib.elem "spotify" cfg.providers) true;
 
     # Upstream openFirewall only covers the stream and provider ports, so add the web interface port here
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
