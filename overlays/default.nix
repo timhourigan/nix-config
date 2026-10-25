@@ -48,4 +48,12 @@ in
       config.allowUnfree = true;
     };
   };
+
+  # Make personal fork packages available at pkgs.personal
+  personal-packages = final: _prev: {
+    personal = import inputs.nixpkgs-personal {
+      inherit (final.stdenv.hostPlatform) system;
+      config.allowUnfree = true;
+    };
+  };
 }

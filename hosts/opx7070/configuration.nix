@@ -101,6 +101,22 @@ in
         ];
         image = config.custom.images.homeAssistant;
       };
+      music-assistant = {
+        enable = true;
+        openFirewall = true;
+        environmentFiles = [ config.sops.secrets."music_assistant_env".path ];
+        providers = [
+          "airplay"
+          "chromecast"
+          "dlna"
+          "hass"
+          "hass_players"
+          "radiobrowser"
+          "spotify"
+          "spotify_connect"
+          "squeezelite"
+        ];
+      };
       mosquitto.enable = true;
       zigbee2mqtt = {
         enable = true;
@@ -122,7 +138,7 @@ in
         autoPrune = true;
       };
       slimserver = {
-        enable = true;
+        enable = false;
         package = pkgs.unstable.slimserver;
       };
       ssh.enable = true;
@@ -152,6 +168,7 @@ in
       };
       gatus = { };
       homepage_env = { };
+      music_assistant_env = { };
       "mqtt/valetudo/larry/password" = { };
       "mqtt/valetudo/harry/password" = { };
     };

@@ -14,6 +14,7 @@
     ./home-assistant
     ./homepage-dashboard
     ./mosquitto
+    ./music-assistant
     ./nebula-sync
     ./pihole
     ./podman
