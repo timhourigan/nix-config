@@ -21,7 +21,7 @@ in
 {
   home.file = builtins.listToAttrs (map
     (name: {
-      name = "agents/skills/${name}";
+      name = ".agents/skills/${name}";
       value.source = "${src}/.claude/skills/${name}";
     })
     skills);
