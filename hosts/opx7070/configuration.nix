@@ -104,9 +104,14 @@ in
       music-assistant = {
         enable = true;
         openFirewall = true;
+        environmentFiles = [ config.sops.secrets."music_assistant_env".path ];
         providers = [
-          "squeezelite"
+          "airplay"
+          "chromecast"
+          "dlna"
+          "spotify"
           "spotify_connect"
+          "squeezelite"
         ];
       };
       mosquitto.enable = true;
@@ -160,6 +165,7 @@ in
       };
       gatus = { };
       homepage_env = { };
+      music_assistant_env = { };
       "mqtt/valetudo/larry/password" = { };
       "mqtt/valetudo/harry/password" = { };
     };

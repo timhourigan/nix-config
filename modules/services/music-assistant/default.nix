@@ -57,6 +57,16 @@ in
       description = "Extra options to pass to music-assistant, appended to the upstream defaults";
     };
 
+    environmentFiles = lib.mkOption {
+      type = lib.types.listOf lib.types.path;
+      default = [ ];
+      example = [ "/run/secrets/music_assistant_env" ];
+      description = ''
+        Environment files to pass to the service, e.g. for `MASS_APP_VAR_*`
+        provider credentials such as `MASS_APP_VAR_SPOTIFY_CLIENT_ID`.
+      '';
+    };
+
     providers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -82,6 +92,8 @@ in
       inherit (cfg) package openFirewall providers;
       extraOptions = options.services.music-assistant.extraOptions.default ++ cfg.extraOptions;
     };
+
+    systemd.services.music-assistant.serviceConfig.EnvironmentFile = cfg.environmentFiles;
 
     # Upstream openFirewall only covers the stream and provider ports, so add the web interface port here
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
