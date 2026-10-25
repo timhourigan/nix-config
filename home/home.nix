@@ -151,6 +151,7 @@
     ./configs/rofi.nix
     ./configs/starship.nix
     ./configs/tmux.nix
+    ./configs/ui-ux-pro-max-skill.nix
     ./configs/vscode.nix
     ./configs/zsh.nix
   ];
