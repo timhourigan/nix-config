@@ -25,6 +25,7 @@
     # Packages to be installed
     packages = with pkgs; [
       # Utils
+      age # age-keygen: encryption keys for sops + home-k8s secrets
       awscli2
       bat # `cat` clone
       bitwarden-desktop # Password Manager
@@ -44,6 +45,7 @@
       just # Command runner
       loco # Loco CLI
       sea-orm-cli # Sea ORM CLI
+      sops # Encrypt/decrypt secrets (home-k8s, .sops.yaml)
       fastfetch # System information
       nemo # File manager
       nixfmt # Nix formatter
