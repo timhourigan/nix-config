@@ -15,8 +15,8 @@ let
   cfg = config.modules.services.music-assistant;
 in
 {
-  # Replace the stable module with the one from nixpkgs-unstable
-  # which includes squeezelite/slimproto firewall port support.
+  # Replace the stable module with the one from nixpkgs-unstable, which has
+  # firewall support for more providers (e.g. squeezelite, spotify_connect).
   # TODO: Revert to stable once backported to a release
   disabledModules = [ "services/audio/music-assistant.nix" ];
   imports = [
@@ -104,8 +104,6 @@ in
         # libpulse for Music Assistant and Soloist
         environment.LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.libpulseaudio ];
         serviceConfig = {
-          # Soloist is downloaded to, and run from, the state directory
-          ExecPaths = [ "/var/lib/music-assistant" ];
           # PulseAudio socket
           RestrictAddressFamilies = [ "AF_UNIX" ];
           # PulseAudio drops privileges on startup
