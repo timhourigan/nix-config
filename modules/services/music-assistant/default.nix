@@ -101,7 +101,7 @@ in
       (lib.mkIf (lib.elem "spotify" cfg.providers) {
         # Audio capture via a private PulseAudio daemon
         path = [ pkgs.pulseaudio ];
-        # libpulse for Music Assistant (ctypes) and Soloist
+        # libpulse for Music Assistant and Soloist
         environment.LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.libpulseaudio ];
         serviceConfig = {
           # Soloist is downloaded to, and run from, the state directory
