@@ -22,7 +22,7 @@
         # https://github.com/home-assistant/core/releases
         homeAssistant = lib.mkOption {
           type = lib.types.str;
-          default = "ghcr.io/home-assistant/home-assistant:2026.10.3";
+          default = "ghcr.io/home-assistant/home-assistant:2026.10.4";
           description = "Home Assistant container image";
         };
         nebulaSync = lib.mkOption {
