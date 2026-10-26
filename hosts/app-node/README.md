@@ -169,6 +169,29 @@ optional tag (defaults to a timestamp).
 After running, you need to tell k3s to use the new image:
 `kubectl -n curam-fitness rollout restart deploy/backend`
 
+### `scripts/deploy-app.sh` (every deploy — OS + app) — **run on the VM**
+
+The full day-2 deploy in one command: pull + `sudo nixos-rebuild switch` for
+the NixOS config, pull + rebuild the app image, apply manifests + the
+sops-encrypted secret, restart the backend and wait for it to come up.
+
+```bash
+/opt/nix-config/scripts/deploy-app.sh
+```
+
+From your dev machine, `make deploy-app-node` wraps this in an ssh call.
+
+### `scripts/provision-vm.sh` (new VMs only) — **run on your dev machine**
+
+Builds a fresh VMA image for a host, uploads it to the PVE host, restores it
+into a new VM and starts it — the "Alternative: deploy from a built Proxmox
+image" flow above, scripted. Aborts if the VMID is already in use, then
+prints the first-boot checklist (password, Tailscale, first deploy).
+
+```bash
+./scripts/provision-vm.sh app-node 101   # or: make provision-vm VMID=101
+```
+
 ## First-time setup
 
 > **Where to run each command:** "dev machine" = your laptop, "VM" = the
@@ -343,7 +366,8 @@ for faster recovery, not a hard requirement.
 nix flake update
 git push
 
-# On the VM:
+# On the VM — or just run the full deploy (config + app):
+#   /opt/nix-config/scripts/deploy-app.sh
 cd /opt/nix-config && git pull
 sudo nixos-rebuild switch --flake /opt/nix-config#app-node
 ```
@@ -355,4 +379,6 @@ cd /opt/curam/fitness
 git pull
 /opt/nix-config/scripts/build-app.sh /opt/curam/fitness
 kubectl -n curam-fitness rollout restart deploy/backend
+# or the whole OS+app deploy in one go:
+# /opt/nix-config/scripts/deploy-app.sh
 ```

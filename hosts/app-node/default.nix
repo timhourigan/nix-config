@@ -68,9 +68,13 @@
   users.users.darren = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
+    # One-time bootstrap password — set your own with `passwd darren` after
+    # first login (it prompts for this as the current password). Lives in git,
+    # so rotate it before the VM does anything real.
+    initialPassword = "xeoNyuiht3aJod";
     openssh.authorizedKeys.keys = [
       # Generate: ssh-keygen -t ed25519 -C "home-k8s" -f ~/.ssh/home-k8s
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHSmchQ7JS1UcyBy2lMoYuBQs/6H/VgqB+TrArRE6QDW home-k8s"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhq0+ALrOXHLNC/75PGi9ymM/nHfCgS5Wc0yUoRTfEP home-k8s"
     ];
   };
 

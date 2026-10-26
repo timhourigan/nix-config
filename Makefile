@@ -25,9 +25,16 @@ build-hm: ## Build Home-Manager configuration
 switch-hm: ## Switch Home-Manager configuration
 	home-manager switch --flake .#$(USER)@$(HOSTNAME)
 
-.PHONY: deploy-fitness
-app-node: ## Pull + switch the app-node VM (requires Tailscale)
-	ssh darren@app-node 'cd /opt/nix-config && git pull && sudo nixos-rebuild switch --flake /opt/nix-config#app-node'
+.PHONY: deploy-app-node
+deploy-app-node: ## Full deploy on app-node: NixOS config + app (requires Tailscale)
+	ssh -t darren@app-node /opt/nix-config/scripts/deploy-app.sh
+
+PROVISION_HOST ?= app-node
+VMID ?= 100
+PVE ?= root@pve
+.PHONY: provision-vm
+provision-vm: ## Provision a VM on PVE from a built VMA image (PROVISION_HOST=media VMID=101 PVE=root@pve)
+	./scripts/provision-vm.sh "$(PROVISION_HOST)" "$(VMID)" "$(PVE)"
 
 .PHONY: deploy-media
 media: ## Pull + switch the media VM (requires Tailscale/ssh)

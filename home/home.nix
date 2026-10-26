@@ -149,6 +149,7 @@
     ./configs/neovim.nix
     ./configs/polybar.nix
     ./configs/rofi.nix
+    ./configs/ssh.nix
     ./configs/starship.nix
     ./configs/tmux.nix
     ./configs/ui-ux-pro-max-skill.nix

@@ -168,6 +168,12 @@ curl -s http://localhost:8080/api/health
 ## Day-2 operations
 
 ```bash
+# Full deploy (config + app) in one command — run on the VM:
+/opt/nix-config/scripts/deploy-app.sh
+# …or from your dev machine:
+#   make deploy-app-node
+
+# Manual split version:
 # Update the OS + config (from dev machine, after git push):
 ssh darren@app-node
 cd /opt/nix-config && git pull
@@ -203,8 +209,9 @@ Once this manual flow works, you can automate steps 1-4:
 
 | Tool | What it buys you |
 | --- | --- |
+| **`scripts/provision-vm.sh`** | Already here: builds the VMA image, uploads to PVE, `qmrestore` + `qm start` (steps 1-4, no console) |
 | **Packer** | Bake NixOS into a Proxmox template; clone → boot with config |
-| **Proxmox API** | Create the VM itself from a script |
+| **Proxmox API** | Create the VM itself from a script (no ssh/scp to PVE) |
 | **Terraform** | Declarative VMs + networking alongside the cluster config |
 
 Add these only when you're creating VMs regularly. For one node, manual is
