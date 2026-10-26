@@ -1,5 +1,8 @@
 HOSTNAME?=$(shell hostname)
 
+CLAUDE_CODE_RELEASES=https://downloads.claude.ai/claude-code-releases
+CLAUDE_CODE_MANIFEST=overlays/claude-code-manifest.json
+
 # Use nix-output-monitor, if available
 ifeq ($(shell command -v nom),)
 NIX_OUTPUT_MONITOR=
@@ -103,6 +106,13 @@ format: ## Format source
 .PHONY: lock
 lock: ## Update lock file
 	nix flake update
+
+.PHONY: update-claude
+update-claude: ## Update Claude Code manifest to latest release
+	@version="$$(curl -fsSL $(CLAUDE_CODE_RELEASES)/latest)" && \
+	curl -fsSL "$(CLAUDE_CODE_RELEASES)/$$version/manifest.zst.json" | jq -je . > $(CLAUDE_CODE_MANIFEST).tmp && \
+	mv $(CLAUDE_CODE_MANIFEST).tmp $(CLAUDE_CODE_MANIFEST)
+	@echo "Claude Code manifest updated to $$(jq -r .version $(CLAUDE_CODE_MANIFEST))"
 
 .PHONY: clean
 clean: ## Garbage collect

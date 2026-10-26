@@ -2,7 +2,7 @@
 let
   # Latest Claude Code
   #
-  # To update: curl -fsSL "https://downloads.claude.ai/claude-code-releases/$(curl -fsSL https://downloads.claude.ai/claude-code-releases/latest)/manifest.zst.json" | jq -j . > overlays/claude-code-manifest.json
+  # To update: make update-claude
   claudeCodeManifest = builtins.fromJSON (builtins.readFile ./claude-code-manifest.json);
 
   claudeCodeLatest = final: prev: {

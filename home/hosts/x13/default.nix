@@ -48,7 +48,7 @@
       enable = true;
       package = pkgs.unstable.claude-code;
       settings = {
-        effortLevel = "high";
+        effortLevel = "medium";
         statusLine = {
           type = "command";
           command = config.modules.home.starship.claudeCodeStatusLineCommand;
