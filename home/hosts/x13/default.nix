@@ -19,13 +19,21 @@
     mqtt-explorer # MQTT client/explorer
     telegram-desktop # Messaging
     scribus # Desktop publishing
-    zed-editor # Text editor
   ];
 
   # Programs and configurations to be installed
   imports = [
     ../../configs/abcde.nix
   ];
+
+  # Cursor theme for X11 apps that don't read Cinnamon's settings (e.g. Zed)
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 23;
+    x11.enable = true;
+  };
 
   # Modules
   modules.home = {
@@ -101,6 +109,7 @@
     rofi.enable = true;
     tmux.shell = "${pkgs.zsh}/bin/zsh";
     vscode.enable = true;
+    zed-editor.enable = true;
     zsh.enable = true;
   };
 }

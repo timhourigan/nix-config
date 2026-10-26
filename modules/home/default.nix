@@ -33,6 +33,7 @@
     ./tmux
     ./uv
     ./vscode
+    ./zed-editor
     ./zsh
   ];
 }
