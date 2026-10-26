@@ -104,6 +104,8 @@ in
         # libpulse for Music Assistant and Soloist
         environment.LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.libpulseaudio ];
         serviceConfig = {
+          # Allow Soloist to run from the state directory
+          ExecPaths = [ "/var/lib/music-assistant" ];
           # PulseAudio socket
           RestrictAddressFamilies = [ "AF_UNIX" ];
           # PulseAudio drops privileges on startup

@@ -137,10 +137,6 @@ in
         enable = true;
         autoPrune = true;
       };
-      slimserver = {
-        enable = false;
-        package = pkgs.unstable.slimserver;
-      };
       ssh.enable = true;
       tailscale = {
         enable = true;
@@ -205,6 +201,12 @@ in
       "http://${config.custom.internalDomain}" = {
         extraConfig = ''
           reverse_proxy :${toString config.modules.services.homepage-dashboard.listenPort}
+        '';
+      };
+      # Music Assistant
+      "http://ma.${config.custom.internalDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${toString config.modules.services.music-assistant.port}
         '';
       };
       # Vikunja

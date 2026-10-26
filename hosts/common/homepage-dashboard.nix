@@ -102,10 +102,10 @@ _:
     {
       Media = [
         {
-          "Lyrion" = {
+          "Music Assistant" = {
             description = "Music Server";
-            icon = "sh-lyrion-music-server";
-            href = "{{HOMEPAGE_VAR_LYRION_URL}}";
+            icon = "sh-music-assistant";
+            href = "{{HOMEPAGE_VAR_MUSIC_ASSISTANT_URL}}";
           };
         }
         {

@@ -76,11 +76,11 @@ _:
       ];
     };
 
-    slimserver-local = {
+    mass-local = {
       initialize = true;
-      paths = [ "/var/lib/slimserver" ];
-      repository = "/mnt/backup/slimserver";
-      passwordFile = "/etc/nixos/secrets/restic-slimserver-local";
+      paths = [ "/var/lib/music-assistant" ];
+      repository = "/mnt/backup/mass";
+      passwordFile = "/etc/nixos/secrets/restic-mass-local";
       timerConfig = {
         # Every six hours, with a random starting time
         OnCalendar = "*-*-* 00/6:00:00";
