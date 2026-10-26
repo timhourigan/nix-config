@@ -18,7 +18,6 @@
     mqtt-explorer # MQTT client/explorer
     telegram-desktop # Messaging
     scribus # Desktop publishing
-    zed-editor # Text editor
   ];
 
   # Programs and configurations to be installed
@@ -31,5 +30,6 @@
     polybar.enable = true;
     rofi.enable = true;
     vscode.enable = true;
+    zed-editor.enable = true;
   };
 }
