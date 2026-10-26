@@ -8,7 +8,7 @@
 let
   cfg = config.modules.home.starship;
 
-  # WORKAROUND - Starship (as of 1.26.0) has no rate-limit statusline module
+  # WORKAROUND - Starship (as of 1.27.0) has no rate-limit statusline module
   # (only claude_model/claude_context/claude_cost), so wrap its Claude Code
   # statusline output with 5-hour/7-day rate limit usage, parsed from the
   # same JSON Claude Code sends on stdin.
@@ -29,7 +29,6 @@ let
       reset=$'\033[0m'
       red=$'\033[1;31m'
       yellow=$'\033[1;33m'
-      green=$'\033[1;32m'
       blue=$'\033[1;34m'
 
       # Most fields below are simply absent when not applicable - this jq
@@ -45,7 +44,6 @@ let
       five_hour_resets_at=$(extract '.rate_limits.five_hour.resets_at')
       seven_day=$(extract '.rate_limits.seven_day.used_percentage')
 
-      # Thresholds match claude_context/claude_cost
       color_for_rate_limit() {
         local pct=''${1%.*}
         if (( pct >= 80 )); then
@@ -69,29 +67,11 @@ let
         printf '%s%s %s%%%s%s ' "$color" "$label" "$pct_int" "$resets" "$reset"
       }
 
-      # --- Effort ----------------------------------------------------------
-      # .effort.level appears only when the current model supports the
-      # reasoning effort parameter, and is one of low/medium/high/xhigh/max
-      # ("ultracode" reports as xhigh, not as a distinct level). It's a
-      # setting, not a metric, so colour is by level rather than by
-      # threshold; five levels are mapped onto the three colours, matching
-      # the file's existing "red costs more" language.
-      effort_level=$(extract '.effort.level')
-
-      color_for_effort() {
-        case "$1" in
-          low | medium) printf '%s' "$green" ;;
-          high) printf '%s' "$yellow" ;;
-          xhigh | max) printf '%s' "$red" ;;
-        esac
-      }
-
-      # Build the rate-limit and effort segment, skipping
-      # parts that aren't present, and append it after Starship's own output
+      # Build the rate-limit segment, skipping parts that aren't present,
+      # and append it after Starship's own output
       segment=""
       [[ -n "$five_hour" ]] && segment+="$(render_window "5h" "$five_hour" "$five_hour_resets_at")"
       [[ -n "$seven_day" ]] && segment+="$(render_window "7d" "$seven_day" "")"
-      [[ -n "$effort_level" ]] && segment+="$(color_for_effort "$effort_level")''${effort_level^}$reset "
       printf '%s%s\n' "$starship_output" "$segment"
     '';
   };
@@ -191,7 +171,7 @@ in
 
         # Claude Code
         profiles."claude-code" =
-          "$battery$time$directory$git_branch$git_status$memory_usage$claude_model$claude_context$claude_cost";
+          "$battery$time$directory$git_branch$git_status$memory_usage$claude_model$claude_context";
 
         claude_context = {
           format = "[$gauge $percentage]($style) ";
@@ -211,7 +191,11 @@ in
           ];
         };
 
-        claude_model.symbol = "";
+        claude_model = {
+          symbol = "";
+          format = "[$symbol$model( $effort)]($style) ";
+          style = "bold 247";
+        };
       };
     };
   };
