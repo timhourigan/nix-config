@@ -107,7 +107,6 @@ in
         environmentFiles = [ config.sops.secrets."music_assistant_env".path ];
         providers = [
           "airplay"
-          "bbc_sounds"
           "chromecast"
           "dlna"
           "hass"
