@@ -7,8 +7,8 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-personal.url = "github:timhourigan/nixpkgs/master";
-    # Pinning to zigbee2mqtt 2.14.1 - https://github.com/NixOS/nixpkgs/pull/559625
-    nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=1cde1c190ce2ef134b7f6fd1b729ada5e058ebaf";
+    # Pinning to zigbee2mqtt 2.14.2 - https://github.com/NixOS/nixpkgs/pull/569180
+    nixpkgs-pinned.url = "github:nixos/nixpkgs?rev=4094ccec48b9046680618b0cf061b711571518b1";
 
     # Community packages
     nur = {
