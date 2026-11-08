@@ -23,6 +23,20 @@ in
     "${inputs.nixpkgs-unstable}/nixos/modules/services/audio/music-assistant.nix"
   ];
 
+  # The unstable module sets this for the `airplay_receiver` provider, but stable avahi lacks it.
+  # Fails from 26.11, or earlier if stable declares it ("already declared" error).
+  # WORKAROUND/TODO: Remove once available in a release
+  options.services.avahi.settings =
+    if lib.versionAtLeast lib.trivial.release "26.11" then
+      throw "music-assistant: remove the `services.avahi.settings` placeholder, stable avahi should now provide it"
+    else
+      lib.mkOption {
+        type = lib.types.attrsOf lib.types.anything;
+        default = { };
+        internal = true;
+        description = "Placeholder for the unstable avahi option; values are ignored";
+      };
+
   options.modules.services.music-assistant = {
     enable = lib.mkEnableOption "Music Assistant";
 
@@ -79,6 +93,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = !(lib.elem "airplay_receiver" cfg.providers);
+        message = "music-assistant: airplay_receiver needs `services.avahi.settings`, which 26.05 stable avahi lacks";
+      }
+    ];
+
     # The unstable module references these via stable pkgs, where they don't exist
     # TODO: Remove once available in a release
     nixpkgs.overlays = [
