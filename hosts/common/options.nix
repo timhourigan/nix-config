@@ -16,7 +16,7 @@
       images = {
         pihole = lib.mkOption {
           type = lib.types.str;
-          default = "docker.io/pihole/pihole:2026.10.1";
+          default = "docker.io/pihole/pihole:2026.11.0";
           description = "Pi-hole container image";
         };
         # https://github.com/home-assistant/core/releases
