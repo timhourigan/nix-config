@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 # Glances monitoring service
 # https://github.com/nicolargo/glances
@@ -29,6 +34,14 @@ in
   config = lib.mkIf cfg.enable {
     services.glances = {
       enable = true;
+      # WORKAROUND 20261114 - Drop optional python-jose (insecure, CVE-2026-120459); skip flaky REST server tests
+      package = pkgs.glances.overridePythonAttrs (old: {
+        dependencies = lib.filter (d: (d.pname or "") != "python-jose") old.dependencies;
+        disabledTestPaths = old.disabledTestPaths or [ ] ++ [
+          "tests/test_restful.py"
+          "tests/test_browser_restful.py"
+        ];
+      });
       openFirewall = true;
       inherit (cfg) port;
       extraArgs = if cfg.webserver then [ "--webserver" ] else [ ];
