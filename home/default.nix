@@ -53,7 +53,10 @@
       autojump.enable = true;
       bash.enable = true;
       delta.enable = true;
-      direnv.enable = true;
+      direnv = {
+        enable = true;
+        nixDirenv = true;
+      };
       firefox.enable = true;
       fzf.enable = true;
       gh.enable = true;
